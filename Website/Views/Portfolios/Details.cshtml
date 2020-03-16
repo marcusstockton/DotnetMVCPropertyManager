@@ -1,0 +1,47 @@
+﻿@model Website.Models.Portfolio
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Portfolio</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+    </dl>
+    @foreach (var property in Model.Properties)
+    {
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@string.Join(" ",property.Address.Line1, property.Address.Line2, property.Address.Line3, property.Address.Postcode, property.Address.Town, property.Address.City)</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

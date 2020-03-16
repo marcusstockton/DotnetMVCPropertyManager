@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-Website-888A4B13-250B-4CB9-B1D6-81C2082707A1</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200309152634_Initial.cs" />
+    <Compile Remove="Data\Migrations\20200309152634_Initial.Designer.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Models\DTOs\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
