@@ -32,7 +32,11 @@
     @foreach (var property in Model.Properties)
     {
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+            @if(property.Images.Any()){
+                <img class="card-img-top" src="@property.Images.First().FilePath" alt="@property.Images.First().FileName">
+            }else{
+                <img class="card-img-top" src="..." alt="Card image cap">
+            }
             <div class="card-body">
                 <h5 class="card-title">@string.Join(" ",property.Address.Line1, property.Address.Line2, property.Address.Line3, property.Address.Postcode, property.Address.Town, property.Address.City)</h5>
                 <p class="card-text">Tenants: @property.Tenants.Count()</p>
