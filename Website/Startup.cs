@@ -11,6 +11,8 @@ using Website.Models;
 using Website.Interfaces;
 using Website.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using AutoMapper;
+using Website.Profiles;
 
 namespace Website
 {
@@ -38,6 +40,16 @@ namespace Website
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new PropertyProfile());
+                mc.AddProfile(new AddressProfile()); 
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc();
@@ -50,8 +62,6 @@ namespace Website
 
             services.AddTransient<IEmailSender, EmailService>();
             services.AddTransient<DataSeeder>();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,7 +6,7 @@
 @if (SignInManager.IsSignedIn( User ))
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Portfolios" asp-action="Index" title="Portfolios">Portfolios</a>
+        <a class="nav-link text-dark" asp-controller="Portfolio" asp-action="Index" title="Portfolios">Portfolios</a>
     </li>
 
     @if (User.IsInRole("Admin"))

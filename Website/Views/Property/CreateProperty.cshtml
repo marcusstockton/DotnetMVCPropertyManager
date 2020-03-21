@@ -1,0 +1,87 @@
+﻿@model Website.Models.DTOs.PropertyCreateView
+
+@{
+    ViewData["Title"] = $"Create a Property in {Model.Portfolio.Name}";
+}
+
+    <h1>@ViewData["Title"]</h1>
+
+<h4>Property</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateProperty" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Portfolio.Id" />
+            <input type="hidden" asp-for="Portfolio.CreatedDate" />
+            <input type="hidden" asp-for="Portfolio.Owner" />
+            <input type="hidden" asp-for="Portfolio.Properties" />
+            <div class="form-group">
+                <label asp-for="Portfolio.Name" class="control-label"></label>
+                <input asp-for="Portfolio.Name" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Portfolio.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseDate" class="control-label"></label>
+                <input asp-for="PurchaseDate" class="form-control" />
+                <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PropertyValue" class="control-label"></label>
+                <input asp-for="PropertyValue" class="form-control" />
+                <span asp-validation-for="PropertyValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Line1" class="control-label"></label>
+                <input asp-for="Address.Line1" class="form-control" />
+                <span asp-validation-for="Address.Line1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Line2" class="control-label"></label>
+                <input asp-for="Address.Line2" class="form-control" />
+                <span asp-validation-for="Address.Line2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Line3" class="control-label"></label>
+                <input asp-for="Address.Line3" class="form-control" />
+                <span asp-validation-for="Address.Line3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Postcode" class="control-label"></label>
+                <input asp-for="Address.Postcode" class="form-control" />
+                <span asp-validation-for="Address.Postcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Town" class="control-label"></label>
+                <input asp-for="Address.Town" class="form-control" />
+                <span asp-validation-for="Address.Town" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.City" class="control-label"></label>
+                <input asp-for="Address.City" class="form-control" />
+                <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Images</label>
+                <input type="file" asp-for="Images" multiple accept='image/*' class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Documents</label>
+                <input type="file" asp-for="Documents" multiple accept=".doc,.docx,.xml,.xlsx,.rtf,.pdf,.txt," class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

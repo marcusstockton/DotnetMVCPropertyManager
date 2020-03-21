@@ -31,7 +31,7 @@ namespace Website.Services
 
         public async Task<Portfolio> GetPortfolioById(Guid id)
         {
-            var portfolios = await _context.Portfolios
+            var portfolio = await _context.Portfolios
                 .Include(owner => owner.Owner)
                 .Include(portfolio => portfolio.Properties)
                     .ThenInclude(property => property.Address)
@@ -39,7 +39,7 @@ namespace Website.Services
 					.ThenInclude(y=>y.Tenants)
                 .SingleAsync(x => x.Id == id);
 
-            return portfolios;
+            return portfolio;
         }
 
         public async Task<bool> DeletePortfolio(Portfolio portfolio)
