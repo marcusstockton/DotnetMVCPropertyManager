@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Website.Controllers
 {
@@ -75,6 +76,7 @@ namespace Website.Controllers
             return View( property );
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProperty(PropertyCreateView propertyCreateView)
         {
 
@@ -86,10 +88,10 @@ namespace Website.Controllers
                 {
                     await _propertyImageService.CreateImagesForProperty( new_property, propertyCreateView.Images );
                 }
-                if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
-                {
-                    await _propertyDocumentService.CreatePropertyDocumentsForProperty( new_property, propertyCreateView.Documents );
-                }
+                // if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
+                // {
+                //     //await _propertyDocumentService.CreatePropertyDocumentsForProperty( new_property, propertyCreateView.Documents );
+                // }
                 new_property.CreatedDate = DateTime.Now;
                 new_property.Address.CreatedDate = DateTime.Now;
                 await _propertyService.SaveAsync();
@@ -107,11 +109,23 @@ namespace Website.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> DeleteProperty(Guid portfolioId, Guid propertyId)
         {
             await _propertyService.DeleteProperty( propertyId );
             await _propertyService.SaveAsync();
             return RedirectToAction( "Details", "Portfolio", new { id= portfolioId } );
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPropertyDocument([Bind("Documents")] PropertyCreateView property)
+        {
+            ViewBag.DocumentTypes = new SelectList(await _propertyDocumentService.GetDocumentTypes(), "Id", "Description");
+
+            property.Documents.Add(new Models.DTOs.Documents.DocumentUploader());
+            return PartialView("PropertyDocuments", property);
         }
     }
 }

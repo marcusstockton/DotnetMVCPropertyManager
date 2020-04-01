@@ -10,5 +10,6 @@ namespace Website.Interfaces
     public interface IPropertyDocumentService
     {
         Task<int> CreatePropertyDocumentsForProperty(Property property, List<IFormFile> documents);
+        Task<List<DocumentType>> GetDocumentTypes();
     }
 }

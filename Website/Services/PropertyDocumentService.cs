@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
@@ -22,6 +23,10 @@ namespace Website.Services
         public async Task<int> CreatePropertyDocumentsForProperty(Property property, List<IFormFile> documents)
         {
             return 0;
+        }
+        public async Task<List<DocumentType>> GetDocumentTypes()
+        {
+            return await _context.DocumentTypes.ToListAsync();
         }
     }
 }
