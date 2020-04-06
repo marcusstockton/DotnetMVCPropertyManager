@@ -1,31 +1,33 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Website.Data;
-using Website.Models;
 using Website.Interfaces;
+using Website.Models;
 
 namespace Website.Services
 {
     public class PortfolioService : IPortfolioService
     {
         private readonly ApplicationDbContext _context;
+
         public PortfolioService(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public async Task<List<Portfolio>> GetPortfolios()
         {
             return await _context.Portfolios.ToListAsync();
         }
-        
+
         public async Task<List<Portfolio>> GetMyPortfolios(string userId)
         {
             return await _context.Portfolios
-                .Include(x=>x.Owner)
-                .Where(x=>x.Owner.Id == userId)
+                .Include(x => x.Owner)
+                .Where(x => x.Owner.Id == userId)
                 .ToListAsync();
         }
 
@@ -35,8 +37,8 @@ namespace Website.Services
                 .Include(owner => owner.Owner)
                 .Include(portfolio => portfolio.Properties)
                     .ThenInclude(property => property.Address)
-				.Include(x=>x.Properties)
-					.ThenInclude(y=>y.Tenants)
+                .Include(x => x.Properties)
+                    .ThenInclude(y => y.Tenants)
                 .SingleAsync(x => x.Id == id);
 
             return portfolio;
@@ -44,7 +46,7 @@ namespace Website.Services
 
         public async Task<bool> DeletePortfolio(Portfolio portfolio)
         {
-            _context.Portfolios.Remove( portfolio );
+            _context.Portfolios.Remove(portfolio);
             try
             {
                 await _context.SaveChangesAsync();
@@ -55,12 +57,11 @@ namespace Website.Services
                 return false;
                 throw;
             }
-            
         }
 
         public async Task<Portfolio> UpdatePortfolio(Portfolio portfolio)
         {
-            _context.Update( portfolio );
+            _context.Update(portfolio);
             try
             {
                 await _context.SaveChangesAsync();
@@ -74,7 +75,7 @@ namespace Website.Services
 
         public async Task<Portfolio> CreatePortfolio(Portfolio portfolio)
         {
-            _context.Add( portfolio );
+            _context.Add(portfolio);
             try
             {
                 await _context.SaveChangesAsync();

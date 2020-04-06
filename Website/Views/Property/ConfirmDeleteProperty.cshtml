@@ -42,7 +42,7 @@
             @Html.DisplayFor(model => model.UpdatedDate)
         </dd>
     </dl>
-    
+
     <form asp-action="DeleteProperty" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id">
         <input type="hidden" asp-for="@Model.Id" />
         <input type="hidden" asp-for="@Model.Portfolio.Id" />

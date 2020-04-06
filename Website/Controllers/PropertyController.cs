@@ -1,14 +1,14 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Website.Controllers
 {
@@ -19,6 +19,7 @@ namespace Website.Controllers
         private readonly IPropertyDocumentService _propertyDocumentService;
         private readonly IPortfolioService _portfolioService;
         private readonly IMapper _mapper;
+
         public PropertyController(IPropertyService propertyService, IPropertyImageService propertyImageService, IPropertyDocumentService propertyDocumentService, IPortfolioService portfolioService, IMapper mapper)
         {
             _propertyService = propertyService;
@@ -31,7 +32,7 @@ namespace Website.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Guid portfolioId)
         {
-            return View( await _propertyService.GetPropertiesForPortfolio(portfolioId) );
+            return View(await _propertyService.GetPropertiesForPortfolio(portfolioId));
         }
 
         [HttpGet]
@@ -43,7 +44,7 @@ namespace Website.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProperty(Guid portfolioId, Guid propertyId)
         {
-            return View( await _propertyService.GetPropertyById( portfolioId, propertyId ) );
+            return View(await _propertyService.GetPropertyById(portfolioId, propertyId));
         }
 
         [HttpPost]
@@ -54,39 +55,38 @@ namespace Website.Controllers
             {
                 if (images.Any())
                 {
-                    var imagesSaved = await _propertyImageService.CreateImagesForProperty( property, images );
+                    var imagesSaved = await _propertyImageService.CreateImagesForProperty(property, images);
                 }
                 if (documents.Any())
                 {
-                    var documentsSaved = await _propertyDocumentService.CreatePropertyDocumentsForProperty( property, documents );
+                    var documentsSaved = await _propertyDocumentService.CreatePropertyDocumentsForProperty(property, documents);
                 }
-                await _propertyService.UpdateProperty( property );
-                return RedirectToAction( nameof( GetPropertyById ), new { portfolioId = property.Portfolio.Id, propertyId = property.Id } );
+                await _propertyService.UpdateProperty(property);
+                return RedirectToAction(nameof(GetPropertyById), new { portfolioId = property.Portfolio.Id, propertyId = property.Id });
             }
-            return View( property );
+            return View(property);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> CreateProperty(Guid portfolioId)
         {
             // View with property, portfolio, images, address, documents
-            var portfolio = await _portfolioService.GetPortfolioById( portfolioId );
-            var property = new PropertyCreateView { Portfolio = portfolio};
-            return View( property );
+            var portfolio = await _portfolioService.GetPortfolioById(portfolioId);
+            var property = new PropertyCreateView { Portfolio = portfolio };
+            return View(property);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProperty(PropertyCreateView propertyCreateView)
         {
-
             if (ModelState.IsValid)
             {
-                var property = _mapper.Map<Property>( propertyCreateView );
-                var new_property = await _propertyService.CreateProperty( property );
+                var property = _mapper.Map<Property>(propertyCreateView);
+                var new_property = await _propertyService.CreateProperty(property);
                 if (propertyCreateView.Images != null && propertyCreateView.Images.Any())
                 {
-                    await _propertyImageService.CreateImagesForProperty( new_property, propertyCreateView.Images );
+                    await _propertyImageService.CreateImagesForProperty(new_property, propertyCreateView.Images);
                 }
                 // if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
                 // {
@@ -95,27 +95,26 @@ namespace Website.Controllers
                 new_property.CreatedDate = DateTime.Now;
                 new_property.Address.CreatedDate = DateTime.Now;
                 await _propertyService.SaveAsync();
-                return RedirectToAction( "Details", "Portfolio", new { id = propertyCreateView.Portfolio.Id} );
+                return RedirectToAction("Details", "Portfolio", new { id = propertyCreateView.Portfolio.Id });
             }
-           
-            return View( propertyCreateView );
+
+            return View(propertyCreateView);
         }
 
         [HttpGet]
         public async Task<IActionResult> ConfirmDeleteProperty(Guid portfolioId, Guid propertyId)
         {
-            var property = await _propertyService.GetPropertyById( portfolioId, propertyId );
-            return View( property );
+            var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
+            return View(property);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> DeleteProperty(Guid portfolioId, Guid propertyId)
         {
-            await _propertyService.DeleteProperty( propertyId );
+            await _propertyService.DeleteProperty(propertyId);
             await _propertyService.SaveAsync();
-            return RedirectToAction( "Details", "Portfolio", new { id= portfolioId } );
+            return RedirectToAction("Details", "Portfolio", new { id = portfolioId });
         }
 
         [HttpPost]

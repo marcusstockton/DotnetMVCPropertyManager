@@ -1,10 +1,6 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Website.Services
 {
@@ -14,17 +10,17 @@ namespace Website.Services
         {
             MailMessage mail = new MailMessage();
             //set the addresses
-            mail.From = new MailAddress( "admin@softcorp.com" );
-            mail.To.Add( email );
+            mail.From = new MailAddress("admin@softcorp.com");
+            mail.To.Add(email);
 
             //set the content
             mail.Subject = subject;
             mail.Body = htmlMessage;
 
             //send the message
-            SmtpClient smtp = new SmtpClient( "localhost" );
+            SmtpClient smtp = new SmtpClient("localhost");
             smtp.UseDefaultCredentials = true;
-            await smtp.SendMailAsync( mail );
+            await smtp.SendMailAsync(mail);
         }
     }
 }

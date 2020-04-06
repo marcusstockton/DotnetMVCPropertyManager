@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
@@ -32,18 +32,18 @@ namespace Website.Services
                     // Upload the file if less than 2 MB
                     if (image.Length < 2097152)
                     {
-                        var path = Path.Combine( _env.WebRootPath, IMAGEFOLDER, property.Id.ToString() );
-                        var filename = Path.GetFileName( image.FileName );
-                        var filePath = Path.Combine( path, filename );
-                        var shortFilePath = filePath.Split( _env.WebRootPath ).Last();
-                        if (!Directory.Exists( path ))
+                        var path = Path.Combine(_env.WebRootPath, IMAGEFOLDER, property.Id.ToString());
+                        var filename = Path.GetFileName(image.FileName);
+                        var filePath = Path.Combine(path, filename);
+                        var shortFilePath = filePath.Split(_env.WebRootPath).Last();
+                        if (!Directory.Exists(path))
                         {
-                            Directory.CreateDirectory( path );
+                            Directory.CreateDirectory(path);
                         }
-                        // Save stuff off 
-                        using (var stream = File.Create( filePath ))
+                        // Save stuff off
+                        using (var stream = File.Create(filePath))
                         {
-                            await image.CopyToAsync( stream );
+                            await image.CopyToAsync(stream);
                             _context.PropertyImages.Add(
                                 new PropertyImage
                                 {
@@ -57,7 +57,7 @@ namespace Website.Services
                     }
                     else
                     {
-                        throw new BadImageFormatException( "File", "The file is too large." );
+                        throw new BadImageFormatException("File", "The file is too large.");
                     }
                 }
                 //return (await _context.SaveChangesAsync());

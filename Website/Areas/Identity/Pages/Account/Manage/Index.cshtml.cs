@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Website.Models;
 
 namespace Website.Areas.Identity.Pages.Account.Manage
@@ -38,11 +36,12 @@ namespace Website.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-            [Display( Name = "First Name" )]
-            public string FirstName { get; set; }
-            [Display( Name = "Surname" )]
-            public string LastName { get; set; }
 
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Surname")]
+            public string LastName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -98,11 +97,11 @@ namespace Website.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
-            if((Input.FirstName != user.FirstName) || (Input.LastName != user.LastName))
+            if ((Input.FirstName != user.FirstName) || (Input.LastName != user.LastName))
             {
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                await _userManager.UpdateAsync( user );
+                await _userManager.UpdateAsync(user);
             }
 
             await _signInManager.RefreshSignInAsync(user);

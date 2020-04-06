@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 using Website.Helpers;
 using Website.Interfaces;
 using Website.Models;
@@ -21,7 +21,7 @@ namespace Website.Controllers
         // GET: Portfolios
         public async Task<IActionResult> Index()
         {
-            return View( await _context.GetMyPortfolios( this.User.GetUserId()));
+            return View(await _context.GetMyPortfolios(this.User.GetUserId()));
         }
 
         // GET: Portfolios/Details/5
@@ -48,7 +48,7 @@ namespace Website.Controllers
         }
 
         // POST: Portfolios/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -56,7 +56,7 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.CreatePortfolio( portfolio );
+                await _context.CreatePortfolio(portfolio);
                 return RedirectToAction(nameof(Index));
             }
             return View(portfolio);
@@ -79,7 +79,7 @@ namespace Website.Controllers
         }
 
         // POST: Portfolios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -94,8 +94,8 @@ namespace Website.Controllers
             {
                 try
                 {
-                    await _context.UpdatePortfolio( portfolio );
-                    return RedirectToAction( nameof( Index ) );
+                    await _context.UpdatePortfolio(portfolio);
+                    return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
@@ -127,12 +127,12 @@ namespace Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var portfolio = await _context.GetPortfolioById( id );
-            if (await _context.DeletePortfolio( portfolio ))
+            var portfolio = await _context.GetPortfolioById(id);
+            if (await _context.DeletePortfolio(portfolio))
             {
-                return RedirectToAction( nameof( Index ) );
+                return RedirectToAction(nameof(Index));
             }
-            return View( portfolio );
+            return View(portfolio);
         }
     }
 }
