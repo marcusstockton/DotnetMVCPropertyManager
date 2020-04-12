@@ -6,6 +6,7 @@ using Website.Models.DTOs.Documents;
 
 namespace Website.Models.DTOs
 {
+    [Serializable]
     public class PropertyCreateView
     {
         public PropertyCreateView()
@@ -22,7 +23,7 @@ namespace Website.Models.DTOs
         public virtual Portfolio Portfolio { get; set; }
         public virtual AddressDTO Address { get; set; }
         public virtual List<Tenant> Tenants { get; set; }
-        public virtual List<DocumentUploader> Documents { get; set; }
+        public List<DocumentUploader> Documents { get; set; }
         public virtual List<IFormFile> Images { get; set; }
     }
 }

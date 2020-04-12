@@ -66,13 +66,17 @@
                 <label>Images</label>
                 <input type="file" asp-for="Images" multiple accept='image/*' class="form-control" />
             </div>
-            <div class="form-group">
-                <fieldset>
-                    <legend>Documents</legend>
-                    <span id="propertyDocumentsContainer">
-                        @Html.EditorFor(item => item.Documents)
-                    </span>
-                </fieldset>
+            <div class="form-group" id="propertyDocumentsContainer">
+                @*<fieldset>
+            <legend>Documents</legend>
+            <span id="propertyDocumentsContainer">
+                @Html.EditorFor(item => item.Documents)
+            </span>
+        </fieldset>*@
+                @Html.EditorFor(item => item.Documents)
+                
+            </div>
+            <div class="row">
                 <input type="button" class="btn btn-secondary" id="btnAdd" value="Add Document">
             </div>
             <div class="form-group">
@@ -90,10 +94,15 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
-        $('#btnAdd').on('click', function(){
+        $('#btnAdd').on('click', function () {
+            var form = $('#propertyCreateForm')[0];
+            var formData = new FormData(form);
+
             $.ajax({
                 async: true,
-                data:$('#propertyCreateForm').serialize(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 type: "POST",
                 url: "/Property/AddPropertyDocument",
                 success: function(partialView){

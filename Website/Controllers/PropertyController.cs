@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs;
+using Website.Models.DTOs.Documents;
 
 namespace Website.Controllers
 {
@@ -119,11 +120,11 @@ namespace Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPropertyDocument([Bind("Documents")] PropertyCreateView property)
+        public async Task<IActionResult> AddPropertyDocument([Bind(include: "Documents")] PropertyCreateView property)
         {
             ViewBag.DocumentTypes = new SelectList(await _propertyDocumentService.GetDocumentTypes(), "Id", "Description");
 
-            property.Documents.Add(new Models.DTOs.Documents.DocumentUploader());
+            property.Documents.Add(new DocumentUploader());
             return PartialView("PropertyDocuments", property);
         }
     }
