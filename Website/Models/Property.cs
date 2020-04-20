@@ -5,6 +5,11 @@ namespace Website.Models
 {
     public class Property : Base
     {
+
+        public Property()
+        {
+            Documents = new List<PropertyDocument> { };
+        }
         public DateTime PurchaseDate { get; set; }
         public double PropertyValue { get; set; }
         public virtual Portfolio Portfolio { get; set; }

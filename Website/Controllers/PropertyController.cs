@@ -89,10 +89,10 @@ namespace Website.Controllers
                 {
                     await _propertyImageService.CreateImagesForProperty(new_property, propertyCreateView.Images);
                 }
-                // if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
-                // {
-                //     //await _propertyDocumentService.CreatePropertyDocumentsForProperty( new_property, propertyCreateView.Documents );
-                // }
+                if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
+                {
+                    await _propertyDocumentService.CreatePropertyDocumentsForProperty( new_property, propertyCreateView.Documents );
+                }
                 new_property.CreatedDate = DateTime.Now;
                 new_property.Address.CreatedDate = DateTime.Now;
                 await _propertyService.SaveAsync();

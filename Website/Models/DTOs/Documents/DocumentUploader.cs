@@ -8,7 +8,7 @@ namespace Website.Models.DTOs.Documents
 {
     public class DocumentUploader
     {
-        [DataType(DataType.Upload), BindProperty, FileExtensions(Extensions = "doc,docx,xml,xlsx,rtf,pdf,txt")]
+        [DataType(DataType.Upload), BindProperty] // FileExtensions(Extensions = "doc,docx,xml,xlsx,rtf,pdf,txt")
         public IFormFile Document { get; set; }
 
         [Display(Name = "Document Type")]

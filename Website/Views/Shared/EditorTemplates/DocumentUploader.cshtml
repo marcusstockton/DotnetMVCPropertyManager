@@ -1,15 +1,24 @@
 @model Website.Models.DTOs.Documents.DocumentUploader
+@if(Model.Document != null)
+{
+    // Don't pass back the existing item, as we are appending the inputs.
+}
+else
+{
     <div class="row">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Document"></label>
-            <input asp-for="Document" class="form-control" accept=".doc,.docx,.xml,.xlsx,.rtf,.pdf,.txt," type="file" />
+            <input asp-for="Document" class="form-control" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.rtf,.pdf,.txt" type="file" />
+            <span asp-validation-for="Document" class="text-danger"></span>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="DocumentType"></label>
                     <select asp-for="DocumentType.Id" asp-items="@ViewBag.DocumentTypes" class="form-control"></select>
+                    <span asp-validation-for="DocumentType" class="text-danger"></span>
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -17,8 +26,11 @@
                 <div class="form-group">
                     <label asp-for="ExpiryDate"></label>
                     <input asp-for="ExpiryDate" class="form-control" />
+                    <span asp-validation-for="ExpiryDate" class="text-danger"></span>
                 </div>
             </div>
         </div>
     </div>
+}
+
 

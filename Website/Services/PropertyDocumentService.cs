@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
+using Website.Models.DTOs.Documents;
 
 namespace Website.Services
 {
@@ -20,7 +21,7 @@ namespace Website.Services
             _env = env;
         }
 
-        public async Task<int> CreatePropertyDocumentsForProperty(Property property, List<IFormFile> documents)
+        public async Task<int> CreatePropertyDocumentsForProperty(Property property, List<DocumentUploader> documents)
         {
             return 0;
         }
