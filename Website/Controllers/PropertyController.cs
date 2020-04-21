@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Website.Extensions.Alerts;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs;
@@ -50,7 +51,7 @@ namespace Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProperty(Property property, List<IFormFile> images, List<IFormFile> documents)
+        public async Task<IActionResult> UpdateProperty(Property property, List<IFormFile> images, List<DocumentUploader> documents)
         {
             if (ModelState.IsValid)
             {
@@ -60,12 +61,13 @@ namespace Website.Controllers
                 }
                 if (documents.Any())
                 {
-                    var documentsSaved = await _propertyDocumentService.CreatePropertyDocumentsForProperty(property, documents);
+                    await _propertyDocumentService.CreatePropertyDocumentsForProperty(property, documents);
                 }
                 await _propertyService.UpdateProperty(property);
-                return RedirectToAction(nameof(GetPropertyById), new { portfolioId = property.Portfolio.Id, propertyId = property.Id });
+                return RedirectToAction(nameof(Index), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })
+                    .WithSuccess("Success", "Property Updated Sucessfully!");
             }
-            return View(property);
+            return View(property).WithDanger("Error", "Some Errors Occured");
         }
 
         [HttpGet]
@@ -96,10 +98,10 @@ namespace Website.Controllers
                 new_property.CreatedDate = DateTime.Now;
                 new_property.Address.CreatedDate = DateTime.Now;
                 await _propertyService.SaveAsync();
-                return RedirectToAction("Details", "Portfolio", new { id = propertyCreateView.Portfolio.Id });
+                return RedirectToAction("Details", "Portfolio", new { id = propertyCreateView.Portfolio.Id }).WithSuccess("Success", "Property Created successfully.");
             }
 
-            return View(propertyCreateView);
+            return View(propertyCreateView).WithDanger("Error", "Please fix the errors");
         }
 
         [HttpGet]
@@ -115,7 +117,7 @@ namespace Website.Controllers
         {
             await _propertyService.DeleteProperty(propertyId);
             await _propertyService.SaveAsync();
-            return RedirectToAction("Details", "Portfolio", new { id = portfolioId });
+            return RedirectToAction("Details", "Portfolio", new { id = portfolioId }).WithSuccess("Deleted", "Property Deleted successfully.");
         }
 
         [HttpPost]
