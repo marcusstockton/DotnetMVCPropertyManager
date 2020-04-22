@@ -11,6 +11,11 @@ a.navbar-brand {
 a {
     color: #0366d6;
 }
+.active {
+    /*color: blue !important;*/
+    font-weight: bold;
+    /*background-color: lightsteelblue;*/
+}
 
 .btn-primary {
     color: #fff;

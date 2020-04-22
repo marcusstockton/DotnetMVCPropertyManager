@@ -10,40 +10,104 @@
     <h4>Property</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PurchaseDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PurchaseDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PropertyValue)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PropertyValue)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Address)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address.Id)
+        <dd class="col-sm-10">
+            <dl class="row">
+                <dt class="col-sm-2">@Html.DisplayNameFor(address => address.Address.Line1)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(address => address.Address.Line1)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(address => address.Address.Line2)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(address => address.Address.Line2)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(address => address.Address.Line3)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(address => address.Address.Line3)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(address => address.Address.Postcode)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(address => address.Address.Postcode)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(address => address.Address.Town)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(address => address.Address.Town)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(address => address.Address.City)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(address => address.Address.City)</dd>
+            </dl>
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UpdatedDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(x => x.Documents)
+        </dt>
+        <dd class="col-sm-10">
+            @for (int i = 0; i < Model.Documents.Count; i++)
+            {
+            <dl>
+                <dt>@Html.DisplayNameFor(model => model.Documents[i].FileName)</dt>
+                <dd>@Html.DisplayFor(model => model.Documents[i].FileName)</dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Documents[i].CreatedDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Documents[i].CreatedDate)
+                </dd>
+            </dl>
+               
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(x => x.Images)
+        </dt>
+        <dd class="col-sm-10">
+            @for (int i = 0; i < Model.Images.Count; i++)
+            {
+                <p>@Html.DisplayFor(model => model.Images[i].FileName)</p>
+                <p>@Html.DisplayFor(model => model.Images[i].CreatedDate)</p>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tenants)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var tenant in Model.Tenants.OrderByDescending(x=>x.TenancyStartDate))
+            {
+                <dl class="row">
+                    <dt class="col-sm-2">@Html.DisplayNameFor(x => tenant.FirstName)</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(x => tenant.FirstName)</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(x => tenant.LastName)</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(x => tenant.LastName)</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(x => tenant.JobTitle)</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(x => tenant.JobTitle)</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(x => tenant.Nationality)</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(x => tenant.Nationality)</dd>
+                    <dt class="col-sm-2">@Html.DisplayNameFor(x => tenant.TenancyStartDate)</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(x => tenant.TenancyStartDate)</dd>
+                </dl>
+            }
+
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
     <a asp-action="ConfirmDeleteProperty" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Delete</a>
-    <a asp-action="Index" class="btn btn-light">Back to List</a>
+    <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light">Back to List</a>
 </div>

@@ -1,11 +1,13 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Website.Data;
 using Website.Interfaces;
@@ -51,15 +53,16 @@ namespace Website
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddScoped<IPortfolioService, PortfolioService>();
-            services.AddScoped<IPropertyDocumentService, PropertyDocumentService>();
-            services.AddScoped<IPropertyImageService, PropertyImageService>();
-            services.AddScoped<IPropertyService, PropertyService>();
-            services.AddScoped<ITenantService, TenantService>();
+            services.TryAddScoped<IPortfolioService, PortfolioService>();
+            services.TryAddScoped<IPropertyDocumentService, PropertyDocumentService>();
+            services.TryAddScoped<IPropertyImageService, PropertyImageService>();
+            services.TryAddScoped<IPropertyService, PropertyService>();
+            services.TryAddScoped<ITenantService, TenantService>();
 
-            services.AddTransient<IEmailSender, EmailService>();
-            services.AddTransient<DataSeeder>();
+            services.TryAddTransient<IEmailSender, EmailService>();
+            services.TryAddTransient<DataSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

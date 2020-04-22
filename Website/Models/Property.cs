@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Website.Models
 {
@@ -11,6 +12,8 @@ namespace Website.Models
             Documents = new List<PropertyDocument> { };
         }
         public DateTime PurchaseDate { get; set; }
+
+        [DataType(DataType.Currency)]
         public double PropertyValue { get; set; }
         public virtual Portfolio Portfolio { get; set; }
         public Guid AddressId { get; set; }
