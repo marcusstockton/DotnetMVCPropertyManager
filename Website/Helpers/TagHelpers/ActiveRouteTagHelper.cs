@@ -70,32 +70,43 @@ namespace Website.Helpers.TagHelpers
 
         private bool ShouldBeActive()
         {
-            object area;
-            object page;
-            object controller;
-            object action;
+            string currentController = string.Empty;
+            string currentAction = string.Empty;
+            string currentArea = string.Empty;
+            string currentPage = string.Empty;
 
-            ViewContext.RouteData.Values.TryGetValue("Area", out area);
-            ViewContext.RouteData.Values.TryGetValue("Page", out page);
-            ViewContext.RouteData.Values.TryGetValue("Controller", out controller);
-            ViewContext.RouteData.Values.TryGetValue("Action", out action);
+            if (ViewContext.RouteData.Values.ContainsKey("Controller"))
+            {
+                currentController = ViewContext.RouteData.Values.GetValueOrDefault("Controller").ToString();
+            }
+            if (ViewContext.RouteData.Values.ContainsKey("Action"))
+            {
+                currentAction = ViewContext.RouteData.Values.GetValueOrDefault("Action").ToString();
+            }
+            if (ViewContext.RouteData.Values.ContainsKey("Area"))
+            {
+                currentArea = ViewContext.RouteData.Values.GetValueOrDefault("Area").ToString();
+            }
+            if (ViewContext.RouteData.Values.ContainsKey("Page"))
+            {
+                currentPage = ViewContext.RouteData.Values.GetValueOrDefault("Page").ToString();
+            }
 
-            if(area != null && !string.IsNullOrEmpty(Area) && Area.ToLower() != area.ToString().ToLower())
+            if (!string.IsNullOrWhiteSpace(Controller) && Controller.ToLower() != currentController.ToLower())
             {
                 return false;
             }
 
-            if (page != null && !string.IsNullOrEmpty(Page) && Page.ToLower() != page.ToString().ToLower())
+            if (!string.IsNullOrWhiteSpace(Action) && Action.ToLower() != currentAction.ToLower())
             {
                 return false;
             }
 
-            if (controller != null && !string.IsNullOrEmpty(Controller) && Controller.ToLower() != controller.ToString().ToLower())
+            if (!string.IsNullOrWhiteSpace(Area) && Area.ToLower() != currentArea.ToLower())
             {
                 return false;
             }
-
-            if (action != null && !string.IsNullOrEmpty(Action) && Action.ToLower() != action.ToString().ToLower())
+            if (!string.IsNullOrWhiteSpace(Page) && Page.ToLower() != currentPage.ToLower())
             {
                 return false;
             }

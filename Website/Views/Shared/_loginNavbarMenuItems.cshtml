@@ -4,9 +4,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" is-active-route asp-controller="Portfolio" asp-action="Index" title="Portfolios">Portfolios</a>
-    </li>
+    if (User.IsInRole("Owner"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" is-active-route asp-controller="Portfolio" asp-action="Index" title="Portfolios">Portfolios</a>
+        </li>
+    }
+    
 
     @if (User.IsInRole("Admin"))
     {
