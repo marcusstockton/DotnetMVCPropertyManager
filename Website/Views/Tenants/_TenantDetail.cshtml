@@ -1,0 +1,78 @@
+﻿@model List<Website.Models.Tenant>
+
+    <div class="container">
+        @if (!Model.Any())
+        {
+            <p>No tenants at this property yet.</p>
+        }
+        else
+        {
+            @foreach (var tenant in Model.OrderByDescending(x => x.TenancyStartDate))
+            {
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.FirstName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.FirstName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.LastName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.LastName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.PhoneNumber)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.PhoneNumber)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.JobTitle)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.JobTitle)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.Nationality)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.Nationality)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.TenancyStartDate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.TenancyStartDate)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.TenancyEndDate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.TenancyEndDate)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.TenantImage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.TenantImage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.CreatedDate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.CreatedDate)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => tenant.UpdatedDate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => tenant.UpdatedDate)
+                    </dd>
+                </dl>
+                
+            }
+        }
+    </div>
+

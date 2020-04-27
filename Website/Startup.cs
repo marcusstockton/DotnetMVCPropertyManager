@@ -46,6 +46,7 @@ namespace Website
             {
                 mc.AddProfile(new PropertyProfile());
                 mc.AddProfile(new AddressProfile());
+                mc.AddProfile(new TenantProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

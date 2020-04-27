@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
@@ -23,7 +25,35 @@ namespace Website.Services
 
         public async Task<int> CreatePropertyDocumentsForProperty(Property property, List<DocumentUploader> documents)
         {
-            return 0;
+            var counter = 0;
+            var uploads = Path.Combine(_env.WebRootPath, "PropertyDocuments", property.Id.ToString());
+            if (!Directory.Exists(uploads))
+            {
+                Directory.CreateDirectory(uploads);
+            }
+            foreach (var file in documents)
+            {
+                if (file.Document.Length > 0)
+                {
+                    var filePath = Path.Combine(uploads, file.Document.FileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.Document.CopyToAsync(fileStream);
+                        counter++;
+                        await _context.AddAsync(new PropertyDocument {
+                            FileName = file.Document.FileName,
+                            FilePath = filePath,
+                            CreatedDate = DateTime.Now,
+                            DocumentType = file.DocumentType,
+                            ExpirationDate = file.ExpiryDate,
+                            FileType = Path.GetExtension(file.Document.FileName),
+                            Property = property
+                        });
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+            return counter;
         }
 
         public async Task<List<DocumentType>> GetDocumentTypes()

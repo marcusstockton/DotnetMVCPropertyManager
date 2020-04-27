@@ -50,10 +50,12 @@ namespace Website.Services
 
         public async Task<Property> UpdateProperty(Property property)
         {
-            property.UpdatedDate = DateTime.Now;
-            _context.Entry(property.Portfolio).State = EntityState.Unchanged;
-            _context.Properties.Update(property);
-            return property;
+            return await Task.Run(() => {
+                property.UpdatedDate = DateTime.Now;
+                _context.Entry(property.Portfolio).State = EntityState.Unchanged;
+                _context.Properties.Update(property);
+                return property;
+            });
         }
 
         public async Task DeleteProperty(Guid propertyId)

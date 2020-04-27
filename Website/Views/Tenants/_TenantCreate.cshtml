@@ -1,0 +1,74 @@
+﻿@model Website.Models.DTOs.Tenants.TenantCreateDTO
+
+<h4>Tenant</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-controller="Tenants" asp-action="Create" asp-route-propertyId="Property.Id" id="tenantCreateForm" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(c => c.Property.Portfolio.Id, new { @id = "portfolio_id" })
+            @Html.HiddenFor(x => x.Property.Id, new { @id = "property_id" })
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="JobTitle" class="control-label"></label>
+                    <input asp-for="JobTitle" class="form-control" />
+                    <span asp-validation-for="JobTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Nationality" class="control-label"></label>
+                    <input asp-for="Nationality" class="form-control" />
+                    <span asp-validation-for="Nationality" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="TenancyStartDate" class="control-label"></label>
+                    <input asp-for="TenancyStartDate" class="form-control" />
+                    <span asp-validation-for="TenancyStartDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="TenancyEndDate" class="control-label"></label>
+                    <input asp-for="TenancyEndDate" class="form-control" />
+                    <span asp-validation-for="TenancyEndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="TenantImage" class="control-label"></label>
+                    <input asp-for="TenantImage" type="file" class="form-control" />
+                    <span asp-validation-for="TenantImage" class="text-danger"></span>
+                </div>
+            </div>
+            @*<div class="row">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>*@
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
