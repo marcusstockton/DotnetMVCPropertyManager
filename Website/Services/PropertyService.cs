@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
+using Website.Models.DTOs.Properties;
 
 namespace Website.Services
 {

@@ -11,6 +11,8 @@ using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs;
 using Website.Models.DTOs.Documents;
+using Website.Models.DTOs.Properties;
+using Website.Models.DTOs.Tenants;
 
 namespace Website.Controllers
 {
@@ -34,19 +36,23 @@ namespace Website.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Guid portfolioId)
         {
-            return View(await _propertyService.GetPropertiesForPortfolio(portfolioId));
+            var properties = await _propertyService.GetPropertiesForPortfolio(portfolioId);
+            return View(properties);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetPropertyById(Guid portfolioId, Guid propertyId)
         {
-            return View(await _propertyService.GetPropertyById(portfolioId, propertyId));
+            var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
+            var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
+            return View(propertyDto);
         }
 
         [HttpGet]
         public async Task<IActionResult> UpdateProperty(Guid portfolioId, Guid propertyId)
         {
-            return View(await _propertyService.GetPropertyById(portfolioId, propertyId));
+            var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
+            return View(property);
         }
 
         [HttpPost]
@@ -73,7 +79,6 @@ namespace Website.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateProperty(Guid portfolioId)
         {
-            // View with property, portfolio, images, address, documents
             var portfolio = await _portfolioService.GetPortfolioById(portfolioId);
             var property = new PropertyCreateView { Portfolio = portfolio };
             return View(property);
@@ -93,7 +98,7 @@ namespace Website.Controllers
                 }
                 if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
                 {
-                    await _propertyDocumentService.CreatePropertyDocumentsForProperty( new_property, propertyCreateView.Documents );
+                    await _propertyDocumentService.CreatePropertyDocumentsForProperty(new_property, propertyCreateView.Documents);
                 }
                 new_property.CreatedDate = DateTime.Now;
                 new_property.Address.CreatedDate = DateTime.Now;
