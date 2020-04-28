@@ -29,6 +29,7 @@
 
         var form = $('#tenantCreateForm')[0];
         var formData = new FormData(form);
+        formData.append('portfolioId', portfolioId);
         formData.append('propertyId', propertyId);
 
         $.ajax({

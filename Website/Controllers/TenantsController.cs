@@ -65,18 +65,19 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Guid propertyId, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate")] TenantCreateDTO tenant)
+        public async Task<IActionResult> Create(Guid portfolioId, Guid propertyId, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate")] TenantCreateDTO tenant)
         {
             if (ModelState.IsValid)
             {
                 var new_tenant = _mapper.Map<Tenant>(tenant);
-                // Save off the image
+                var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
                 var o = await _tenantService.CreateTenant(new_tenant);
+                o.Property = property;
                 if (tenant.TenantImage != null)
                 {
                     o.TenantImage = await _tenantService.CreateTenantImage(o.Id, tenant.TenantImage);
                 }
-
+                
                 await _tenantService.SaveAsync();
                 return Ok(o);
             }
