@@ -24,7 +24,7 @@ namespace Website.Services
 
         public async Task<List<Property>> GetPropertiesForPortfolio(Guid portfolioId)
         {
-            return await _context.Properties
+            return await _context.Properties.Include(x=>x.Address)
                 .Where(x => x.Portfolio.Id == portfolioId)
                 .AsNoTracking()
                 .ToListAsync();
@@ -51,12 +51,12 @@ namespace Website.Services
 
         public async Task<Property> UpdateProperty(Property property)
         {
-            return await Task.Run(() => {
-                property.UpdatedDate = DateTime.Now;
-                _context.Entry(property.Portfolio).State = EntityState.Unchanged;
-                _context.Properties.Update(property);
-                return property;
-            });
+            property.UpdatedDate = DateTime.Now;
+            _context.Entry(property.Portfolio).State = EntityState.Unchanged;
+            _context.Properties.Update(property);
+            await _context.SaveChangesAsync();
+            return property;
+            
         }
 
         public async Task DeleteProperty(Guid propertyId)

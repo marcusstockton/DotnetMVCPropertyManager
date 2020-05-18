@@ -1,4 +1,4 @@
-﻿@model Website.Models.Property
+﻿@model Website.Models.DTOs.Properties.PropertyDetailDTO
 
 @{
     ViewData["Title"] = "UpdateProperty";
@@ -12,6 +12,12 @@
     <div class="col-md-4">
         <form asp-action="UpdateProperty">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+            <input type="hidden" asp-for="UpdatedDate" />
+            <input type="hidden" asp-for="Portfolio.Id" />
+            <input type="hidden" asp-for="Address.Id" />
+
             <div class="form-group">
                 <label asp-for="PurchaseDate" class="control-label"></label>
                 <input asp-for="PurchaseDate" class="form-control" />
@@ -23,21 +29,52 @@
                 <span asp-validation-for="PropertyValue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressId" class="control-label"></label>
-                <select asp-for="AddressId" class="form-control" asp-items="ViewBag.AddressId"></select>
-                <span asp-validation-for="AddressId" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                <label asp-for="Address.Line1" class="control-label"></label>
+                <input asp-for="Address.Line1" class="form-control" />
+                <span asp-validation-for="Address.Line1" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdatedDate" class="control-label"></label>
-                <input asp-for="UpdatedDate" class="form-control" />
-                <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+                <label asp-for="Address.Line2" class="control-label"></label>
+                <input asp-for="Address.Line2" class="form-control" />
+                <span asp-validation-for="Address.Line2" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Address.Line3" class="control-label"></label>
+                <input asp-for="Address.Line3" class="form-control" />
+                <span asp-validation-for="Address.Line3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Town" class="control-label"></label>
+                <input asp-for="Address.Town" class="form-control" />
+                <span asp-validation-for="Address.Town" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.City" class="control-label"></label>
+                <input asp-for="Address.City" class="form-control" />
+                <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Postcode" class="control-label"></label>
+                <input asp-for="Address.Postcode" class="form-control" />
+                <span asp-validation-for="Address.Postcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoOfRooms" class="control-label"></label>
+                <input asp-for="NoOfRooms" class="form-control" />
+                <span asp-validation-for="NoOfRooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MonthlyRentAmount" class="control-label"></label>
+                <input asp-for="MonthlyRentAmount" class="form-control" />
+                <span asp-validation-for="MonthlyRentAmount" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -13,6 +13,11 @@ namespace Website.Models
         }
         public DateTime PurchaseDate { get; set; }
 
+        [Range(1, 100)]
+        public int NoOfRooms { get; set; }
+        public double MonthlyRentAmount { get; set; }
+        public string Description { get; set; }
+
         [DataType(DataType.Currency)]
         public double PropertyValue { get; set; }
         public virtual Portfolio Portfolio { get; set; }

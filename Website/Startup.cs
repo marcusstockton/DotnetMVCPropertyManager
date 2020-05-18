@@ -12,8 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
-using Website.Profiles;
 using Website.Services;
+using Website.Profiles;
 
 namespace Website
 {
@@ -32,7 +32,7 @@ namespace Website
             services.AddDbContext<ApplicationDbContext>(options =>
                options
                .UseLazyLoadingProxies()
-               .UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+               .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
            {
@@ -73,7 +73,7 @@ namespace Website
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-
+                app.UseBrowserLink();
                 seeder.SeedData().GetAwaiter().GetResult();
             }
             else

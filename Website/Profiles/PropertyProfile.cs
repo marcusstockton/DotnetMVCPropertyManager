@@ -15,7 +15,9 @@ namespace Website.Profiles
                 .ForMember(dest => dest.Documents, opt => opt.Ignore())
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
 
-            CreateMap<Property, PropertyDetailDTO>().ReverseMap();
+            CreateMap<Property, PropertyDetailDTO>().ReverseMap()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
+               
         }
     }
 }

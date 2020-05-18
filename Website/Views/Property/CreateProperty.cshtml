@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-8">
-        <form asp-action="CreateProperty" enctype="multipart/form-data" id="propertyCreateForm" method="post", name="propertyDocument">
+        <form asp-action="CreateProperty" enctype="multipart/form-data" id="propertyCreateForm" method="post" , name="propertyDocument">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Portfolio.Id" />
             <input type="hidden" asp-for="Portfolio.CreatedDate" />
@@ -60,6 +60,22 @@
                 <label asp-for="Address.City" class="control-label"></label>
                 <input asp-for="Address.City" class="form-control" />
                 <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NoOfRooms" class="control-label"></label>
+                <input asp-for="NoOfRooms" class="form-control" />
+                <span asp-validation-for="NoOfRooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MonthlyRentAmount" class="control-label"></label>
+                <input asp-for="MonthlyRentAmount" class="form-control" />
+                <span asp-validation-for="MonthlyRentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="form-group">

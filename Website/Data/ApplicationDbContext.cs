@@ -13,6 +13,7 @@ namespace Website.Data
 
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<PropertyDocument> PropertyDocuments { get; set; }
         public DbSet<PropertyImage> PropertyImages { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
@@ -23,6 +24,7 @@ namespace Website.Data
         {
             builder.Entity<Portfolio>().HasKey(x => x.Id);
             builder.Entity<Property>().HasKey(x => x.Id);
+            builder.Entity<Address>().HasKey(x => x.Id);
             builder.Entity<PropertyDocument>().HasKey(x => x.Id);
             builder.Entity<PropertyImage>().HasKey(x => x.Id);
             builder.Entity<Tenant>().HasKey(x => x.Id);
@@ -35,6 +37,8 @@ namespace Website.Data
                 .HasForeignKey<Property>(b => b.AddressId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            //builder.Entity<Property>().Property(x => x.AddressId).ValueGeneratedOnAdd();
 
             builder.Entity<Property>()
                 .HasMany(x => x.Images)

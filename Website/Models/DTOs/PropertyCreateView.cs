@@ -20,6 +20,15 @@ namespace Website.Models.DTOs
         [Display(Name = "Property Value")]
         public double PropertyValue { get; set; }
 
+        [Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
+        public int NoOfRooms { get; set; }
+
+        [Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month.")]
+        public double MonthlyRentAmount { get; set; }
+
+        [MaxLength(1000)]
+        public string Description { get; set; }
+
         public virtual Portfolio Portfolio { get; set; }
         public virtual AddressDTO Address { get; set; }
         public virtual List<Tenant> Tenants { get; set; }

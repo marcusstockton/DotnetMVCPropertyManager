@@ -96,10 +96,13 @@ namespace Website.Data
                                 City = "Exeter",
                                 Postcode = "EX2 2EX",
                                 CreatedDate = DateTime.Now
+                            },
+                            Images = new List<PropertyImage>{
+                                new PropertyImage{CreatedDate = DateTime.Now, FileName = "Picture 177.jpg", FilePath = "\\PropertyImages\\d7306acd-b089-45af-b4b7-f0dfb1126441\\Picture 177.jpg", FileType = ".jpg"}
                             }
                         }
                     }
-                    });
+                    }) ;
                     await _context.SaveChangesAsync();
                 }
             }

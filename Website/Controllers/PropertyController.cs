@@ -52,25 +52,29 @@ namespace Website.Controllers
         public async Task<IActionResult> UpdateProperty(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
-            return View(property);
+            var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
+            return View(propertyDto);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProperty(Property property, List<IFormFile> images, List<DocumentUploader> documents)
+        public async Task<IActionResult> UpdateProperty(PropertyDetailDTO property, List<IFormFile> images, List<DocumentUploader> documents)
         {
             if (ModelState.IsValid)
             {
+                var updatedProperty = _mapper.Map<Property>(property);
+                var portfolio = _mapper.Map<Portfolio>(property.Portfolio);
                 if (images.Any())
                 {
-                    var imagesSaved = await _propertyImageService.CreateImagesForProperty(property, images);
+                    var imagesSaved = await _propertyImageService.CreateImagesForProperty(updatedProperty, images);
                 }
                 if (documents.Any())
                 {
-                    await _propertyDocumentService.CreatePropertyDocumentsForProperty(property, documents);
+                    await _propertyDocumentService.CreatePropertyDocumentsForProperty(updatedProperty, documents);
                 }
-                await _propertyService.UpdateProperty(property);
-                return RedirectToAction(nameof(Index), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })
+                
+                await _propertyService.UpdateProperty(updatedProperty);
+                return RedirectToAction(nameof(GetPropertyById), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })
                     .WithSuccess("Success", "Property Updated Sucessfully!");
             }
             return View(property).WithDanger("Error", "Some Errors Occured");
