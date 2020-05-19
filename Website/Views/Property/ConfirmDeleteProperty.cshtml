@@ -47,6 +47,6 @@
         <input type="hidden" asp-for="@Model.Id" />
         <input type="hidden" asp-for="@Model.Portfolio.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id">Back to List</a>
     </form>
 </div>

@@ -15,7 +15,6 @@ namespace Website.Models.DTOs.Portfolios
 
         [Display(Name="# Properties")]
         public int NumberOfProperties { get { return Properties.Count(); } }
-
         public double GrossIncome { get { return Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
         public string Name { get; set; }
         public virtual ApplicationUser Owner { get; set; }

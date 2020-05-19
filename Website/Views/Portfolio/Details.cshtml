@@ -10,46 +10,64 @@
     <h4>Portfolio</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UpdatedDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UpdatedDate)
         </dd>
     </dl>
+
+    
+
+
     <div class="card-deck">
-    @foreach (var property in Model.Properties)
-    {
-        <div class="col-sm-3">
-            <div class="card border-0 mt-2" style="width: 18rem;">
-                @if (property.Images.Any())
-                {
-                    <img class="card-img-top" src="@property.Images.First().FilePath" alt="@property.Images.First().FileName">
-                }
-                else
-                {
-                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCk0PhUNBlZeeI86ZYuxVQQoMc2SVNxbgk8nk6nh9AV78sEzWI&s" alt="Card image cap">
-                }
-                <div class="card-body">
-                    <h5 class="card-title">@string.Join(" ", property.Address.Line1, property.Address.Line2, property.Address.Line3, property.Address.Postcode, property.Address.Town, property.Address.City)</h5>
-                    <p class="card-text">Tenants: @property.Tenants.Count()</p>
-                    <a asp-controller="Property" asp-action="GetPropertyById" asp-route-portfolioId="@Model.Id" asp-route-propertyId="@property.Id" class="btn btn-primary">View</a>
+        @foreach (var property in Model.Properties)
+        {
+
+            <div class="card flex-row flex-wrap">
+                <div class="card-header border-0">
+                    @if (property.Images.Any())
+                    {
+                        <img src="@property.Images.First().FilePath" height="150" alt="@property.Images.First().FileName">
+                    }
+                    else
+                    {
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCk0PhUNBlZeeI86ZYuxVQQoMc2SVNxbgk8nk6nh9AV78sEzWI&s" alt="Card image cap">
+                    }
+                </div>
+                <div class="card-block px-2">
+                    <h4 class="card-title">@string.Join(" ", property.Address.Line1, property.Address.Line2, property.Address.Line3, property.Address.Postcode, property.Address.Town, property.Address.City)</h4>
+
+                    <p class="card-text">Description: @property.Description</p>
+                    <p class="card-text"><a asp-controller="Property" asp-action="GetPropertyById" asp-route-portfolioId="@Model.Id" asp-route-propertyId="@property.Id" asp-fragment="nav-tenant">Tenants <span class="badge">@property.Tenants.Count()</span></a><br></p>
+                    <p class="card-text">Monthly Income: @property.MonthlyRentAmount</p>
+                    <p class="card-text">
+                        <small class="text-muted">Created @property.CreatedDate</small>
+                        <br />
+                        <small class="text-muted">Last updated @property.UpdatedDate</small>
+                    </p>
+                </div>
+                <div class="w-100">
+                    <a asp-controller="Property" asp-action="GetPropertyById" asp-route-portfolioId="@Model.Id" asp-route-propertyId="@property.Id" class="btn btn-primary m-2">View</a>
+                </div>
+                <div class="card-footer w-100 text-muted">
+                   
                 </div>
             </div>
-        </div>
-    }
+        }
     </div>
 
     <a asp-controller="Property" asp-action="CreateProperty" asp-route-portfolioId="@Model.Id" class="btn btn-success"><i class="material-icons md-24">add</i> Add New Property</a>
