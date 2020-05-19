@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Website.Helpers;
 using Website.Interfaces;
 using Website.Models;
+using Website.Models.DTOs.Portfolios;
 
 namespace Website.Controllers
 {
@@ -12,16 +15,20 @@ namespace Website.Controllers
     public class PortfolioController : Controller
     {
         private readonly IPortfolioService _context;
+        private readonly IMapper _mapper;
 
-        public PortfolioController(IPortfolioService context)
+        public PortfolioController(IPortfolioService context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Portfolios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GetMyPortfolios(this.User.GetUserId()));
+            var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());
+            var portfolioList = _mapper.Map<IList<PortfolioDetailsDto>>(portfolios);
+            return View(portfolioList);
         }
 
         // GET: Portfolios/Details/5
@@ -37,8 +44,9 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
+            var portfolioDto = _mapper.Map<PortfolioDetailsDto>(portfolio);
 
-            return View(portfolio);
+            return View(portfolioDto);
         }
 
         // GET: Portfolios/Create

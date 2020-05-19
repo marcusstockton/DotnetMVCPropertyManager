@@ -47,12 +47,13 @@ namespace Website
                 mc.AddProfile(new PropertyProfile());
                 mc.AddProfile(new AddressProfile());
                 mc.AddProfile(new TenantProfile());
+                mc.AddProfile(new PortfolioProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

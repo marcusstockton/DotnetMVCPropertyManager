@@ -1,4 +1,4 @@
-﻿@model Website.Models.Portfolio
+﻿@model Website.Models.DTOs.Portfolios.PortfolioDetailsDto
 
 @{
     ViewData["Title"] = "Details";
@@ -32,16 +32,21 @@
     <div class="card-deck">
     @foreach (var property in Model.Properties)
     {
-        <div class="card" style="width: 18rem;">
-            @if(property.Images.Any()){
-                <img class="card-img-top" src="@property.Images.First().FilePath" alt="@property.Images.First().FileName">
-            }else{
-                <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCk0PhUNBlZeeI86ZYuxVQQoMc2SVNxbgk8nk6nh9AV78sEzWI&s" alt="Card image cap">
-            }
-            <div class="card-body">
-                <h5 class="card-title">@string.Join(" ",property.Address.Line1, property.Address.Line2, property.Address.Line3, property.Address.Postcode, property.Address.Town, property.Address.City)</h5>
-                <p class="card-text">Tenants: @property.Tenants.Count()</p>
-                <a asp-controller="Property" asp-action="GetPropertyById" asp-route-portfolioId="@Model.Id" asp-route-propertyId="@property.Id" class="btn btn-primary">View</a>
+        <div class="col-sm-3">
+            <div class="card border-0 mt-2" style="width: 18rem;">
+                @if (property.Images.Any())
+                {
+                    <img class="card-img-top" src="@property.Images.First().FilePath" alt="@property.Images.First().FileName">
+                }
+                else
+                {
+                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCk0PhUNBlZeeI86ZYuxVQQoMc2SVNxbgk8nk6nh9AV78sEzWI&s" alt="Card image cap">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@string.Join(" ", property.Address.Line1, property.Address.Line2, property.Address.Line3, property.Address.Postcode, property.Address.Town, property.Address.City)</h5>
+                    <p class="card-text">Tenants: @property.Tenants.Count()</p>
+                    <a asp-controller="Property" asp-action="GetPropertyById" asp-route-portfolioId="@Model.Id" asp-route-propertyId="@property.Id" class="btn btn-primary">View</a>
+                </div>
             </div>
         </div>
     }
