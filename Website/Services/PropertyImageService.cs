@@ -30,7 +30,7 @@ namespace Website.Services
                 if (image.Length > 0)
                 {
                     // Upload the file if less than 2 MB
-                    if (image.Length < 2097152)
+                    if (image.Length < 2000000)
                     {
                         var path = Path.Combine(_env.WebRootPath, IMAGEFOLDER, property.Id.ToString());
                         var filename = Path.GetFileName(image.FileName);
@@ -57,7 +57,7 @@ namespace Website.Services
                     }
                     else
                     {
-                        throw new BadImageFormatException("File", "The file is too large.");
+                        throw new BadImageFormatException($"The file is too large at {Math.Round((image.Length / 1024f) / 1024, 2)} MBs.", image.FileName);
                     }
                 }
                 //return (await _context.SaveChangesAsync());

@@ -98,7 +98,16 @@ namespace Website.Controllers
                 var new_property = await _propertyService.CreateProperty(property);
                 if (propertyCreateView.Images != null && propertyCreateView.Images.Any())
                 {
-                    await _propertyImageService.CreateImagesForProperty(new_property, propertyCreateView.Images);
+                    try
+                    {
+                        await _propertyImageService.CreateImagesForProperty(new_property, propertyCreateView.Images);
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("Images", ex.Message);
+                        return View(propertyCreateView);
+                    }
+                    
                 }
                 if (propertyCreateView.Documents != null && propertyCreateView.Documents.Any())
                 {

@@ -14,7 +14,7 @@ namespace Website.Models.DTOs
         [Display(Name = "Line 2")]
         public string Line2 { get; set; }
 
-        [Display(Name = "Line 2")]
+        [Display(Name = "Line 3")]
         public string Line3 { get; set; }
 
         [Display(Name = "Post Code"), Required, DataType(DataType.PostalCode)]
