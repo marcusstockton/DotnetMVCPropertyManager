@@ -17,6 +17,6 @@ namespace Website.Interfaces
 
         Task<Portfolio> UpdatePortfolio(Portfolio portfolio);
 
-        Task<Portfolio> CreatePortfolio(Portfolio portfolio);
+        Task<Portfolio> CreatePortfolio(Portfolio portfolio, string username);
     }
 }

@@ -64,7 +64,8 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.CreatePortfolio(portfolio);
+                var username = User.Identity.Name;
+                await _context.CreatePortfolio(portfolio, username);
                 return RedirectToAction(nameof(Index));
             }
             return View(portfolio);

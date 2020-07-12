@@ -46,6 +46,12 @@ namespace Website.Services
 
         public async Task<bool> DeletePortfolio(Portfolio portfolio)
         {
+            var properties = _context.Properties.Where( x => x.Portfolio.Id == portfolio.Id );
+            foreach (var item in properties)
+            {
+                _context.Properties.Remove( item );
+            }
+
             _context.Portfolios.Remove(portfolio);
             try
             {
@@ -73,8 +79,14 @@ namespace Website.Services
             }
         }
 
-        public async Task<Portfolio> CreatePortfolio(Portfolio portfolio)
+        public async Task<Portfolio> CreatePortfolio(Portfolio portfolio, string username)
         {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            if (user == null)
+            {
+                return null;
+            }
+            portfolio.Owner = user;
             _context.Add(portfolio);
             try
             {

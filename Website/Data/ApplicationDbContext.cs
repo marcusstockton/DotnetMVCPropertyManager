@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Website.Models;
 
 namespace Website.Data
@@ -51,6 +55,53 @@ namespace Website.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
+        }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker
+                        .Entries()
+                        .Where(e => e.Entity is Base && (
+                                e.State == EntityState.Added
+                                || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Modified)
+                {
+                    ((Base)entityEntry.Entity).UpdatedDate = DateTime.Now;
+                }
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((Base)entityEntry.Entity).CreatedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker
+                        .Entries()
+                        .Where(e => e.Entity is Base && (
+                                e.State == EntityState.Added
+                                || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Modified)
+                {
+                    ((Base)entityEntry.Entity).UpdatedDate = DateTime.Now;
+                }
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((Base)entityEntry.Entity).CreatedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }

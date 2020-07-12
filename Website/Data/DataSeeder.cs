@@ -86,6 +86,7 @@ namespace Website.Data
                                     PhoneNumber = "074625174385",
                                     Nationality = "British",
                                     TenancyStartDate = new DateTime(2019, 11, 23),
+                                    TenantImage = "\\TenantImages\\c9e768aa-9b8c-4e92-9b19-55282d1d2d04\\dark-angels-codex-500x750.jpg",
                                     Notes = new List<Note>{ new Note {Description = "An overall good tenant. Keeps himself to himself, and looks after the property" } }
                                 }
                             },

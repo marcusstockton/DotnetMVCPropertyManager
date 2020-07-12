@@ -35,23 +35,31 @@ namespace Website.Services
             {
                 if (file.Document.Length > 0)
                 {
-                    var filePath = Path.Combine(uploads, file.Document.FileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    if (file.Document.Length < 2000000)
                     {
-                        await file.Document.CopyToAsync(fileStream);
-                        counter++;
-                        await _context.AddAsync(new PropertyDocument {
-                            FileName = file.Document.FileName,
-                            FilePath = filePath,
-                            CreatedDate = DateTime.Now,
-                            DocumentType = file.DocumentType,
-                            ExpirationDate = file.ExpiryDate,
-                            FileType = Path.GetExtension(file.Document.FileName),
-                            Property = property
-                        });
+                        var filePath = Path.Combine( uploads, file.Document.FileName );
+                        using (var fileStream = new FileStream( filePath, FileMode.Create ))
+                        {
+                            await file.Document.CopyToAsync( fileStream );
+                            counter++;
+                            await _context.AddAsync( new PropertyDocument
+                            {
+                                FileName = file.Document.FileName,
+                                FilePath = filePath,
+                                CreatedDate = DateTime.Now,
+                                DocumentType = file.DocumentType,
+                                ExpirationDate = file.ExpiryDate,
+                                FileType = Path.GetExtension( file.Document.FileName ),
+                                Property = property
+                            } );
+                        }
                     }
+                    await _context.SaveChangesAsync();
                 }
-                await _context.SaveChangesAsync();
+                else
+                {
+                    throw new Exception( $"The file is too large at {Math.Round( (file.Document.Length / 1024f) / 1024, 2 )} MBs." );
+                }
             }
             return counter;
         }
