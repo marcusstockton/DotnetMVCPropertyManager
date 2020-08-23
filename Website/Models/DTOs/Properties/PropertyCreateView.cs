@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Website.Models.DTOs.Documents;
 
-namespace Website.Models.DTOs
+namespace Website.Models.DTOs.Properties
 {
     [Serializable]
     public class PropertyCreateView
@@ -20,10 +20,10 @@ namespace Website.Models.DTOs
         [Display(Name = "Property Value")]
         public double PropertyValue { get; set; }
 
-        [Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
+        [Display(Name ="# Rooms"),Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
         public int NoOfRooms { get; set; }
 
-        [Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month.")]
+        [Display(Name = "Monthly Rental Amount"), Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month.")]
         public double MonthlyRentAmount { get; set; }
 
         [MaxLength(1000)]

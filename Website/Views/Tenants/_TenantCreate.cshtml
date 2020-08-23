@@ -71,4 +71,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("_TenantCreate called");
+        });
+    </script>
 }

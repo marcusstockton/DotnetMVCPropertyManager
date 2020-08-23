@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SQLitePCL;
 using System;
 using System.IO;
 using System.Linq;
@@ -47,6 +48,18 @@ namespace Website.Services
                 await file.CopyToAsync(stream);
             }
             return shortFilePath;
+        }
+
+        public async Task<Tenant> GetTenantByIdAsync(Guid tenantId)
+        {
+            return await _context.Tenants.FindAsync(tenantId);
+        }
+
+        public async Task<Tenant> UpdateTenant(Tenant obj)
+        {
+            _context.Tenants.Update(obj);
+            await SaveAsync();
+            return obj;
         }
 
         public async Task<int> SaveAsync()

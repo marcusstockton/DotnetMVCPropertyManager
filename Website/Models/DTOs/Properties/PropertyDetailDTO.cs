@@ -30,6 +30,11 @@ namespace Website.Models.DTOs.Properties
         public string Description { get; set; }
         public virtual Portfolio Portfolio { get; set; }
         public Guid AddressId { get; set; }
+        public string AddressString
+        {
+            get { return $"{Address.Line1} {Address.Line2} {Address.Line3} {Address.Postcode} {Address.Town} {Address.City}"; }
+        }
+
         public virtual AddressDTO Address { get; set; }
         public virtual List<TenantDTO> Tenants { get; set; }
         public virtual List<PropertyDocument> Documents { get; set; }

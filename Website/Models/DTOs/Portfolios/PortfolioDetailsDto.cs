@@ -10,11 +10,16 @@ namespace Website.Models.DTOs.Portfolios
     public class PortfolioDetailsDto
     {
         public Guid Id { get; set; }
+
+        [Display(Name="Created Date")]
         public DateTime CreatedDate { get; set; }
+
+        [Display(Name="Updated Date")]
         public DateTime? UpdatedDate { get; set; }
 
         [Display(Name="# Properties")]
         public int NumberOfProperties { get { return Properties.Count(); } }
+        [Display(Name="Gross Income")]
         public double GrossIncome { get { return Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
         public string Name { get; set; }
         public virtual ApplicationUser Owner { get; set; }

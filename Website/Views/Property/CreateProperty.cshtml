@@ -1,4 +1,4 @@
-﻿@model Website.Models.DTOs.PropertyCreateView
+﻿@model Website.Models.DTOs.Properties.PropertyCreateView
 
 @{
     ViewData["Title"] = $"Create a Property in {Model.Portfolio.Name}";
@@ -31,37 +31,39 @@
                 <input asp-for="PropertyValue" class="form-control" />
                 <span asp-validation-for="PropertyValue" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Address.Line1" class="control-label"></label>
-                <input asp-for="Address.Line1" class="form-control" />
-                <span asp-validation-for="Address.Line1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.Line2" class="control-label"></label>
-                <input asp-for="Address.Line2" class="form-control" />
-                <span asp-validation-for="Address.Line2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.Line3" class="control-label"></label>
-                <input asp-for="Address.Line3" class="form-control" />
-                <span asp-validation-for="Address.Line3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.Postcode" class="control-label"></label>
-                <input asp-for="Address.Postcode" class="form-control" />
-                <span asp-validation-for="Address.Postcode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.Town" class="control-label"></label>
-                <input asp-for="Address.Town" class="form-control" />
-                <span asp-validation-for="Address.Town" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.City" class="control-label"></label>
-                <input asp-for="Address.City" class="form-control" />
-                <span asp-validation-for="Address.City" class="text-danger"></span>
-            </div>
-
+            <fieldset class="border p-2">
+                <legend class="w-auto">Address</legend>
+                <div class="form-group">
+                    <label asp-for="Address.Line1" class="control-label"></label>
+                    <input asp-for="Address.Line1" class="form-control" />
+                    <span asp-validation-for="Address.Line1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.Line2" class="control-label"></label>
+                    <input asp-for="Address.Line2" class="form-control" />
+                    <span asp-validation-for="Address.Line2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.Line3" class="control-label"></label>
+                    <input asp-for="Address.Line3" class="form-control" />
+                    <span asp-validation-for="Address.Line3" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.Postcode" class="control-label"></label>
+                    <input asp-for="Address.Postcode" class="form-control" />
+                    <span asp-validation-for="Address.Postcode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.Town" class="control-label"></label>
+                    <input asp-for="Address.Town" class="form-control" />
+                    <span asp-validation-for="Address.Town" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.City" class="control-label"></label>
+                    <input asp-for="Address.City" class="form-control" />
+                    <span asp-validation-for="Address.City" class="text-danger"></span>
+                </div>
+            </fieldset>
             <div class="form-group">
                 <label asp-for="NoOfRooms" class="control-label"></label>
                 <input asp-for="NoOfRooms" class="form-control" />

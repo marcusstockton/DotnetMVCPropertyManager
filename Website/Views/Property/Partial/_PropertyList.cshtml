@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Website.Models.DTOs.Properties.PropertyDetailDTO>
+
+@if (!Model.Any())
+{
+    <p>No properties.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoOfRooms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PropertyValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MonthlyRentAmount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoOfRooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddressString)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PropertyValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthlyRentAmount)
+                    </td>
+                    <td>
+                        <a asp-controller="Property" asp-action="UpdateProperty" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Edit</a> |
+                        <a asp-controller="Property" asp-action="GetPropertyById" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Details</a> |
+                        <a asp-controller="Property" asp-action="ConfirmDeleteProperty" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
