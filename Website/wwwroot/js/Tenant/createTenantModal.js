@@ -14,7 +14,7 @@
             success: function (response) {
                 //Do Something
                 $('#configureBody').html(response);
-                $('#tenantCreateModal').modal('show');
+                $('#tenantCreateModal').modal('hide');
             },
             error: function (ex) {
                 //Do Something to handle error

@@ -47,7 +47,7 @@ namespace Website.Services
                                 FileName = file.Document.FileName,
                                 FilePath = filePath,
                                 CreatedDate = DateTime.Now,
-                                DocumentType = file.DocumentType,
+                                DocumentTypeId = file.DocumentType.Id,
                                 ExpirationDate = file.ExpiryDate,
                                 FileType = Path.GetExtension( file.Document.FileName ),
                                 Property = property

@@ -41,6 +41,10 @@
     <Compile Remove="Data\Migrations\20200319083156_KeyAdded.Designer.cs" />
     <Compile Remove="Migrations\20200518213655_Initial.cs" />
     <Compile Remove="Migrations\20200518213655_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200825200048_PropertyDocsFix.cs" />
+    <Compile Remove="Migrations\20200825200048_PropertyDocsFix.Designer.cs" />
+    <Compile Remove="Migrations\20200825202747_PropertyDocFixes.cs" />
+    <Compile Remove="Migrations\20200825202747_PropertyDocFixes.Designer.cs" />
   </ItemGroup>
 
 
@@ -68,6 +72,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Models\Enums\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\PropertyDocuments\" />
     <Folder Include="wwwroot\PropertyImages\" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Website.Data
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
+
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -53,6 +56,11 @@ namespace Website.Data
                 .HasMany(x => x.Documents)
                 .WithOne(x => x.Property)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<PropertyDocument>()
+                .HasOne(x => x.DocumentType)
+                .WithMany()
+                .HasForeignKey(x => x.DocumentTypeId);
 
             base.OnModelCreating(builder);
         }

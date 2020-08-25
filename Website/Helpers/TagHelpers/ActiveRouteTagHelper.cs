@@ -120,59 +120,6 @@ namespace Website.Helpers.TagHelpers
             }
 
             return true;
-
-            //if (ViewContext.RouteData.Values.ContainsKey("Area"))
-            //{
-            //    var area = ViewContext.RouteData.Values["Area"].ToString();
-            //    var page = ViewContext.RouteData.Values["Page"].ToString();
-            //    if (!string.IsNullOrWhiteSpace(Area) && Area.ToLower() != area.ToLower())
-            //    {
-            //        return false;
-            //    }
-
-            //    if (!string.IsNullOrWhiteSpace(Page) && Page.ToLower() != page.ToLower())
-            //    {
-            //        return false;
-            //    }
-
-            //    foreach (KeyValuePair<string, string> routeValue in RouteValues)
-            //    {
-            //        if (!ViewContext.RouteData.Values.ContainsKey(routeValue.Key) ||
-            //            ViewContext.RouteData.Values[routeValue.Key].ToString() != routeValue.Value)
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    return true;
-            //}
-            //else
-            //{
-            //    string currentController = ViewContext.RouteData.Values["Controller"].ToString();
-            //    string currentAction = ViewContext.RouteData.Values["Action"].ToString();
-
-            //    if (!string.IsNullOrWhiteSpace(Controller) && Controller.ToLower() != currentController.ToLower())
-            //    {
-            //        return false;
-            //    }
-
-            //    if (!string.IsNullOrWhiteSpace(Action) && Action.ToLower() != currentAction.ToLower())
-            //    {
-            //        return false;
-            //    }
-
-            //    foreach (KeyValuePair<string, string> routeValue in RouteValues)
-            //    {
-            //        if (!ViewContext.RouteData.Values.ContainsKey(routeValue.Key) ||
-            //            ViewContext.RouteData.Values[routeValue.Key].ToString() != routeValue.Value)
-            //        {
-            //            return false;
-            //        }
-            //    }
-
-            //    return true;
-            //}
-
         }
 
         private void MakeActive(TagHelperOutput output)
