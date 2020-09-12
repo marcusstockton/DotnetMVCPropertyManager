@@ -59,6 +59,10 @@ namespace Website.Data
                     {
                         Description = "Tenancy Agreement",
                         CreatedDate = DateTime.Now,
+                    }, new DocumentType
+                    {
+                        Description = "Deposit Protection Scheme",
+                        CreatedDate = DateTime.Now,
                     });
                     await _context.SaveChangesAsync();
                 }
@@ -103,7 +107,7 @@ namespace Website.Data
                             }
                         }
                     }
-                    }) ;
+                    });
                     await _context.SaveChangesAsync();
                 }
             }

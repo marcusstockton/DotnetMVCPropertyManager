@@ -11,6 +11,7 @@ namespace Website.Models
 
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+
         public string JobTitle { get; set; }
         public string Nationality { get; set; }
 
@@ -19,6 +20,7 @@ namespace Website.Models
 
         [DataType(DataType.Date)]
         public DateTime? TenancyEndDate { get; set; }
+
         public virtual Property Property { get; set; }
         public string TenantImage { get; set; }
         public virtual List<Note> Notes { get; set; }

@@ -4,7 +4,7 @@
     ViewData["Title"] = $"Create a Property in {Model.Portfolio.Name}";
 }
 
-    <h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>Property</h4>
 <hr />
@@ -118,7 +118,7 @@
                 type: "POST",
                 url: "/Property/AddPropertyDocument",
                 success: function(partialView){
-                    console.log("Partial View: " + partialView),
+                    //console.log("Partial View: " + partialView),
                     $('#propertyDocumentsContainer').append(partialView)
                 }, error: function(err){
                     console.error(err.error);

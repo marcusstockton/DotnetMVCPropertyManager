@@ -8,9 +8,13 @@ namespace Website.Interfaces
     public interface ITenantService
     {
         Task<Tenant> CreateTenant(Tenant tenant);
+
         Task<string> CreateTenantImage(Guid tenantId, IFormFile file);
+
         Task<Tenant> GetTenantByIdAsync(Guid tenantId);
+
         Task<Tenant> UpdateTenant(Tenant obj);
+
         Task<int> SaveAsync();
     }
 }

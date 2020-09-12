@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SQLitePCL;
 using System;
 using System.IO;
 using System.Linq;
@@ -25,6 +24,7 @@ namespace Website.Services
             _env = env;
             _logger = logger;
         }
+
         public async Task<Tenant> CreateTenant(Tenant tenant)
         {
             tenant.CreatedDate = DateTime.Now;

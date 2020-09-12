@@ -1,5 +1,5 @@
 @model Website.Models.DTOs.Documents.DocumentUploader
-@if(Model.Document != null)
+@if (Model.Document != null)
 {
     // Don't pass back the existing item, as we are appending the inputs.
 }
@@ -18,7 +18,6 @@ else
                     <label asp-for="DocumentType"></label>
                     <select asp-for="DocumentType.Id" asp-items="@ViewBag.DocumentTypes" class="form-control"></select>
                     <span asp-validation-for="DocumentType" class="text-danger"></span>
-
                 </div>
             </div>
             <div class="col-md-6">
@@ -32,5 +31,11 @@ else
         </div>
     </div>
 }
-
-
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            // TODO: Get the DocumentType selected, check if it has expiry, hide or show expiry date
+            console.log("ready!");
+        });
+    </script>
+}

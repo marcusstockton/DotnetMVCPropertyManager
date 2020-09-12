@@ -9,17 +9,17 @@
     <div class="col-md-4 offset-md-3" style="padding-top:10%;">
         <section>
             <form id="account" method="post">
-                <h4>@ViewData[ "Title" ]</h4>
+                <h4>@ViewData["Title"]</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
+                    <input asp-for="Input.Email" class="form-control" value="beckystockton84@hotmail.co.uk"/>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                    <input asp-for="Input.Password" class="form-control" value="P@55w0rd1" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">

@@ -34,6 +34,7 @@ namespace Website.Services
                     {
                         var path = Path.Combine(_env.WebRootPath, IMAGEFOLDER, property.Id.ToString());
                         var filename = Path.GetFileName(image.FileName);
+                        filename = GetSafeFileName(filename);
                         var filePath = Path.Combine(path, filename);
                         var shortFilePath = filePath.Split(_env.WebRootPath).Last();
                         if (!Directory.Exists(path))
@@ -63,6 +64,22 @@ namespace Website.Services
                 //return (await _context.SaveChangesAsync());
             }
             return 1;
+        }
+
+        public async Task<string> FileToBase64String(string fileLocation)
+        {
+            if (string.IsNullOrEmpty(fileLocation))
+            {
+                return string.Empty;
+            }
+            var bytes = await File.ReadAllBytesAsync(Path.Combine(_env.ContentRootPath, fileLocation));
+            return Convert.ToBase64String(bytes);
+        }
+
+        static string GetSafeFileName(string name, char replace = '_')
+        {
+            char[] invalids = Path.GetInvalidFileNameChars();
+            return new string(name.Select(c => invalids.Contains(c) ? replace : c).ToArray());
         }
     }
 }

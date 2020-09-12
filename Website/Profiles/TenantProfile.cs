@@ -10,7 +10,6 @@ namespace Website.Profiles
         {
             CreateMap<Tenant, TenantDTO>().ReverseMap();
             CreateMap<Tenant, TenantCreateDTO>().ReverseMap();
-
         }
     }
 }

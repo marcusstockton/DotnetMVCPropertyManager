@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Website.Models;
-using Website.Models.DTOs;
 using Website.Models.DTOs.Properties;
 
 namespace Website.Profiles
@@ -17,7 +16,6 @@ namespace Website.Profiles
 
             CreateMap<Property, PropertyDetailDTO>().ReverseMap()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
-               
         }
     }
 }

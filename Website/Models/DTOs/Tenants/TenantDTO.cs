@@ -12,6 +12,7 @@ namespace Website.Models.DTOs.Tenants
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -21,6 +22,7 @@ namespace Website.Models.DTOs.Tenants
 
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
+
         public string Nationality { get; set; }
 
         [Display(Name = "Date Tenancy Started")]
@@ -30,10 +32,12 @@ namespace Website.Models.DTOs.Tenants
         [Display(Name = "Date Tenancy Ended")]
         [DataType(DataType.Date)]
         public DateTime? TenancyEndDate { get; set; }
+
         public virtual Property Property { get; set; }
 
         [Display(Name = "Tenant Profile")]
         public string TenantImage { get; set; }
+
         public virtual List<Note> Notes { get; set; }
     }
 }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
-using Website.Models.DTOs.Properties;
 
 namespace Website.Services
 {
@@ -24,7 +23,7 @@ namespace Website.Services
 
         public async Task<List<Property>> GetPropertiesForPortfolio(Guid portfolioId)
         {
-            return await _context.Properties.Include(x=>x.Address)
+            return await _context.Properties.Include(x => x.Address)
                 .Where(x => x.Portfolio.Id == portfolioId)
                 .AsNoTracking()
                 .ToListAsync();
@@ -56,7 +55,6 @@ namespace Website.Services
             _context.Properties.Update(property);
             await _context.SaveChangesAsync();
             return property;
-            
         }
 
         public async Task DeleteProperty(Guid propertyId)

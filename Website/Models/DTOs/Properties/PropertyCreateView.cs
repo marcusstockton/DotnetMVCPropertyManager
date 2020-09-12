@@ -20,7 +20,7 @@ namespace Website.Models.DTOs.Properties
         [Display(Name = "Property Value")]
         public double PropertyValue { get; set; }
 
-        [Display(Name ="# Rooms"),Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
+        [Display(Name = "# Rooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
         public int NoOfRooms { get; set; }
 
         [Display(Name = "Monthly Rental Amount"), Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month.")]

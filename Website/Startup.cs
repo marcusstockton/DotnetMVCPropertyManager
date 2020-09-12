@@ -9,12 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using System;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
-using Website.Services;
 using Website.Profiles;
-using System;
+using Website.Services;
 
 namespace Website
 {
@@ -44,7 +44,6 @@ namespace Website
                     .UseLazyLoadingProxies()
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             }
-
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
            {

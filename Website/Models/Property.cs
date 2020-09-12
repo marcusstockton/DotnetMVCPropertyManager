@@ -6,20 +6,22 @@ namespace Website.Models
 {
     public class Property : Base
     {
-
         public Property()
         {
             Documents = new List<PropertyDocument> { };
         }
+
         public DateTime PurchaseDate { get; set; }
 
         [Range(1, 100)]
         public int NoOfRooms { get; set; }
+
         public double MonthlyRentAmount { get; set; }
         public string Description { get; set; }
 
         [DataType(DataType.Currency)]
         public double PropertyValue { get; set; }
+
         public virtual Portfolio Portfolio { get; set; }
         public Guid AddressId { get; set; }
         public virtual Address Address { get; set; }

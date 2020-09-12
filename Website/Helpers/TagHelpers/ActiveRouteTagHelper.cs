@@ -39,7 +39,7 @@ namespace Website.Helpers.TagHelpers
             get
             {
                 if (this._routeValues == null)
-                    this._routeValues = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
+                    this._routeValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 return this._routeValues;
             }
             set

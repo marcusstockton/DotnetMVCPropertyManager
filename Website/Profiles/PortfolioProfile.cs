@@ -9,7 +9,7 @@ namespace Website.Profiles
         public PortfolioProfile()
         {
             CreateMap<Portfolio, PortfolioDetailsDto>()
-                .ForMember(x=>x.NumberOfProperties, opt=>opt.Ignore())
+                .ForMember(x => x.NumberOfProperties, opt => opt.Ignore())
                 .ForMember(x => x.GrossIncome, opt => opt.Ignore())
                 .ReverseMap();
         }

@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Website.Data;
 using Website.Models;
+using Website.Models.DTOs.DocumentTypes;
 
 namespace Website.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class DocumentTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DocumentTypesController(ApplicationDbContext context)
+        public DocumentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: DocumentTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DocumentTypes.ToListAsync());
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return View(await _context.DocumentTypes.Where(x=>x.Owner == user || x.Owner == null).ToListAsync());
         }
 
         // GET: DocumentTypes/Details/5
@@ -52,14 +55,21 @@ namespace Website.Controllers
         }
 
         // POST: DocumentTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,Id,CreatedDate,UpdatedDate")] DocumentType documentType)
+        public async Task<IActionResult> Create([Bind("Description,Id,CreatedDate,UpdatedDate,Expires,ExpriyDate,OwnerId,Owner")] DocumentTypeCreateDto documentType)
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("Owner"))
+                {
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    documentType.Owner = user;
+                }
+                // Check role...if they are an owner....its custom document type..
+
                 documentType.Id = Guid.NewGuid();
                 _context.Add(documentType);
                 await _context.SaveChangesAsync();
@@ -85,11 +95,11 @@ namespace Website.Controllers
         }
 
         // POST: DocumentTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,CreatedDate,UpdatedDate")] DocumentType documentType)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,CreatedDate,UpdatedDate,Expires,Owner,OwnerId")] DocumentType documentType)
         {
             if (id != documentType.Id)
             {

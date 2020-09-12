@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -25,42 +24,47 @@ namespace Website.Data
         public DbSet<Note> Notes { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
 
-        
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Portfolio>().HasKey(x => x.Id);
-            builder.Entity<Property>().HasKey(x => x.Id);
-            builder.Entity<Address>().HasKey(x => x.Id);
-            builder.Entity<PropertyDocument>().HasKey(x => x.Id);
-            builder.Entity<PropertyImage>().HasKey(x => x.Id);
-            builder.Entity<Tenant>().HasKey(x => x.Id);
-            builder.Entity<Note>().HasKey(x => x.Id);
-            builder.Entity<DocumentType>().HasKey(x => x.Id);
-
-            builder.Entity<Property>()
-                .HasOne(b => b.Address)
+            builder.Entity<Portfolio>(b =>
+            {
+                b.HasKey(x => x.Id);
+            });
+            builder.Entity<Property>(b =>
+            {
+                b.HasKey(x => x.Id);
+                b.HasOne(b => b.Address)
                 .WithOne(i => i.Property)
                 .HasForeignKey<Property>(b => b.AddressId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //builder.Entity<Property>().Property(x => x.AddressId).ValueGeneratedOnAdd();
-
-            builder.Entity<Property>()
-                .HasMany(x => x.Images)
+                b.HasMany(x => x.Images)
                 .WithOne(x => x.Property)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Property>()
-                .HasMany(x => x.Documents)
+                b.HasMany(x => x.Documents)
                 .WithOne(x => x.Property)
                 .OnDelete(DeleteBehavior.Cascade);
+            });
 
-            builder.Entity<PropertyDocument>()
-                .HasOne(x => x.DocumentType)
+            builder.Entity<Address>().HasKey(x => x.Id);
+            builder.Entity<PropertyDocument>().HasKey(x => x.Id);
+            builder.Entity<PropertyImage>().HasKey(x => x.Id);
+            builder.Entity<Tenant>().HasKey(x => x.Id);
+            builder.Entity<Note>().HasKey(x => x.Id);
+            builder.Entity<DocumentType>(b=> {
+                b.HasKey(x => x.Id);
+                b.HasOne(x => x.Owner)
+                .WithMany()
+                .HasForeignKey(x => x.OwnerId);
+            });
+
+            builder.Entity<PropertyDocument>(b => {
+                b.HasOne(x => x.DocumentType)
                 .WithMany()
                 .HasForeignKey(x => x.DocumentTypeId);
+            });
 
             base.OnModelCreating(builder);
         }

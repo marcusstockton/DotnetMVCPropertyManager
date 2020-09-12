@@ -46,10 +46,10 @@ namespace Website.Services
 
         public async Task<bool> DeletePortfolio(Portfolio portfolio)
         {
-            var properties = _context.Properties.Where( x => x.Portfolio.Id == portfolio.Id );
+            var properties = _context.Properties.Where(x => x.Portfolio.Id == portfolio.Id);
             foreach (var item in properties)
             {
-                _context.Properties.Remove( item );
+                _context.Properties.Remove(item);
             }
 
             _context.Portfolios.Remove(portfolio);

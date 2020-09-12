@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Website.Data;
-using Website.Extensions.Alerts;
+using System;
+using System.Threading.Tasks;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Tenants;
@@ -16,9 +12,9 @@ namespace Website.Controllers
     {
         //private readonly ApplicationDbContext _context;
         private readonly ITenantService _tenantService;
+
         private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
-
 
         public TenantsController(ITenantService tenantService, IPropertyService propertyService, IMapper mapper)
         {
@@ -57,11 +53,11 @@ namespace Website.Controllers
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
             var tenant = new Tenant { Property = property };
             var tenantDto = _mapper.Map<TenantCreateDTO>(tenant);
-            return PartialView("_TenantCreate",tenantDto);
+            return PartialView("_TenantCreate", tenantDto);
         }
 
         // POST: Tenants/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -77,7 +73,7 @@ namespace Website.Controllers
                 {
                     o.TenantImage = await _tenantService.CreateTenantImage(o.Id, tenant.TenantImage);
                 }
-                
+
                 await _tenantService.SaveAsync();
                 return Ok(o);
             }
@@ -101,7 +97,7 @@ namespace Website.Controllers
         }
 
         // POST: Tenants/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -42,7 +42,6 @@
             success: function (result) {
                 console.log(result);
                 $('#tenantCreateModal').modal('hide');
-
             }, error: function (err) {
                 console.error(err.error);
             }

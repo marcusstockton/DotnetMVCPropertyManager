@@ -1,5 +1,5 @@
-﻿@model Website.Models.DocumentType
-
+﻿@model Website.Models.DTOs.DocumentTypes.DocumentTypeCreateDto;
+    
 @{
     ViewData["Title"] = "Create";
 }
@@ -12,20 +12,26 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Owner" />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                <label asp-for="Expires" class="control-label">
+                    Expires?
+                    <input asp-for="Expires" type="checkbox" />
+                    <i title="Whether Documents of this type have an expiry i.e every year" class="material-icons" style="font-size: 15px">help</i>
+                </label>
+                <span asp-validation-for="Expires" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdatedDate" class="control-label"></label>
-                <input asp-for="UpdatedDate" class="form-control" />
-                <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+                <label asp-for="ExpriyDate" class="control-label">
+                    Expires?
+                    <input asp-for="ExpriyDate" type="date" />
+                </label>
+                <span asp-validation-for="ExpriyDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -40,4 +46,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/DocumentTypes/DocumentType.js"></script>
 }
