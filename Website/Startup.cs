@@ -59,6 +59,7 @@ namespace Website
                 mc.AddProfile(new AddressProfile());
                 mc.AddProfile(new TenantProfile());
                 mc.AddProfile(new PortfolioProfile());
+                mc.AddProfile(new DocumentTypeProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

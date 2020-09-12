@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +17,13 @@ namespace Website.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public DocumentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public DocumentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         // GET: DocumentTypes
@@ -59,7 +62,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,Id,CreatedDate,UpdatedDate,Expires,ExpriyDate,OwnerId,Owner")] DocumentTypeCreateDto documentType)
+        public async Task<IActionResult> Create([Bind("Description,Expires,ExpriyDate")] DocumentTypeCreateDto documentType)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +74,8 @@ namespace Website.Controllers
                 // Check role...if they are an owner....its custom document type..
 
                 documentType.Id = Guid.NewGuid();
-                _context.Add(documentType);
+                var mappedData = _mapper.Map<DocumentType>(documentType);
+                _context.Add(mappedData);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
