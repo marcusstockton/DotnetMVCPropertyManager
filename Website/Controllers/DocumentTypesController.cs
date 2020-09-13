@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Data;
@@ -30,7 +31,10 @@ namespace Website.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(await _context.DocumentTypes.Where(x=>x.Owner == user || x.Owner == null).ToListAsync());
+            var docTypes = _context.DocumentTypes.Where(x => x.Owner == user || x.Owner == null);
+            var results = _mapper.Map<List<DocumentTypeDetailDto>>(docTypes);
+
+            return View(results);
         }
 
         // GET: DocumentTypes/Details/5

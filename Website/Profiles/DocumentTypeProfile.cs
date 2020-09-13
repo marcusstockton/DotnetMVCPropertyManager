@@ -13,6 +13,7 @@ namespace Website.Profiles
         public DocumentTypeProfile()
         {
             CreateMap<DocumentType, DocumentTypeCreateDto>().ReverseMap();
+            CreateMap<DocumentType, DocumentTypeDetailDto>().ReverseMap();
         }
     }
 }
