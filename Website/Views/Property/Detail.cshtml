@@ -179,7 +179,7 @@
             </dl>
         </div>
         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
-            @await Html.PartialAsync("/Views/Property/Partial/_PropertyDocumentList.cshtml", Model.Documents)
+            @await Html.PartialAsync("/Views/Property/Partial/_PropertyDocumentList.cshtml", Model.Documents, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
         </div>
         <div class="tab-pane fade" id="nav-tenant" role="tabpanel" aria-labelledby="nav-tenant-tab">
             @await Html.PartialAsync("/Views/Tenants/_TenantDetail.cshtml", Model.Tenants)
@@ -211,7 +211,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="UpdateProperty" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-primary">Edit</a>
-    <a asp-action="ConfirmDeleteProperty" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Delete</a>
+    <a asp-action="Update" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Delete" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Delete</a>
     <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light">Back to List</a>
 </div>

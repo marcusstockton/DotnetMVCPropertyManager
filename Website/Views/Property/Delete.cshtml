@@ -1,7 +1,7 @@
 ﻿@model Website.Models.Property
 
 @{
-    ViewData["Title"] = "DeleteProperty";
+    ViewData["Title"] = "Delete Property";
 }
 
 <h1>DeleteProperty</h1>
@@ -43,7 +43,7 @@
         </dd>
     </dl>
 
-    <form asp-action="DeleteProperty" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id">
+    <form asp-action="Delete" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id">
         <input type="hidden" asp-for="@Model.Id" />
         <input type="hidden" asp-for="@Model.Portfolio.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

@@ -1,6 +1,6 @@
 ﻿@model List<Website.Models.DTOs.Tenants.TenantDTO>
 
-<div class="container">
+<div class="container" style="padding-left:15px;">
     @if (!Model.Any())
     {
         <p>No tenants at this property yet.</p>
@@ -9,76 +9,65 @@
     {
         @foreach (var tenant in Model.OrderByDescending(x => x.TenancyStartDate))
         {
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.FirstName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.FirstName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.LastName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.LastName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.PhoneNumber)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.PhoneNumber)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.JobTitle)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.JobTitle)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.Nationality)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.Nationality)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.TenancyStartDate)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.TenancyStartDate)
-                </dd>
-                @if (tenant.TenancyEndDate > DateTime.MinValue)
-                {
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => tenant.TenancyEndDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => tenant.TenancyEndDate)
-                    </dd>
-                }
-
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.TenantImage)
-                </dt>
-                <dd class="col-sm-10">
-                    <img src="@tenant.TenantImage" class="img-thumbnail" style="height:250px;" alt="@tenant.FirstName @tenant.LastName">
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => tenant.CreatedDate)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => tenant.CreatedDate)
-                </dd>
-                @if (tenant.UpdatedDate > DateTime.MinValue)
-                {
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => tenant.UpdatedDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => tenant.UpdatedDate)
-                    </dd>
-                }
-            </dl>
-
+            <div class="card" style="width: 22rem;">
+                <img class="card-img-top" src="@tenant.TenantImage" style="max-width:340px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
+                <div class="card-body">
+                    <h3 class="card-title">@tenant.FirstName @tenant.LastName</h3>
+                    <p class="card-text">
+                        <dl class="row">
+                            <dt class="col-sm-6 small text-muted">
+                                @Html.DisplayNameFor(model => tenant.PhoneNumber)
+                            </dt>
+                            <dd class="col-sm-6">
+                                @Html.DisplayFor(model => tenant.PhoneNumber)
+                            </dd>
+                            <dt class="col-sm-6 small text-muted">
+                                @Html.DisplayNameFor(model => tenant.JobTitle)
+                            </dt>
+                            <dd class="col-sm-6">
+                                @Html.DisplayFor(model => tenant.JobTitle)
+                            </dd>
+                            <dt class="col-sm-6 small text-muted">
+                                @Html.DisplayNameFor(model => tenant.Nationality)
+                            </dt>
+                            <dd class="col-sm-6">
+                                @Html.DisplayFor(model => tenant.Nationality)
+                            </dd>
+                            <dt class="col-sm-6 small text-muted">
+                                @Html.DisplayNameFor(model => tenant.TenancyStartDate)
+                            </dt>
+                            <dd class="col-sm-6">
+                                @Html.DisplayFor(model => tenant.TenancyStartDate)
+                            </dd>
+                            @if (tenant.TenancyEndDate > DateTime.MinValue)
+                            {
+                                <dt class="col-sm-6 small text-muted">
+                                    @Html.DisplayNameFor(model => tenant.TenancyEndDate)
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Html.DisplayFor(model => tenant.TenancyEndDate)
+                                </dd>
+                            }
+                            <dt class="col-sm-6 small text-muted">
+                                @Html.DisplayNameFor(model => tenant.CreatedDate)
+                            </dt>
+                            <dd class="col-sm-6">
+                                @Html.DisplayFor(model => tenant.CreatedDate)
+                            </dd>
+                            @if (tenant.UpdatedDate > DateTime.MinValue)
+                            {
+                                <dt class="col-sm-6 small text-muted">
+                                    @Html.DisplayNameFor(model => tenant.UpdatedDate)
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Html.DisplayFor(model => tenant.UpdatedDate)
+                                </dd>
+                            }
+                        </dl>
+                    </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
         }
     }
 </div>

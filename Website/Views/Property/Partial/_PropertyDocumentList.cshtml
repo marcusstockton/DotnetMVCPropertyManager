@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Website.Models.PropertyDocument>
 
+    @Html.ActionLink("Add Document", "Create", "PropertyDocuments", new { propertyId = ViewData["PropertyId"] })
+
 @if (!Model.Any())
 {
     <p>No Documents Uploaded for this property.</p>
@@ -11,9 +13,6 @@ else
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.FileName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FilePath)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FileType)
@@ -38,9 +37,6 @@ else
                         @Html.DisplayFor(modelItem => item.FileName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FilePath)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.FileType)
                     </td>
                     <td>
@@ -53,9 +49,9 @@ else
                         @Html.DisplayFor(modelItem => item.UpdatedDate)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Edit" asp-controller="PropertyDocuments" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-controller="PropertyDocuments" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-controller="PropertyDocuments" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

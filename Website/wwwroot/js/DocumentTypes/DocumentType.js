@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    $("#ExpriyDate").parent().hide();
+    $("#ExpiryDate").parent().hide();
 
     $("#Expires").on("change", function () {
         if (this.checked) {
-            $("#ExpriyDate").parent().show();
+            $("#ExpiryDate").parent().show();
         } else {
-            $("#ExpriyDate").parent().hide();
+            $("#ExpiryDate").parent().hide();
         }
     });
 });

@@ -1,0 +1,1 @@
+﻿Need to implement an ImageType object and update PropertyImages to use this instead of Document type.

@@ -16,8 +16,7 @@ namespace Website.Models.DTOs.Tenants
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone Number"), DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Job Title")]
@@ -25,12 +24,10 @@ namespace Website.Models.DTOs.Tenants
 
         public string Nationality { get; set; }
 
-        [Display(Name = "Date Tenancy Started")]
-        [DataType(DataType.Date)]
+        [Display(Name = "Date Tenancy Started"), DataType(DataType.Date)]
         public DateTime TenancyStartDate { get; set; }
 
-        [Display(Name = "Date Tenancy Ended")]
-        [DataType(DataType.Date)]
+        [Display(Name = "Date Tenancy Ended"), DataType(DataType.Date)]
         public DateTime? TenancyEndDate { get; set; }
 
         public virtual Property Property { get; set; }

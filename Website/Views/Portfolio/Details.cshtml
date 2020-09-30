@@ -32,7 +32,7 @@
 
     @{await Html.RenderPartialAsync("../Property/Partial/_PropertyList", Model.Properties);}
 
-    <a asp-controller="Property" asp-action="CreateProperty" asp-route-portfolioId="@Model.Id" class="btn btn-success"><i class="material-icons md-24">add</i> Add New Property</a>
+    <a asp-controller="Property" asp-action="Create" asp-route-portfolioId="@Model.Id" class="btn btn-success d-inline-flex align-items-center"><i class="material-icons md-24">add</i> Add New Property</a>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpriyDate)
+                @Html.DisplayNameFor(model => model.ExpiryDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedDate)
@@ -34,9 +34,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @if (item.ExpriyDate > DateTime.MinValue)
+                @if (item.ExpiryDate > DateTime.MinValue)
                 {
-                    @Html.DisplayFor(modelItem => item.ExpriyDate)
+                    @Html.DisplayFor(modelItem => item.ExpiryDate)
                 }
                 else
                 {

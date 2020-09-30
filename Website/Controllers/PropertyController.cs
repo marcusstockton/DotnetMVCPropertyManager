@@ -42,7 +42,7 @@ namespace Website.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPropertyById(Guid portfolioId, Guid propertyId)
+        public async Task<IActionResult> Detail(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
             var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
@@ -50,7 +50,7 @@ namespace Website.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateProperty(Guid portfolioId, Guid propertyId)
+        public async Task<IActionResult> Edit(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
             var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
@@ -59,7 +59,7 @@ namespace Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProperty(PropertyDetailDTO property, List<IFormFile> images, List<DocumentUploader> documents)
+        public async Task<IActionResult> Edit(PropertyDetailDTO property, List<IFormFile> images, List<DocumentUploader> documents)
         {
             if (ModelState.IsValid)
             {
@@ -75,14 +75,14 @@ namespace Website.Controllers
                 }
 
                 await _propertyService.UpdateProperty(updatedProperty);
-                return RedirectToAction(nameof(GetPropertyById), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })
+                return RedirectToAction(nameof(Detail), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })
                     .WithSuccess("Success", "Property Updated Sucessfully!");
             }
             return View(property).WithDanger("Error", "Some Errors Occured");
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateProperty(Guid portfolioId)
+        public async Task<IActionResult> Create(Guid portfolioId)
         {
             var portfolio = await _portfolioService.GetPortfolioById(portfolioId);
             var property = new PropertyCreateView { Portfolio = portfolio };
@@ -92,7 +92,7 @@ namespace Website.Controllers
         [HttpPost]
         [RequestSizeLimit(1_074_790_400)]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProperty(PropertyCreateView propertyCreateView)
+        public async Task<IActionResult> Create(PropertyCreateView propertyCreateView)
         {
             if (ModelState.IsValid)
             {
@@ -137,7 +137,7 @@ namespace Website.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmDeleteProperty(Guid portfolioId, Guid propertyId)
+        public async Task<IActionResult> Delete(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
             return View(property);

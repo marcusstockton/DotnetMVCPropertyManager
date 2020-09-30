@@ -21,10 +21,10 @@ namespace Website.Models.DTOs.Properties
         [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double PropertyValue { get; set; }
 
-        [Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
+        [Display(Name = "# Rooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
         public int NoOfRooms { get; set; }
 
-        [Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month.")]
+        [Display(Name = "Monthly Rent"), Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month.")]
         public double MonthlyRentAmount { get; set; }
 
         [MaxLength(1000), Description("Describe the property")]
@@ -41,7 +41,7 @@ namespace Website.Models.DTOs.Properties
         public virtual AddressDTO Address { get; set; }
         public virtual List<TenantDTO> Tenants { get; set; }
         public virtual List<PropertyDocument> Documents { get; set; }
-        public virtual List<PropertyImage> Images { get; set; }
+        public virtual List<Models.PropertyImage> Images { get; set; }
 
         [Display(Name = "Date Created"), DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }

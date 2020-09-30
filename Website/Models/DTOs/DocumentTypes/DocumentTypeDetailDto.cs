@@ -13,7 +13,7 @@ namespace Website.Models.DTOs.DocumentTypes
         public string Description { get; set; }
         public bool Expires { get; set; }
         [DataType(DataType.Date), Display(Name ="Expiry Date")]
-        public DateTime? ExpriyDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
         public string OwnerId { get; set; }
         public virtual ApplicationUser Owner { get; set; }
     }
