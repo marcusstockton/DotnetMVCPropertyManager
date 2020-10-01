@@ -50,6 +50,18 @@ namespace Website.Services
             return shortFilePath;
         }
 
+        public async Task<bool> DeleteTenantImage(string fileLocation)
+        {
+            var path = Path.Combine(_env.WebRootPath, fileLocation.TrimStart(Path.DirectorySeparatorChar));
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                return true;
+            }
+            return false;
+        }
+
+
         public async Task<Tenant> GetTenantByIdAsync(Guid tenantId)
         {
             return await _context.Tenants.FindAsync(tenantId);
@@ -58,8 +70,14 @@ namespace Website.Services
         public async Task<Tenant> UpdateTenant(Tenant obj)
         {
             _context.Tenants.Update(obj);
+
             await SaveAsync();
-            return obj;
+
+            return await _context.Tenants
+                .AsNoTracking()
+                .Include(x => x.Property)
+                .ThenInclude(x => x.Portfolio)
+                .SingleOrDefaultAsync(t => t.Id == obj.Id);
         }
 
         public async Task<int> SaveAsync()

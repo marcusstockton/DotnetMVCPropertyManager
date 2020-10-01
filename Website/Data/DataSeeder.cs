@@ -90,8 +90,23 @@ namespace Website.Data
                                     PhoneNumber = "074625174385",
                                     Nationality = "British",
                                     TenancyStartDate = new DateTime(2019, 11, 23),
-                                    TenantImage = "\\TenantImages\\c9e768aa-9b8c-4e92-9b19-55282d1d2d04\\dark-angels-codex-500x750.jpg",
+                                    TenantImage = @"\TenantImages\c9e768aa-9b8c-4e92-9b19-55282d1d2d04\dark-angels-codex-500x750.jpg",
                                     Notes = new List<Note>{ new Note {Description = "An overall good tenant. Keeps himself to himself, and looks after the property" } }
+                                },
+                                new Tenant
+                                {
+                                    FirstName = "Tony",
+                                    LastName = "Montana",
+                                    JobTitle = "Professional Cleaner",
+                                    Nationality = "Cuban",
+                                    PhoneNumber = "0192838456",
+                                    TenancyStartDate = new DateTime(2018, 7, 17),
+                                    TenancyEndDate = new DateTime(2019, 11, 12),
+                                    TenantImage = @"\TenantImages\f421ff8c-019c-458c-719b-08d8493633d7\download.jpg",
+                                    Notes = new List<Note>
+                                    {
+                                        new Note{Description = "Definitley not a professional cleaner."}
+                                    }
                                 }
                             },
                             Address = new Address

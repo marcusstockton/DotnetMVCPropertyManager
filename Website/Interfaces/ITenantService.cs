@@ -10,7 +10,7 @@ namespace Website.Interfaces
         Task<Tenant> CreateTenant(Tenant tenant);
 
         Task<string> CreateTenantImage(Guid tenantId, IFormFile file);
-
+        Task<bool> DeleteTenantImage(string fileLocation);
         Task<Tenant> GetTenantByIdAsync(Guid tenantId);
 
         Task<Tenant> UpdateTenant(Tenant obj);

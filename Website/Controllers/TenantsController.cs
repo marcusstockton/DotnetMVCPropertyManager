@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -93,7 +94,8 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
-            return View(tenant);
+            var viewData = _mapper.Map<TenantDTO>(tenant);
+            return View(viewData);
         }
 
         // POST: Tenants/Edit/5
@@ -101,7 +103,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate")] Tenant tenant)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate")] Tenant tenant, IFormFile profilePic)
         {
             if (id != tenant.Id)
             {
@@ -110,9 +112,17 @@ namespace Website.Controllers
 
             if (ModelState.IsValid)
             {
-                _tenantService.UpdateTenant(tenant);
-                return RedirectToAction(nameof(Index));
-            }
+                if(profilePic != null)
+                {
+                    // Uploaded a new image, delete the existing...
+                    if(await _tenantService.DeleteTenantImage(tenant.TenantImage))
+                    {
+                        tenant.TenantImage = await _tenantService.CreateTenantImage(tenant.Id, profilePic);
+                    }
+                }
+                var result = await _tenantService.UpdateTenant(tenant);
+                return RedirectToAction("Detail", "Property",new { portfolioId = result.Property.Portfolio.Id, propertyId = result.Property.Id } + "#nav-tenant/");
+            } 
             return View(tenant);
         }
 

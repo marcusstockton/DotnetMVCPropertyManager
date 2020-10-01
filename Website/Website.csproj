@@ -45,6 +45,8 @@
     <Compile Remove="Migrations\20200825200048_PropertyDocsFix.Designer.cs" />
     <Compile Remove="Migrations\20200825202747_PropertyDocFixes.cs" />
     <Compile Remove="Migrations\20200825202747_PropertyDocFixes.Designer.cs" />
+    <Compile Remove="Migrations\20200930194732_SomethingTenantRelated.cs" />
+    <Compile Remove="Migrations\20200930194732_SomethingTenantRelated.Designer.cs" />
   </ItemGroup>
 
 

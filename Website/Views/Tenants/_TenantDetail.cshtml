@@ -65,7 +65,12 @@
                             }
                         </dl>
                     </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="btn-group" role="group">
+                        <a type="button" class="btn btn-info" asp-action="Edit" asp-controller="Tenants" asp-route-id="@tenant.Id">Edit</a>
+                        <button type="button" class="btn btn-primary">Details</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                   
                 </div>
             </div>
         }
