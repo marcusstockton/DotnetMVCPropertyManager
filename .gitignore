@@ -230,5 +230,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-/ClientApp/node_modules
 .vs/PropertyManager/v16/.suo
+**/wwwroot/PropertyDocuments
+**/wwwroot/PropertyImages
+**/wwwroot/TenantImages
