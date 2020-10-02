@@ -52,13 +52,16 @@ namespace Website.Services
 
         public async Task<bool> DeleteTenantImage(string fileLocation)
         {
-            var path = Path.Combine(_env.WebRootPath, fileLocation.TrimStart(Path.DirectorySeparatorChar));
-            if (File.Exists(path))
+            return await Task.Run(() =>
             {
-                File.Delete(path);
-                return true;
-            }
-            return false;
+                var path = Path.Combine(_env.WebRootPath, fileLocation.TrimStart(Path.DirectorySeparatorChar));
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                    return true;
+                }
+                return false;
+            });
         }
 
 

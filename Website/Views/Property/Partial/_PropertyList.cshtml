@@ -53,7 +53,7 @@ else
                         @Html.DisplayFor(modelItem => item.MonthlyRentAmount)
                     </td>
                     <td>
-                        <a asp-controller="Property" asp-action="Update" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Edit</a> |
+                        <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Edit</a> |
                         <a asp-controller="Property" asp-action="Detail" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Details</a> |
                         <a asp-controller="Property" asp-action="Delete" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Delete</a>
                     </td>

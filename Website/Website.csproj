@@ -5,7 +5,7 @@
     <UserSecretsId>aspnet-Website-888A4B13-250B-4CB9-B1D6-81C2082707A1</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Compile Remove="wwwroot\PropertyImages\00ca1a7e-56e8-407b-bf9f-f28e638d91e0\**" />
     <Compile Remove="wwwroot\PropertyImages\055c0880-4634-4cfc-85dc-2df288a875e5\**" />
     <Compile Remove="wwwroot\PropertyImages\5b64f667-9032-451e-aa8d-b0f9cd9ec678\**" />
@@ -30,7 +30,7 @@
     <None Remove="wwwroot\PropertyImages\648e941c-a7b7-4d6e-a966-d58d02dcd1d6\**" />
     <None Remove="wwwroot\PropertyImages\668316e8-36f1-4b1b-a36a-6c29e43afdbb\**" />
     <None Remove="wwwroot\PropertyImages\af52d5f9-27b1-454c-af1d-0809c168df34\**" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200309152634_Initial.cs" />
@@ -74,8 +74,8 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Models\Enums\" />
     <Folder Include="Services\" />
-    <Folder Include="wwwroot\PropertyDocuments\" />
-    <Folder Include="wwwroot\PropertyImages\" />
+    <!--<Folder Include="wwwroot\PropertyDocuments\" />
+    <Folder Include="wwwroot\PropertyImages\" />-->
   </ItemGroup>
 
 </Project>
