@@ -56,10 +56,39 @@
         return sb.ToString();
     }
 }
+<div class="row">
+    <div col-sm-6>
+        <h1>
+            @Title()
+        </h1>
+    </div>
+    <div class="col-sm-6">
+        <div class="float-right">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-primary btn-sm"
+                   data-toggle="tooltip" data-placement="top" title="Edit Portfolio">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </a>
+                <a asp-action="Delete" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger btn-sm"
+                   data-toggle="tooltip" data-placement="top" title="Delete Portfolio">
+                    <span class="material-icons">
+                        delete_forever
+                    </span>
+                </a>
+                <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light btn-sm"
+                   data-toggle="tooltip" data-placement="top" title="Back to list">
+                    <span class="material-icons">
+                        arrow_back
+                    </span>
+                </a>
+            </div>
+        </div>
 
-<h1>
-    @Title()
-</h1>
+    </div>
+</div>
+
 
 <div>
     <h4>Property Details</h4>
@@ -222,6 +251,7 @@
                 }
 
             </div>
+            <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-info">Edit</a>
         </div>
         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
             @await Html.PartialAsync("/Views/Property/Partial/_PropertyDocumentList.cshtml", Model.Documents, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
@@ -254,9 +284,4 @@
             </div>
         </div>
     </div>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-primary">Edit</a>
-    <a asp-action="Delete" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger">Delete</a>
-    <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light">Back to List</a>
 </div>

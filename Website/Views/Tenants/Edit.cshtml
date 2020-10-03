@@ -62,7 +62,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Detail" asp-controller="Property" asp-route-portfolioId="@Model.Property.Portfolio.Id" asp-route-propertyId="@Model.Property.Id" asp-fragment="nav-tenant/">Back</a>
 </div>
 
 @section Scripts {
