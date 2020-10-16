@@ -234,3 +234,4 @@ _Pvt_Extensions
 **/wwwroot/PropertyDocuments
 **/wwwroot/PropertyImages
 **/wwwroot/TenantImages
+/Website/Logs

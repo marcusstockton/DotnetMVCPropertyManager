@@ -9,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
@@ -81,10 +83,13 @@ namespace Website
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataSeeder seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataSeeder seeder, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
+                var path = Directory.GetCurrentDirectory();
+                loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
+
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
