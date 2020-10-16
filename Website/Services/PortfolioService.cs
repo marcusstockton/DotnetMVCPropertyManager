@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +13,22 @@ namespace Website.Services
     public class PortfolioService : IPortfolioService
     {
         private readonly ApplicationDbContext _context;
-
-        public PortfolioService(ApplicationDbContext context)
+        private readonly ILogger _logger;
+        public PortfolioService(ApplicationDbContext context, ILogger<PortfolioService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<List<Portfolio>> GetPortfolios()
         {
+            _logger.LogInformation("Retrieving all portfolio's");
             return await _context.Portfolios.ToListAsync();
         }
 
         public async Task<List<Portfolio>> GetMyPortfolios(string userId)
         {
+            _logger.LogInformation($"Retrieving all portfolio's for user id {userId}");
             return await _context.Portfolios
                 .Include(x => x.Owner)
                 .Where(x => x.Owner.Id == userId)
@@ -33,6 +37,7 @@ namespace Website.Services
 
         public async Task<Portfolio> GetPortfolioById(Guid id)
         {
+            _logger.LogInformation($"Retrieving portfolio with id {id}");
             var portfolio = await _context.Portfolios
                 .Include(owner => owner.Owner)
                 .Include(portfolio => portfolio.Properties)
@@ -46,7 +51,9 @@ namespace Website.Services
 
         public async Task<bool> DeletePortfolio(Portfolio portfolio)
         {
+            _logger.LogInformation($"Deleting portfolio with id {portfolio.Id}");
             var properties = _context.Properties.Where(x => x.Portfolio.Id == portfolio.Id);
+            _logger.LogInformation($"Also deleting all attached properties. Found {properties.Count()} properties to delete");
             foreach (var item in properties)
             {
                 _context.Properties.Remove(item);
@@ -56,10 +63,12 @@ namespace Website.Services
             try
             {
                 await _context.SaveChangesAsync();
+                _logger.LogInformation($"Sucessfully deleted portfolio with id {portfolio.Id}");
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"Error removing property. {ex}");
                 return false;
                 throw;
             }
@@ -67,20 +76,23 @@ namespace Website.Services
 
         public async Task<Portfolio> UpdatePortfolio(Portfolio portfolio)
         {
+            _logger.LogInformation($"Updating portfolio with id {portfolio.Id}");
             _context.Update(portfolio);
             try
             {
                 await _context.SaveChangesAsync();
                 return portfolio;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"Error updating property. {ex}");
                 throw;
             }
         }
 
         public async Task<Portfolio> CreatePortfolio(Portfolio portfolio, string username)
         {
+            _logger.LogInformation($"Creating a new portfolio called '{portfolio.Name}' for user {username}");
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
             if (user == null)
             {
