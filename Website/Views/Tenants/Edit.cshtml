@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label asp-for="TenantImage" class="control-label"></label>
                 <p><small>Uploading a new image will over-write the existing.</small></p>
-                <p><small>Currently the image is:</small></p>
+                <p><small id="preview">Currently the image is:</small></p>
                 <input type="file" asp-for="TenantImage" name="profilePic"/>
                 <img src="@Model.TenantImage" class="img-thumbnail" style="height: 20vh;" alt="Tenant Image" />
             </div>
@@ -67,4 +67,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/Tenant/image-preview.js"></script>
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Website.Extensions.Alerts;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Tenants;
@@ -121,7 +122,9 @@ namespace Website.Controllers
                     }
                 }
                 var result = await _tenantService.UpdateTenant(tenant);
-                return RedirectToAction("Detail", "Property",new { portfolioId = result.Property.Portfolio.Id, propertyId = result.Property.Id } + "#nav-tenant/");
+                return RedirectToAction("Detail", "Property",
+                    new { portfolioId = result.Property.Portfolio.Id, propertyId = result.Property.Id } + "#nav-tenant/")
+                    .WithSuccess("Success", "Tenant sucessfully updated");
             } 
             return View(tenant);
         }
