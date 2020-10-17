@@ -54,6 +54,8 @@ namespace Website
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
+
+
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -67,7 +69,9 @@ namespace Website
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
