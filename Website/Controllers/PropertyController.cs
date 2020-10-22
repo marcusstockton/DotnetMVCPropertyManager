@@ -158,7 +158,7 @@ namespace Website.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             
-            ViewBag.DocumentTypes = new SelectList(await _propertyDocumentService.GetDocumentTypes(user), "Id", "Description");
+            ViewBag.DocumentTypes = await _propertyDocumentService.GetDocumentTypes(user);
 
             property.Documents.Add(new DocumentUploader());
             return PartialView("PropertyDocuments", property);

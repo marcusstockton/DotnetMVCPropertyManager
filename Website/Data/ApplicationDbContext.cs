@@ -30,6 +30,13 @@ namespace Website.Data
             {
                 b.HasKey(x => x.Id);
             });
+
+            builder.Entity<Portfolio>(x => 
+                x.HasOne(x => x.Owner)
+                .WithMany()
+                .HasForeignKey(x=>x.OwnerId)
+                .IsRequired());
+
             builder.Entity<Property>(b =>
             {
                 b.HasKey(x => x.Id);
@@ -49,18 +56,23 @@ namespace Website.Data
             });
 
             builder.Entity<Address>().HasKey(x => x.Id);
+            builder.Entity<Address>().Property(x => x.Longitude).HasColumnType("decimal(18, 9)");
+            builder.Entity<Address>().Property(x=>x.Latitude).HasColumnType("decimal(18, 9)");
+
             builder.Entity<PropertyDocument>().HasKey(x => x.Id);
             builder.Entity<PropertyImage>().HasKey(x => x.Id);
             builder.Entity<Tenant>().HasKey(x => x.Id);
             builder.Entity<Note>().HasKey(x => x.Id);
-            builder.Entity<DocumentType>(b=> {
+            builder.Entity<DocumentType>(b =>
+            {
                 b.HasKey(x => x.Id);
                 b.HasOne(x => x.Owner)
                 .WithMany()
                 .HasForeignKey(x => x.OwnerId);
             });
 
-            builder.Entity<PropertyDocument>(b => {
+            builder.Entity<PropertyDocument>(b =>
+            {
                 b.HasOne(x => x.DocumentType)
                 .WithMany()
                 .HasForeignKey(x => x.DocumentTypeId);

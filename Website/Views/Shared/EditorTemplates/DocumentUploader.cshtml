@@ -1,4 +1,9 @@
 @model Website.Models.DTOs.Documents.DocumentUploader
+@{ 
+    var documentTypesList = ViewBag.DocumentTypes;
+    var documentTypesSelection = new SelectList(ViewBag.DocumentTypes, "Id", "Descrription");
+}
+
 @if (Model.Document != null)
 {
     // Don't pass back the existing item, as we are appending the inputs.
@@ -16,7 +21,7 @@ else
             <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="DocumentType"></label>
-                    <select asp-for="DocumentType.Id" asp-items="@ViewBag.DocumentTypes" class="form-control"></select>
+                    <select asp-for="DocumentType.Id" asp-items="documentTypesSelection" class="form-control"></select>
                     <span asp-validation-for="DocumentType" class="text-danger"></span>
                 </div>
             </div>
