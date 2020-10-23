@@ -2,39 +2,7 @@
 @{
     ViewData["Title"] = "Property Details";
 }
-@section Scripts {
-    <script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
 
-    <script type="text/javascript">
-        $(document).ready(() => {
-            console.log("GetPropertyById called");
-
-            let url = location.href.replace(/\/$/, "");
-
-            if (location.hash) {
-                const hash = url.split("#");
-                $('#nav-tab a[href="#' + hash[1] + '"]').tab("show");
-                url = location.href.replace(/\/#/, "#");
-                history.replaceState(null, null, url);
-                setTimeout(() => {
-                    $(window).scrollTop(0);
-                }, 400);
-            }
-
-            $('a[data-toggle="tab"]').on("click", function () {
-                let newUrl;
-                const hash = $(this).attr("href");
-                if (hash == "#nav-home") {
-                    newUrl = url.split("#")[0];
-                } else {
-                    newUrl = url.split("#")[0] + hash;
-                }
-                newUrl += "/";
-                history.replaceState(null, null, newUrl);
-            });
-        });
-    </script>
-}
 @functions{
     string Title()
     {
@@ -107,6 +75,8 @@
                 <dl class="col-md-9">
                     @Html.HiddenFor(x => x.Portfolio.Id, new { @id = "portfolio_id" })
                     @Html.HiddenFor(x => x.Id, new { @id = "property_id" })
+                    @Html.HiddenFor(x => x.Address.Latitude)
+                    @Html.HiddenFor(x => x.Address.Longitude)
                     <div class="row">
                         <dt class="col-sm-2 small text-muted text-uppercase">
                             @Html.DisplayNameFor(model => model.PurchaseDate)
@@ -257,10 +227,14 @@
                         </div>
                     </div>
                 }
+                <img src="#" alt="Postcode image" width="300" height="300" hidden="hidden" id="postcodeImg" />
 
             </div>
             <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-info">Edit</a>
+            <a asp-controller="Portfolio" asp-action="Details" asp-route-id="@Model.Portfolio.Id" class="btn btn-default">Back</a>
+
         </div>
+
         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
             @await Html.PartialAsync("/Views/Property/Partial/_PropertyDocumentList.cshtml", Model.Documents, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
         </div>
@@ -293,3 +267,56 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+
+            let url = location.href.replace(/\/$/, "");
+
+            if (location.hash) {
+                const hash = url.split("#");
+                $('#nav-tab a[href="#' + hash[1] + '"]').tab("show");
+                url = location.href.replace(/\/#/, "#");
+                history.replaceState(null, null, url);
+                setTimeout(() => {
+                    $(window).scrollTop(0);
+                }, 400);
+            }
+
+            $('a[data-toggle="tab"]').on("click", function () {
+                let newUrl;
+                const hash = $(this).attr("href");
+                if (hash == "#nav-home") {
+                    newUrl = url.split("#")[0];
+                } else {
+                    newUrl = url.split("#")[0] + hash;
+                }
+                newUrl += "/";
+                history.replaceState(null, null, newUrl);
+            });
+
+            var addressLat = $('#Address_Latitude').val();
+            var addressLon = $('#Address_Longitude').val();
+            if (addressLat != '0.000000000' && addressLon != '0.000000000') {
+                $.ajax({
+                    url: "../api/address/GetMapFromLatLong",
+                    data: {
+                        "lat": addressLat,
+                        "lon": addressLon
+                    },
+                    cache: false,
+                    type: "GET",
+                    success: function (response) {
+                        $('#postcodeImg').attr("src", "data:" +response).removeAttr('hidden');
+                    },
+                    error: function (xhr) {
+                        console.error(xhr);
+                    }
+                });
+            }
+
+        });
+    </script>
+}

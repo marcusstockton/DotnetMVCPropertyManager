@@ -4,7 +4,8 @@
         "processing": true,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
-            dataSrc: ''
+            dataSrc: '',
+            cache: true,
         },
         columns: [
             { "data": "name" },

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,19 +11,21 @@ namespace Website.Areas
     public class AddressController : ControllerBase
     {
         private string _apiKey;
-        private string ukLatLong;
+        private string _ukLatLong;
+        private string _countryCode;
         public AddressController()
         {
             _apiKey = Environment.GetEnvironmentVariable("HERE_Maps_API_Key", EnvironmentVariableTarget.User);
-            ukLatLong = "55.3781,3.4360";
+            _ukLatLong = "55.3781,3.4360"; // UK lat/lon
+            _countryCode = "GBP";
         }
 
-        [HttpGet, Route("GetAutoSuggestion")]
+        [HttpGet, Route("getautosuggestion")]
         public async Task<IActionResult> GetAutoSuggestion(string search)
         {
             using (HttpClient client = new HttpClient())
             {
-                var url = $"https://autosuggest.search.hereapi.com/v1/autosuggest?at={ukLatLong}&limit=5&lang=en&q={search}&apiKey={_apiKey}";
+                var url = $"https://autosuggest.search.hereapi.com/v1/autosuggest?at={_ukLatLong}&countryCode={_countryCode}&limit=50&lang=en&q={search}&apiKey={_apiKey}";
                 var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
@@ -33,13 +36,50 @@ namespace Website.Areas
             return BadRequest();
         }
 
-        [HttpGet, Route("Lookup")]
+        [HttpGet, Route("GetMapFromLatLong")]
+        public async Task<IActionResult> GetMapFromLatLong(decimal lat, decimal lon)
+        {
+            //using (System.Net.WebClient webClient = new System.Net.WebClient())
+            //{
+            //    var url = $"https://image.maps.ls.hereapi.com/mia/1.6/mapview?apiKey={_apiKey}&lat={lat}&lon={lon}&vt=0&z=12";
+            //    using (Stream stream = webClient.OpenRead(url))
+            //    {
+            //        return Image.FromStream(stream);
+            //    }
+            //}
+
+
+            using (HttpClient client = new HttpClient())
+            {
+                var url = $"https://image.maps.ls.hereapi.com/mia/1.6/mapview?apiKey={_apiKey}&lat={lat}&lon={lon}&vt=0&z=12";
+                var response = await client.GetByteArrayAsync(url);
+                return Ok("image/jpeg;base64," + Convert.ToBase64String(response));
+            }
+        }
+
+        [HttpGet, Route("lookup")]
         public async Task<IActionResult> Lookup(string hereId)
         {
             using (HttpClient client = new HttpClient())
             {
-                //   var url = $"https://autosuggest.search.hereapi.com/v1/autosuggest?at={ukLatLong}&limit=5&lang=en&q={search}&apiKey={_apiKey}";
-                var url = $"https://lookup.search.hereapi.com/v1/lookup?id={hereId}&apiKey={_apiKey}";
+                var url = $"https://lookup.search.hereapi.com/v1/lookup?id={hereId}&countryCode={_countryCode}&apiKey={_apiKey}";
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    return Ok(response.Content);
+                    
+                }
+            }
+            return BadRequest();
+        
+        }
+
+        [HttpGet, Route("postcode-auto-complete")]
+        public async Task<IActionResult> PostcodeAutoComplete(string postcode)
+        {
+            using(HttpClient client = new HttpClient())
+            {
+                var url = $"api.postcodes.io/postcodes/{postcode}/autocomplete";
                 var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
@@ -47,8 +87,7 @@ namespace Website.Areas
                     return Ok(data);
                 }
             }
-            return BadRequest();
-        
+            return Ok();
         }
     }
 }
