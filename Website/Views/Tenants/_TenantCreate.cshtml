@@ -1,7 +1,7 @@
 ﻿@model Website.Models.DTOs.Tenants.TenantCreateDTO
 
-<h4>Tenant</h4>
-<hr />
+@*<h4>Tenant</h4>
+<hr />*@
 <div class="row">
     <div class="col-md-12">
         <form asp-controller="Tenants" asp-action="Create" asp-route-propertyId="Property.Id" id="tenantCreateForm" enctype="multipart/form-data">
@@ -65,9 +65,9 @@
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
