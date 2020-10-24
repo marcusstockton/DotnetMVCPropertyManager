@@ -18,13 +18,13 @@ namespace Website.Models.DTOs.Properties
         [Display(Name = "Date Purchased"), DataType(DataType.Date)]
         public DateTime PurchaseDate { get; set; }
 
-        [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed"), DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed"), DisplayFormat(DataFormatString = "{0:C}")]
         public double PropertyValue { get; set; }
 
         [Display(Name = "# Rooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
         public int NoOfRooms { get; set; }
 
-        [Display(Name = "Monthly Rent"), Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Monthly Rent"), Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:C}")]
         public double MonthlyRentAmount { get; set; }
 
         [MaxLength(1000), Description("Describe the property")]

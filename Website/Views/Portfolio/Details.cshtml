@@ -9,32 +9,40 @@
 <div>
     <h4>Portfolio</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-sm-11">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UpdatedDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UpdatedDate)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-sm-1">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="float-right btn btn-info btn-sm" title="Edit Portfolio"><span class="material-icons">edit</span></a>
+        </div>
+    </div>
+    
+    
 
     @{await Html.RenderPartialAsync("../Property/Partial/_PropertyList", Model.Properties);}
 
     <a asp-controller="Property" asp-action="Create" asp-route-portfolioId="@Model.Id" class="btn btn-success d-inline-flex align-items-center"><i class="material-icons md-24">add</i> Add New Property</a>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

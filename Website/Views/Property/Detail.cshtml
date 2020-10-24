@@ -13,12 +13,12 @@
         }
         if (!string.IsNullOrEmpty(Model.Address.Line2))
         {
-            sb.Append(",");
+            sb.Append(Environment.NewLine);
             sb.Append(Model.Address.Line2);
         }
         if (!string.IsNullOrEmpty(Model.Address.Line3))
         {
-            sb.Append(",");
+            sb.Append(Environment.NewLine);
             sb.Append(Model.Address.Line3);
         }
         return sb.ToString();
@@ -126,11 +126,11 @@
 
                             </dl>
                         </dd>
-                        <div class="col-sm-4">
+                        <span class="col-sm-4">
                             <img src="#" alt="Postcode image" width="200" height="200" hidden="hidden" id="postcodeImg" />
-                        </div>
+                        </span>
                     </div>
-                    
+
                     <div class="row">
                         <dt class="col-sm-2 small text-muted text-uppercase">
                             @Html.DisplayNameFor(model => model.MonthlyRentAmount)
@@ -219,7 +219,7 @@
                                 @foreach (var image in Model.Images)
                                 {
                                     <div class="carousel-item @(image == Model.Images.First() ? "active" : "")">
-                                        <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: 100%; height: 300px;">
+                                        <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: 100%; height: auto;">
                                     </div>
                                 }
                             </div>
@@ -234,7 +234,7 @@
                         </div>
                     </div>
                 }
-            
+
             </div>
             <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-info">Edit</a>
             <a asp-controller="Portfolio" asp-action="Details" asp-route-id="@Model.Portfolio.Id" class="btn btn-default">Back</a>
@@ -297,7 +297,7 @@
                     cache: false,
                     type: "GET",
                     success: function (response) {
-                        $('#postcodeImg').attr("src", "data:" +response).removeAttr('hidden');
+                        $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
                     },
                     error: function (xhr) {
                         console.error(xhr);

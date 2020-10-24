@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
     var table = $('#portfolioIndexTable').DataTable({
-        "processing": true,
+        //"processing": true,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
             dataSrc: '',
@@ -10,6 +10,7 @@
         columns: [
             { "data": "name" },
             { "data": "numberOfProperties" },
+            { "data": "totalPropertyValue", render: $.fn.dataTable.render.number(',', '.', 2, '£') },
             { "data": "grossIncome", render: $.fn.dataTable.render.number(',', '.', 2, '£') },
             { "data": "createdDate" },
             { "data": "updatedDate" },
@@ -24,8 +25,12 @@
         ],
         columnDefs: [
             {
+                "targets": 1,
+                "className": "text-center",
+            },
+            {
                 // Format dates...
-                "targets": [3, 4],
+                "targets": [4, 5],
                 "render": function (data) {
                     return moment(data).format('llll');
                 }

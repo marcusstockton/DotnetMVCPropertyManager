@@ -53,9 +53,11 @@ else
                         @Html.DisplayFor(modelItem => item.MonthlyRentAmount)
                     </td>
                     <td>
-                        <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Edit</a> |
-                        <a asp-controller="Property" asp-action="Detail" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Details</a> |
-                        <a asp-controller="Property" asp-action="Delete" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Delete</a>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id" title="Edit Property"><span class="material-icons"style="color:#17a2b8;">edit</span></a>
+                            <a asp-controller="Property" asp-action="Detail" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id"title="View Property"><span class="material-icons">house</span></a>
+                            <a asp-controller="Property" asp-action="Delete" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id"title="Delete Property"><span class="material-icons" style="color:red">delete_forever</span></a>
+                        </div>
                     </td>
                 </tr>
             }
