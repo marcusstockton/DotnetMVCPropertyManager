@@ -10,7 +10,7 @@
         columns: [
             { "data": "name" },
             { "data": "numberOfProperties" },
-            { "data": "grossIncome" },
+            { "data": "grossIncome", render: $.fn.dataTable.render.number(',', '.', 2, '£') },
             { "data": "createdDate" },
             { "data": "updatedDate" },
             {

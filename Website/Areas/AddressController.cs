@@ -39,16 +39,6 @@ namespace Website.Areas
         [HttpGet, Route("GetMapFromLatLong")]
         public async Task<IActionResult> GetMapFromLatLong(decimal lat, decimal lon)
         {
-            //using (System.Net.WebClient webClient = new System.Net.WebClient())
-            //{
-            //    var url = $"https://image.maps.ls.hereapi.com/mia/1.6/mapview?apiKey={_apiKey}&lat={lat}&lon={lon}&vt=0&z=12";
-            //    using (Stream stream = webClient.OpenRead(url))
-            //    {
-            //        return Image.FromStream(stream);
-            //    }
-            //}
-
-
             using (HttpClient client = new HttpClient())
             {
                 var url = $"https://image.maps.ls.hereapi.com/mia/1.6/mapview?apiKey={_apiKey}&lat={lat}&lon={lon}&vt=0&z=12";
@@ -66,7 +56,7 @@ namespace Website.Areas
                 var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    return Ok(response.Content);
+                    return Ok(await response.Content.ReadAsStringAsync());
                     
                 }
             }
