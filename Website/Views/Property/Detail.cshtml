@@ -6,22 +6,26 @@
 @functions{
     string Title()
     {
-        var sb = new System.Text.StringBuilder();
-        if (!string.IsNullOrEmpty(Model.Address.Line1))
+        if(Model != null)
         {
-            sb.Append(Model.Address.Line1);
+            var sb = new System.Text.StringBuilder();
+            if (!string.IsNullOrEmpty(Model.Address?.Line1))
+            {
+                sb.Append(Model.Address.Line1);
+            }
+            if (!string.IsNullOrEmpty(Model.Address?.Line2))
+            {
+                sb.Append(Environment.NewLine);
+                sb.Append(Model.Address.Line2);
+            }
+            if (!string.IsNullOrEmpty(Model.Address?.Line3))
+            {
+                sb.Append(Environment.NewLine);
+                sb.Append(Model.Address.Line3);
+            }
+            return sb.ToString();
         }
-        if (!string.IsNullOrEmpty(Model.Address.Line2))
-        {
-            sb.Append(Environment.NewLine);
-            sb.Append(Model.Address.Line2);
-        }
-        if (!string.IsNullOrEmpty(Model.Address.Line3))
-        {
-            sb.Append(Environment.NewLine);
-            sb.Append(Model.Address.Line3);
-        }
-        return sb.ToString();
+        return "";
     }
 }
 <div class="row">
@@ -236,8 +240,7 @@
                 }
 
             </div>
-            <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-info">Edit</a>
-            <a asp-controller="Portfolio" asp-action="Details" asp-route-id="@Model.Portfolio.Id" class="btn btn-default">Back</a>
+
 
         </div>
 
@@ -252,6 +255,10 @@
 
             <!-- Modal -->
             @await Html.PartialAsync("/Views/Tenants/Modals/_tenantCreateModal.cshtml")
+        </div>
+        <div style="padding-top:10px;">
+            <a asp-controller="Property" asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-info">Edit</a>
+            <a asp-controller="Portfolio" asp-action="Details" asp-route-id="@Model.Portfolio.Id" class="btn btn-default">Back</a>
         </div>
     </div>
 </div>

@@ -42,6 +42,7 @@
             success: function (result) {
                 console.log(result);
                 $('#tenantCreateModal').modal('hide');
+                location.reload();
             }, error: function (err) {
                 console.error(err.error);
             }

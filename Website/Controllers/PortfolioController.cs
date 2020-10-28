@@ -24,11 +24,8 @@ namespace Website.Controllers
         }
 
         // GET: Portfolios
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            //var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());
-            //var portfolioList = _mapper.Map<IList<PortfolioDetailsDto>>(portfolios);
-            //return View(portfolioList);
             return View();
         }
 

@@ -32,6 +32,9 @@
                 // Format dates...
                 "targets": [4, 5],
                 "render": function (data) {
+                    if (data === null) {
+                        return "-"
+                    }
                     return moment(data).format('llll');
                 }
             }
