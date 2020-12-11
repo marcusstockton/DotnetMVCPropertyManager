@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-
     $("[name='profilePic']").on("change", function (ele) {
         readfile(ele.currentTarget)
     });

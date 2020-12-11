@@ -1,5 +1,5 @@
 @model Website.Models.DTOs.Documents.DocumentUploader
-@{ 
+@{
     var documentTypesList = ViewBag.DocumentTypes;
     var documentTypesSelection = new SelectList(documentTypesList, "Id", "Description");
 }

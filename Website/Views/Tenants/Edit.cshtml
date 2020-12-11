@@ -51,7 +51,7 @@
                 <label asp-for="TenantImage" class="control-label"></label>
                 <p><small>Uploading a new image will over-write the existing.</small></p>
                 <p><small id="preview">Currently the image is:</small></p>
-                <input type="file" asp-for="TenantImage" name="profilePic"/>
+                <input type="file" asp-for="TenantImage" name="profilePic" />
                 <img src="@Model.TenantImage" class="img-thumbnail" style="height: 20vh;" alt="Tenant Image" />
             </div>
             <div class="form-group">

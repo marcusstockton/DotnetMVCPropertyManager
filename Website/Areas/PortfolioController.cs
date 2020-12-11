@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Website.Helpers;
 using Website.Interfaces;
 using Website.Models.DTOs.Portfolios;
@@ -18,12 +15,14 @@ namespace Website.Areas
     {
         private readonly IPortfolioService _context;
         private readonly IMapper _mapper;
+
         public PortfolioController(IPortfolioService context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-        [HttpGet("GetMyPortfolios"), ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
+
+        [HttpGet("GetMyPortfolios")]
         public async Task<ActionResult<IList<PortfolioDetailsDto>>> GetMyPortfolios()
         {
             var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());

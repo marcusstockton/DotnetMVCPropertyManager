@@ -64,7 +64,6 @@ namespace Website.Services
             });
         }
 
-
         public async Task<Tenant> GetTenantByIdAsync(Guid tenantId)
         {
             return await _context.Tenants.FindAsync(tenantId);

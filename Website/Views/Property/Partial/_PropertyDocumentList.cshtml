@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Website.Models.PropertyDocument>
 
-    @Html.ActionLink("Add Document", "Create", "PropertyDocuments", new { propertyId = ViewData["PropertyId"] })
+@Html.ActionLink("Add Document", "Create", "PropertyDocuments", new { propertyId = ViewData["PropertyId"] })
 
 @if (!Model.Any())
 {

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
@@ -61,7 +58,7 @@ namespace Website.Controllers
         }
 
         // POST: PropertyImages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -69,9 +66,9 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                var property = await _context.Properties.Include(x=>x.Portfolio).SingleOrDefaultAsync(x=>x.Id == propertyImage.PropertyId);
+                var property = await _context.Properties.Include(x => x.Portfolio).SingleOrDefaultAsync(x => x.Id == propertyImage.PropertyId);
                 var file = await _propertyImageService.CreateImageForProperty(property, propertyImage.Image);
-                return RedirectToAction("GetPropertyById",nameof(PropertyController), new { portfolioId = property.Portfolio.Id, propertyId=propertyImage.PropertyId });
+                return RedirectToAction("GetPropertyById", nameof(PropertyController), new { portfolioId = property.Portfolio.Id, propertyId = propertyImage.PropertyId });
             }
             return View(propertyImage);
         }
@@ -93,7 +90,7 @@ namespace Website.Controllers
         }
 
         // POST: PropertyImages/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -31,10 +31,10 @@ namespace Website.Data
                 b.HasKey(x => x.Id);
             });
 
-            builder.Entity<Portfolio>(x => 
+            builder.Entity<Portfolio>(x =>
                 x.HasOne(x => x.Owner)
                 .WithMany()
-                .HasForeignKey(x=>x.OwnerId)
+                .HasForeignKey(x => x.OwnerId)
                 .IsRequired());
 
             builder.Entity<Property>(b =>
@@ -57,7 +57,7 @@ namespace Website.Data
 
             builder.Entity<Address>().HasKey(x => x.Id);
             builder.Entity<Address>().Property(x => x.Longitude).HasColumnType("decimal(18, 9)");
-            builder.Entity<Address>().Property(x=>x.Latitude).HasColumnType("decimal(18, 9)");
+            builder.Entity<Address>().Property(x => x.Latitude).HasColumnType("decimal(18, 9)");
 
             builder.Entity<PropertyDocument>().HasKey(x => x.Id);
             builder.Entity<PropertyImage>().HasKey(x => x.Id);

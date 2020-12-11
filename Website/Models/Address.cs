@@ -1,5 +1,4 @@
-﻿
-namespace Website.Models
+﻿namespace Website.Models
 {
     public class Address : Base
     {

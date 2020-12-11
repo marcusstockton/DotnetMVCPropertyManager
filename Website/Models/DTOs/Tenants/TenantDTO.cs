@@ -7,7 +7,11 @@ namespace Website.Models.DTOs.Tenants
     public class TenantDTO
     {
         public Guid Id { get; set; }
+
+        [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
+
+        [Display(Name = "Updated Date")]
         public DateTime UpdatedDate { get; set; }
 
         [Display(Name = "First Name")]

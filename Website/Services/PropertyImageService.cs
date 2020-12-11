@@ -16,7 +16,8 @@ namespace Website.Services
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
         private static string IMAGEFOLDER = "PropertyImages";
-        private string[] permittedExtensions = { ".tiff", ".pdf", ".jpg", ".jpeg", ".png", ".gif", ".bmp"};
+        private string[] permittedExtensions = { ".tiff", ".pdf", ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+
         public PropertyImageService(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
@@ -31,7 +32,7 @@ namespace Website.Services
                 {
                     // Upload the file if less than 2 MB
                     var ext = Path.GetExtension(image.FileName).ToLowerInvariant();
-                    if(string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                    if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
                     {
                         throw new BadImageFormatException($"We cannot upload this type of file", image.FileName);
                     }
@@ -81,7 +82,7 @@ namespace Website.Services
             return Convert.ToBase64String(bytes);
         }
 
-        static string GetSafeFileName(string name, char replace = '_')
+        private static string GetSafeFileName(string name, char replace = '_')
         {
             char[] invalids = Path.GetInvalidFileNameChars();
             return new string(name.Select(c => invalids.Contains(c) ? replace : c).ToArray());

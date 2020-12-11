@@ -1,16 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Website.Interfaces;
-using AutoMapper;
-using Website.Profiles;
-using System;
-using Website.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Website.Models.DTOs.Portfolios;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Website.Controllers.Tests
+﻿namespace Website.Controllers.Tests
 {
     [TestClass()]
     public class PortfolioControllerTests
@@ -26,10 +14,11 @@ namespace Website.Controllers.Tests
             var portfolioProfile = new PortfolioProfile();
             var propertyProfile = new PropertyProfile();
             var addressProfile = new AddressProfile();
-            var config = new MapperConfiguration(cfg => { 
-                cfg.AddProfile(portfolioProfile); 
-                cfg.AddProfile(propertyProfile); 
-                cfg.AddProfile(addressProfile); 
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(portfolioProfile);
+                cfg.AddProfile(propertyProfile);
+                cfg.AddProfile(addressProfile);
             });
             _mapper = new Mapper(config);
         }
@@ -84,14 +73,20 @@ namespace Website.Controllers.Tests
         }
 
         [TestMethod()]
-        public void CreateTest()
+        public async Task CreateTest1()
         {
-            Assert.Fail();
-        }
+            var newPortfolio = new Portfolio
+            {
+                Name = "New Portfolio",
+                OwnerId = "1",
+            };
 
-        [TestMethod()]
-        public void CreateTest1()
-        {
+            _portfolioServiceMock.Setup(x => x.GetPortfolioById(_portfolio1Id)).ReturnsAsync(_portfolio1);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _mapper);
+
+            // Act
+            var viewResult = await controller.Create(newPortfolio) as ViewResult;
+            // Assert stuff..
             Assert.Fail();
         }
 

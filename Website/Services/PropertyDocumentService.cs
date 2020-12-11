@@ -110,9 +110,9 @@ namespace Website.Services
 
         public async Task<List<DocumentType>> GetDocumentTypes(ApplicationUser user)
         {
-            if(await _userManager.IsInRoleAsync(user, "Owner"))
+            if (await _userManager.IsInRoleAsync(user, "Owner"))
             {
-                return await _context.DocumentTypes.Where(x=>x.Owner == user || x.Owner == null).ToListAsync();
+                return await _context.DocumentTypes.Where(x => x.Owner == user || x.Owner == null).ToListAsync();
             }
             return await _context.DocumentTypes.ToListAsync();
         }

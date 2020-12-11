@@ -19,7 +19,7 @@ namespace Website.Models.DTOs.Portfolios
         [Display(Name = "# Properties")]
         public int NumberOfProperties { get { return Properties.Count(); } }
 
-        [Display(Name="Total Property Value")]
+        [Display(Name = "Total Property Value")]
         public double TotalPropertyValue { get { return Properties.Select(x => x.PropertyValue).Sum(); } }
 
         [Display(Name = "Gross Income")]

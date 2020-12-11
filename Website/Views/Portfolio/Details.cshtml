@@ -36,8 +36,6 @@
             <a asp-action="Edit" asp-route-id="@Model.Id" class="float-right btn btn-info btn-sm" title="Edit Portfolio"><span class="material-icons">edit</span></a>
         </div>
     </div>
-    
-    
 
     @{await Html.RenderPartialAsync("../Property/Partial/_PropertyList", Model.Properties);}
 

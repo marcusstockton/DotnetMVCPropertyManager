@@ -1,23 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Website.Areas;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Moq;
-using Website.Interfaces;
-using AutoMapper;
-using Website.Data;
-using Microsoft.EntityFrameworkCore;
-using Website.Models;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System.Linq;
-using Website.Models.DTOs.Portfolios;
-using Website.Profiles;
-
-namespace Website.Areas.Tests
+﻿namespace Website.Areas.Tests
 {
     [TestClass()]
     public class PortfolioControllerTests
@@ -67,6 +48,5 @@ namespace Website.Areas.Tests
             Assert.AreEqual(portfolioId, firstRecord.Id);
             Assert.AreEqual("Test", firstRecord.Name);
         }
-
     }
 }

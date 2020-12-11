@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Areas
 {
@@ -13,6 +12,7 @@ namespace Website.Areas
         private string _apiKey;
         private string _ukLatLong;
         private string _countryCode;
+
         public AddressController()
         {
             _apiKey = Environment.GetEnvironmentVariable("HERE_Maps_API_Key", EnvironmentVariableTarget.User);
@@ -57,17 +57,15 @@ namespace Website.Areas
                 if (response.IsSuccessStatusCode)
                 {
                     return Ok(await response.Content.ReadAsStringAsync());
-                    
                 }
             }
             return BadRequest();
-        
         }
 
         [HttpGet, Route("postcode-auto-complete")]
         public async Task<IActionResult> PostcodeAutoComplete(string postcode)
         {
-            using(HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
                 var url = $"api.postcodes.io/postcodes/{postcode}/autocomplete";
                 var response = await client.GetAsync(url);

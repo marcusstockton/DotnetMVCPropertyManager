@@ -3,7 +3,7 @@ using System;
 
 namespace Website.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

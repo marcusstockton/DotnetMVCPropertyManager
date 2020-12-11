@@ -14,6 +14,7 @@ namespace Website.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
+
         public PortfolioService(ApplicationDbContext context, ILogger<PortfolioService> logger)
         {
             _context = context;

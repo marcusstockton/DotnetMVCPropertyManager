@@ -8,8 +8,10 @@ namespace Website.Models.DTOs.PropertyDocuments
     {
         [DataType(DataType.Upload)]
         public IFormFile Document { get; set; }
+
         [Display(Name = "Document Type")]
         public Guid DocumentTypeId { get; set; }
+
         public Guid PropertyId { get; set; }
     }
 }

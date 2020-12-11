@@ -113,10 +113,10 @@ namespace Website.Controllers
 
             if (ModelState.IsValid)
             {
-                if(profilePic != null)
+                if (profilePic != null)
                 {
                     // Uploaded a new image, delete the existing...
-                    if(await _tenantService.DeleteTenantImage(tenant.TenantImage))
+                    if (await _tenantService.DeleteTenantImage(tenant.TenantImage))
                     {
                         tenant.TenantImage = await _tenantService.CreateTenantImage(tenant.Id, profilePic);
                     }
@@ -125,7 +125,7 @@ namespace Website.Controllers
                 return RedirectToAction("Detail", "Property",
                     new { portfolioId = result.Property.Portfolio.Id, propertyId = result.Property.Id } + "#nav-tenant/")
                     .WithSuccess("Success", "Tenant sucessfully updated");
-            } 
+            }
             return View(tenant);
         }
 

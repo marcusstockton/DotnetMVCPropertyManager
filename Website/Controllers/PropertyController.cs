@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,7 +156,7 @@ namespace Website.Controllers
         public async Task<IActionResult> AddPropertyDocument([Bind(include: "Documents")] PropertyCreateView property)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            
+
             ViewBag.DocumentTypes = await _propertyDocumentService.GetDocumentTypes(user);
 
             property.Documents.Add(new DocumentUploader());

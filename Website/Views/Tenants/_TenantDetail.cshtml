@@ -7,72 +7,74 @@
     }
     else
     {
-        @foreach (var tenant in Model.OrderByDescending(x => x.TenancyStartDate))
-        {
-            <div class="card" style="width: 22rem;">
-                <img class="card-img-top" src="@tenant.TenantImage" style="max-width:340px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
-                <div class="card-body">
-                    <h3 class="card-title">@tenant.FirstName @tenant.LastName</h3>
-                    <p class="card-text">
-                        <dl class="row">
-                            <dt class="col-sm-6 small text-muted">
-                                @Html.DisplayNameFor(model => tenant.PhoneNumber)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => tenant.PhoneNumber)
-                            </dd>
-                            <dt class="col-sm-6 small text-muted">
-                                @Html.DisplayNameFor(model => tenant.JobTitle)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => tenant.JobTitle)
-                            </dd>
-                            <dt class="col-sm-6 small text-muted">
-                                @Html.DisplayNameFor(model => tenant.Nationality)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => tenant.Nationality)
-                            </dd>
-                            <dt class="col-sm-6 small text-muted">
-                                @Html.DisplayNameFor(model => tenant.TenancyStartDate)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => tenant.TenancyStartDate)
-                            </dd>
-                            @if (tenant.TenancyEndDate > DateTime.MinValue)
-                            {
+        <div class="card-columns">
+            @foreach (var tenant in Model.OrderByDescending(x => x.TenancyStartDate))
+            {
+                <div class="card" style="width: 22rem;">
+                    <img class="card-img-top" src="@tenant.TenantImage" style="max-width:340px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
+                    <div class="card-body">
+                        <h3 class="card-title">@tenant.FirstName @tenant.LastName</h3>
+                        <p class="card-text">
+                            <dl class="row">
                                 <dt class="col-sm-6 small text-muted">
-                                    @Html.DisplayNameFor(model => tenant.TenancyEndDate)
+                                    @Html.DisplayNameFor(model => tenant.PhoneNumber)
                                 </dt>
                                 <dd class="col-sm-6">
-                                    @Html.DisplayFor(model => tenant.TenancyEndDate)
+                                    @Html.DisplayFor(model => tenant.PhoneNumber)
                                 </dd>
-                            }
-                            <dt class="col-sm-6 small text-muted">
-                                @Html.DisplayNameFor(model => tenant.CreatedDate)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => tenant.CreatedDate)
-                            </dd>
-                            @if (tenant.UpdatedDate > DateTime.MinValue)
-                            {
                                 <dt class="col-sm-6 small text-muted">
-                                    @Html.DisplayNameFor(model => tenant.UpdatedDate)
+                                    @Html.DisplayNameFor(model => tenant.JobTitle)
                                 </dt>
                                 <dd class="col-sm-6">
-                                    @Html.DisplayFor(model => tenant.UpdatedDate)
+                                    @Html.DisplayFor(model => tenant.JobTitle)
                                 </dd>
-                            }
-                        </dl>
-                    </p>
-                    <div class="btn-group" role="group">
-                        <a type="button" class="btn btn-info" asp-action="Edit" asp-controller="Tenants" asp-route-id="@tenant.Id">Edit</a>
-                        <button type="button" class="btn btn-primary">Details</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                                <dt class="col-sm-6 small text-muted">
+                                    @Html.DisplayNameFor(model => tenant.Nationality)
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Html.DisplayFor(model => tenant.Nationality)
+                                </dd>
+                                <dt class="col-sm-6 small text-muted">
+                                    @Html.DisplayNameFor(model => tenant.TenancyStartDate)
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Html.DisplayFor(model => tenant.TenancyStartDate)
+                                </dd>
+                                @if (tenant.TenancyEndDate > DateTime.MinValue)
+                                {
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.TenancyEndDate)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.TenancyEndDate)
+                                    </dd>
+                                }
+                                <dt class="col-sm-6 small text-muted">
+                                    @Html.DisplayNameFor(model => tenant.CreatedDate)
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Html.DisplayFor(model => tenant.CreatedDate)
+                                </dd>
+                                @if (tenant.UpdatedDate > DateTime.MinValue)
+                                {
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.UpdatedDate)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.UpdatedDate)
+                                    </dd>
+                                }
+                            </dl>
+                        </p>
+                        <div class="btn-group" role="group">
+                            <a type="button" class="btn btn-info" asp-action="Edit" asp-controller="Tenants" asp-route-id="@tenant.Id">Edit</a>
+                            <button type="button" class="btn btn-primary">Details</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
                     </div>
-                   
                 </div>
-            </div>
-        }
+            }
+        </div>
+
     }
 </div>

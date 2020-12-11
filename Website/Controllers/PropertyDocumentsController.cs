@@ -1,12 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Website.Data;
 using Website.Extensions.Alerts;
 using Website.Interfaces;
@@ -60,7 +60,7 @@ namespace Website.Controllers
         public IActionResult Create(Guid propertyId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes.Where(x=>x.Owner == null || x.OwnerId == userId), "Id", "Description");
+            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes.Where(x => x.Owner == null || x.OwnerId == userId), "Id", "Description");
             var data = new PropertyDocumentCreateDto
             {
                 PropertyId = propertyId,
@@ -69,7 +69,7 @@ namespace Website.Controllers
         }
 
         // POST: PropertyDocuments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -80,9 +80,9 @@ namespace Website.Controllers
             {
                 try
                 {
-                    var property = await _context.Properties.Include(x=>x.Portfolio).SingleOrDefaultAsync(x=>x.Id == propertyDocument.PropertyId);
+                    var property = await _context.Properties.Include(x => x.Portfolio).SingleOrDefaultAsync(x => x.Id == propertyDocument.PropertyId);
                     var result = await _propertyDocumentService.CreatePropertyDocumentForProperty(propertyDocument.PropertyId, propertyDocument.Document, propertyDocument.DocumentTypeId);
-                    return RedirectToAction("GetPropertyById", "Property", new { portfolioId = property.Portfolio.Id, propertyId = property.Id}).WithSuccess("Success", "Document Added");
+                    return RedirectToAction("GetPropertyById", "Property", new { portfolioId = property.Portfolio.Id, propertyId = property.Id }).WithSuccess("Success", "Document Added");
                 }
                 catch (ImageFormatLimitationException ex)
                 {
@@ -111,7 +111,7 @@ namespace Website.Controllers
         }
 
         // POST: PropertyDocuments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

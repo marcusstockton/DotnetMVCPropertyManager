@@ -1,11 +1,3 @@
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
-using Website.Data;
-using Website.Interfaces;
-
 namespace Website.UnitTests
 {
     [TestClass]

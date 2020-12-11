@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-
     var table = $('#portfolioIndexTable').DataTable({
         //"processing": true,
         ajax: {
@@ -18,7 +17,7 @@
                 "data": "Actions",
                 sortable: false,
                 "mRender": function (data, type, row) {
-                    return '<a href=/Portfolio/Edit?id=' + row.id + '><span class="material-icons">edit</span ></a>' + '  ' + 
+                    return '<a href=/Portfolio/Edit?id=' + row.id + '><span class="material-icons">edit</span ></a>' + '  ' +
                         '<a href=/Portfolio/Delete?id=' + row.id + '><span class="material-icons" style="color:red">delete</span ></a>';
                 }
             }
@@ -44,9 +43,7 @@
     // Handle row clicked
     $('#portfolioIndexTable tbody').on('click', 'tr', function () {
         var row = table.row($(this)).data();
-        var url = "/Portfolio/Details?id=" + row.id; 
+        var url = "/Portfolio/Details?id=" + row.id;
         window.location.href = url;
     });
-
 });
-

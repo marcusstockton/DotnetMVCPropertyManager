@@ -8,10 +8,12 @@ namespace Website.Services
     public class EmailService : IEmailSender
     {
         private readonly ILogger _logger;
+
         public EmailService(ILogger<EmailService> logger)
         {
             _logger = logger;
         }
+
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             _logger.LogInformation("Sending email to {EmailAddress}", email);
