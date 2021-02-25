@@ -5,33 +5,6 @@
     <UserSecretsId>aspnet-Website-888A4B13-250B-4CB9-B1D6-81C2082707A1</UserSecretsId>
   </PropertyGroup>
 
-  <!--<ItemGroup>
-    <Compile Remove="wwwroot\PropertyImages\00ca1a7e-56e8-407b-bf9f-f28e638d91e0\**" />
-    <Compile Remove="wwwroot\PropertyImages\055c0880-4634-4cfc-85dc-2df288a875e5\**" />
-    <Compile Remove="wwwroot\PropertyImages\5b64f667-9032-451e-aa8d-b0f9cd9ec678\**" />
-    <Compile Remove="wwwroot\PropertyImages\648e941c-a7b7-4d6e-a966-d58d02dcd1d6\**" />
-    <Compile Remove="wwwroot\PropertyImages\668316e8-36f1-4b1b-a36a-6c29e43afdbb\**" />
-    <Compile Remove="wwwroot\PropertyImages\af52d5f9-27b1-454c-af1d-0809c168df34\**" />
-    <Content Remove="wwwroot\PropertyImages\00ca1a7e-56e8-407b-bf9f-f28e638d91e0\**" />
-    <Content Remove="wwwroot\PropertyImages\055c0880-4634-4cfc-85dc-2df288a875e5\**" />
-    <Content Remove="wwwroot\PropertyImages\5b64f667-9032-451e-aa8d-b0f9cd9ec678\**" />
-    <Content Remove="wwwroot\PropertyImages\648e941c-a7b7-4d6e-a966-d58d02dcd1d6\**" />
-    <Content Remove="wwwroot\PropertyImages\668316e8-36f1-4b1b-a36a-6c29e43afdbb\**" />
-    <Content Remove="wwwroot\PropertyImages\af52d5f9-27b1-454c-af1d-0809c168df34\**" />
-    <EmbeddedResource Remove="wwwroot\PropertyImages\00ca1a7e-56e8-407b-bf9f-f28e638d91e0\**" />
-    <EmbeddedResource Remove="wwwroot\PropertyImages\055c0880-4634-4cfc-85dc-2df288a875e5\**" />
-    <EmbeddedResource Remove="wwwroot\PropertyImages\5b64f667-9032-451e-aa8d-b0f9cd9ec678\**" />
-    <EmbeddedResource Remove="wwwroot\PropertyImages\648e941c-a7b7-4d6e-a966-d58d02dcd1d6\**" />
-    <EmbeddedResource Remove="wwwroot\PropertyImages\668316e8-36f1-4b1b-a36a-6c29e43afdbb\**" />
-    <EmbeddedResource Remove="wwwroot\PropertyImages\af52d5f9-27b1-454c-af1d-0809c168df34\**" />
-    <None Remove="wwwroot\PropertyImages\00ca1a7e-56e8-407b-bf9f-f28e638d91e0\**" />
-    <None Remove="wwwroot\PropertyImages\055c0880-4634-4cfc-85dc-2df288a875e5\**" />
-    <None Remove="wwwroot\PropertyImages\5b64f667-9032-451e-aa8d-b0f9cd9ec678\**" />
-    <None Remove="wwwroot\PropertyImages\648e941c-a7b7-4d6e-a966-d58d02dcd1d6\**" />
-    <None Remove="wwwroot\PropertyImages\668316e8-36f1-4b1b-a36a-6c29e43afdbb\**" />
-    <None Remove="wwwroot\PropertyImages\af52d5f9-27b1-454c-af1d-0809c168df34\**" />
-  </ItemGroup>-->
-
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200309152634_Initial.cs" />
     <Compile Remove="Data\Migrations\20200309152634_Initial.Designer.cs" />
@@ -47,6 +20,10 @@
     <Compile Remove="Migrations\20200825202747_PropertyDocFixes.Designer.cs" />
     <Compile Remove="Migrations\20200930194732_SomethingTenantRelated.cs" />
     <Compile Remove="Migrations\20200930194732_SomethingTenantRelated.Designer.cs" />
+    <Compile Remove="Migrations\20210223185819_Dunno.cs" />
+    <Compile Remove="Migrations\20210223185819_Dunno.Designer.cs" />
+    <Compile Remove="Migrations\20210223190245_Re-Init.cs" />
+    <Compile Remove="Migrations\20210223190245_Re-Init.Designer.cs" />
   </ItemGroup>
 
 
@@ -75,6 +52,7 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Models\Enums\" />
     <Folder Include="Services\" />
     <!--<Folder Include="wwwroot\PropertyDocuments\" />

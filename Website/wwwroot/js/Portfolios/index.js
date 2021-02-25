@@ -1,10 +1,11 @@
 ﻿$(document).ready(function () {
     var table = $('#portfolioIndexTable').DataTable({
-        //"processing": true,
+        "processing": true,
+        "cache": false,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
             dataSrc: '',
-            cache: true,
+            cache: false,
         },
         columns: [
             { "data": "name" },
@@ -34,7 +35,7 @@
                     if (data === null) {
                         return "-"
                     }
-                    return moment(data).format('llll');
+                    return moment(data).format('lll');
                 }
             }
         ]
