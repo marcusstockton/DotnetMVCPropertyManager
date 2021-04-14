@@ -9,3 +9,10 @@ https://developer.here.com/documentation/geocoding-search-api/dev_guide/topics-a
 https://stackoverflow.com/questions/16534969/get-latitude-and-longitudefrom-city-name-using-html-js-in-bing-map
 https://docs.microsoft.com/en-us/bingmaps/articles/create-a-custom-map-url
 https://www.bing.com/maps?cp=50.7218017578125~-3.5336170196533205&lvl=15&style=r
+
+
+
+
+
+Migrations:
+Add-Migration [MIGRATION NAME] -OutputDir Data\Migrations

@@ -98,7 +98,7 @@ namespace Website
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
-                seeder.SeedData().GetAwaiter().GetResult();
+                seeder.SeedData(false).Wait();
             }
             else
             {

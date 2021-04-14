@@ -5,27 +5,6 @@
     <UserSecretsId>aspnet-Website-888A4B13-250B-4CB9-B1D6-81C2082707A1</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Migrations\20200309152634_Initial.cs" />
-    <Compile Remove="Data\Migrations\20200309152634_Initial.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200318141926_WhoKnows.cs" />
-    <Compile Remove="Data\Migrations\20200318141926_WhoKnows.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200319083156_KeyAdded.cs" />
-    <Compile Remove="Data\Migrations\20200319083156_KeyAdded.Designer.cs" />
-    <Compile Remove="Migrations\20200518213655_Initial.cs" />
-    <Compile Remove="Migrations\20200518213655_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200825200048_PropertyDocsFix.cs" />
-    <Compile Remove="Migrations\20200825200048_PropertyDocsFix.Designer.cs" />
-    <Compile Remove="Migrations\20200825202747_PropertyDocFixes.cs" />
-    <Compile Remove="Migrations\20200825202747_PropertyDocFixes.Designer.cs" />
-    <Compile Remove="Migrations\20200930194732_SomethingTenantRelated.cs" />
-    <Compile Remove="Migrations\20200930194732_SomethingTenantRelated.Designer.cs" />
-    <Compile Remove="Migrations\20210223185819_Dunno.cs" />
-    <Compile Remove="Migrations\20210223185819_Dunno.Designer.cs" />
-    <Compile Remove="Migrations\20210223190245_Re-Init.cs" />
-    <Compile Remove="Migrations\20210223190245_Re-Init.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -44,7 +23,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
   </ItemGroup>
 
@@ -52,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Models\Enums\" />
     <Folder Include="Services\" />
     <!--<Folder Include="wwwroot\PropertyDocuments\" />

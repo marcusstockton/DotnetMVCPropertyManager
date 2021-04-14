@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Website.Models.PropertyImage>
+
+@*@Html.ActionLink("Add Document", "Create", "PropertyDocuments", new { propertyId = ViewData["PropertyId"] })*@
+
+@if (!Model.Any())
+{
+    <p>No Images Uploaded for this property.</p>
+}
+else
+{
+<div class="col-md-9 offset-1">
+    <div class="carousel slide" data-ride="carousel" data-interval="2000" id="propertyImages">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <li data-target="#propertyImages" data-slide-to=@i class=@(i == 0 ? "active" : "")></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @foreach (var image in Model)
+            {
+                <div class="carousel-item @(image == Model.First() ? "active" : "")">
+                    <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: 100%; height: auto;">
+                </div>
+            }
+        </div>
+        <a class="carousel-control-prev" href="#propertyImages" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#propertyImages" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+}

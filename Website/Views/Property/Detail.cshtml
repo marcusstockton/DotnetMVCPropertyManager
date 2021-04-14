@@ -6,7 +6,7 @@
 @functions{
     string Title()
     {
-        if(Model != null)
+        if (Model != null)
         {
             var sb = new System.Text.StringBuilder();
             if (!string.IsNullOrEmpty(Model.Address?.Line1))
@@ -67,6 +67,8 @@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Details</a>
+            <a class="nav-item nav-link" id="nav-images-tab" data-toggle="tab" href="#nav-images" role="tab" aria-controls="nav-images" aria-selected="false">Images <span class="badge badge-pill badge-primary">@Model.Images.Count</span></a>
+
             <a class="nav-item nav-link" id="nav-document-tab" data-toggle="tab" href="#nav-document" role="tab" aria-controls="nav-document" aria-selected="false">Documents</a>
             <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#nav-tenant" role="tab" aria-controls="nav-tenant" aria-selected="false">Tenants</a>
         </div>
@@ -74,7 +76,7 @@
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="container row">
-                <dl class="col-md-9">
+                <dl class="col-md-12">
                     @Html.HiddenFor(x => x.Portfolio.Id, new { @id = "portfolio_id" })
                     @Html.HiddenFor(x => x.Id, new { @id = "property_id" })
                     @Html.HiddenFor(x => x.Address.Latitude)
@@ -206,38 +208,17 @@
                                             @Html.DisplayFor(x => x.Images[i].CreatedDate)
                                         </td>
                                     </tr>
-
                                 }
                             </tbody>
                         </table>
                     </dd>
                 </dl>
-                @if (Model.Images.Any())
-                {
-                    <div class="col-md-3">
-                        <div class="carousel slide" data-ride="carousel" data-interval="2000" id="propertyImages">
-                            <div class="carousel-inner">
-                                @foreach (var image in Model.Images)
-                                {
-                                    <div class="carousel-item @(image == Model.Images.First() ? "active" : "")">
-                                        <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: 100%; height: auto;">
-                                    </div>
-                                }
-                            </div>
-                            <a class="carousel-control-prev" href="#propertyImages" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#propertyImages" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                    </div>
-                }
+
             </div>
         </div>
-
+        <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
+            @await Html.PartialAsync("/Views/Property/Partial/_PropertyImages.cshtml", Model.Images, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
+        </div>
         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
             @await Html.PartialAsync("/Views/Property/Partial/_PropertyDocumentList.cshtml", Model.Documents, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
         </div>
