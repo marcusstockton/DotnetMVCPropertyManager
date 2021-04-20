@@ -73,7 +73,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Document,DocumentTypeId,PropertyId")] PropertyDocumentCreateDto propertyDocument)
+        public async Task<IActionResult> Create([Bind("Document,DocumentTypeId,PropertyId,Expires,ActiveFrom,ExpiryDate")] PropertyDocumentCreateDto propertyDocument)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
@@ -81,8 +81,8 @@ namespace Website.Controllers
                 try
                 {
                     var property = await _context.Properties.Include(x => x.Portfolio).SingleOrDefaultAsync(x => x.Id == propertyDocument.PropertyId);
-                    var result = await _propertyDocumentService.CreatePropertyDocumentForProperty(propertyDocument.PropertyId, propertyDocument.Document, propertyDocument.DocumentTypeId);
-                    return RedirectToAction("GetPropertyById", "Property", new { portfolioId = property.Portfolio.Id, propertyId = property.Id }).WithSuccess("Success", "Document Added");
+                    var result = await _propertyDocumentService.CreatePropertyDocumentForProperty(propertyDocument);
+                    return RedirectToAction("Detail", "Property", new { portfolioId = property.Portfolio.Id, propertyId = property.Id }).WithSuccess("Success", "Document Added");
                 }
                 catch (ImageFormatLimitationException ex)
                 {
@@ -115,7 +115,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FileName,FilePath,FileType,DocumentTypeId,ExpirationDate,Id,CreatedDate,UpdatedDate")] PropertyDocument propertyDocument)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FileName,FilePath,FileType,DocumentTypeId,ExpirationDate,Id,CreatedDate,UpdatedDate,Expires,ActiveFrom")] PropertyDocument propertyDocument)
         {
             if (id != propertyDocument.Id)
             {

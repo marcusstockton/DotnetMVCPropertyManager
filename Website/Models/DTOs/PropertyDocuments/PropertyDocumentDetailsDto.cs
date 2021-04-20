@@ -21,11 +21,14 @@ namespace Website.Models.DTOs.PropertyDocuments
 
         [Display(Name = "File Type")]
         public string FileType { get; set; }
-
         public Guid PropertyId { get; set; }
         public Guid DocumentTypeId { get; set; }
         public virtual DocumentType DocumentType { get; set; } // EPC, Certificates etc...
         public virtual Property Property { get; set; }
+        [Display(Name="Expiration Date"), DataType(DataType.Date)]
         public DateTime? ExpirationDate { get; set; } // When the document runs out.
+        public bool Expires { get; set; }
+        [Display(Name = "Active From"), DataType(DataType.Date)]
+        public DateTime? ActiveFrom { get; set; }
     }
 }

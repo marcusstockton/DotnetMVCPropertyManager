@@ -12,6 +12,7 @@ using Website.Data;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Documents;
+using Website.Models.DTOs.PropertyDocuments;
 
 namespace Website.Services
 {
@@ -28,32 +29,35 @@ namespace Website.Services
             _userManager = userManager;
         }
 
-        public async Task<bool> CreatePropertyDocumentForProperty(Guid propertyId, IFormFile file, Guid documentTypeId)
+        public async Task<bool> CreatePropertyDocumentForProperty(PropertyDocumentCreateDto propertyDoc)
         {
             var result = false;
             var contentRootPath = _env.ContentRootPath;
-            var uploads = Path.Combine(_env.WebRootPath, "PropertyDocuments", propertyId.ToString());
+            var uploads = Path.Combine(_env.WebRootPath, "PropertyDocuments", propertyDoc.PropertyId.ToString());
             if (!Directory.Exists(uploads))
             {
                 Directory.CreateDirectory(uploads);
             }
-            if (file.Length > 0)
+            if (propertyDoc.Document.Length > 0)
             {
                 // Upload the file if less than 2 MB
-                if (file.Length < 2097152)
+                if (propertyDoc.Document.Length < 2097152)
                 {
-                    var filePath = Path.Combine(uploads, file.FileName);
+                    var filePath = Path.Combine(uploads, propertyDoc.Document.FileName);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        await file.CopyToAsync(fileStream);
+                        await propertyDoc.Document.CopyToAsync(fileStream);
                         await _context.AddAsync(new PropertyDocument
                         {
-                            FileName = file.FileName,
+                            FileName = propertyDoc.Document.FileName,
                             FilePath = filePath,
                             CreatedDate = DateTime.Now,
-                            DocumentTypeId = documentTypeId,
-                            FileType = Path.GetExtension(file.FileName),
-                            PropertyId = propertyId
+                            DocumentTypeId = propertyDoc.DocumentTypeId,
+                            FileType = Path.GetExtension(propertyDoc.Document.FileName),
+                            PropertyId = propertyDoc.PropertyId,
+                            Expires = propertyDoc.Expires,
+                            ActiveFrom = propertyDoc.ActiveFrom,
+                            ExpirationDate = propertyDoc.ExpiryDate
                         });
                     }
                     await _context.SaveChangesAsync();

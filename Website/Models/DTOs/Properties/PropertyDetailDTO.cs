@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Website.Models.DTOs.PropertyDocuments;
 using Website.Models.DTOs.Tenants;
 
 namespace Website.Models.DTOs.Properties
@@ -10,7 +11,7 @@ namespace Website.Models.DTOs.Properties
     {
         public PropertyDetailDTO()
         {
-            Documents = new List<PropertyDocument> { };
+            Documents = new List<PropertyDocumentDetailsDto> { };
         }
 
         public Guid Id { get; set; }
@@ -40,7 +41,7 @@ namespace Website.Models.DTOs.Properties
 
         public virtual AddressDTO Address { get; set; }
         public virtual List<TenantDTO> Tenants { get; set; }
-        public virtual List<PropertyDocument> Documents { get; set; }
+        public virtual List<PropertyDocumentDetailsDto> Documents { get; set; }
         public virtual List<Models.PropertyImage> Images { get; set; }
 
         [Display(Name = "Date Created"), DataType(DataType.DateTime)]

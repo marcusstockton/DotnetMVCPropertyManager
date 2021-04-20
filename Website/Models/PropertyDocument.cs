@@ -11,6 +11,8 @@ namespace Website.Models
         public Guid DocumentTypeId { get; set; }
         public virtual DocumentType DocumentType { get; set; } // EPC, Certificates etc...
         public virtual Property Property { get; set; }
+        public bool Expires { get; set; }
+        public DateTime? ActiveFrom { get; set; }
         public DateTime? ExpirationDate { get; set; } // When the document runs out.
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Website.Models;
 using Website.Models.DTOs.Documents;
+using Website.Models.DTOs.PropertyDocuments;
 
 namespace Website.Interfaces
 {
@@ -11,7 +12,7 @@ namespace Website.Interfaces
     {
         Task<int> CreatePropertyDocumentsForProperty(Property property, List<DocumentUploader> documents);
 
-        Task<bool> CreatePropertyDocumentForProperty(Guid propertyId, IFormFile file, Guid documentTypeId);
+        Task<bool> CreatePropertyDocumentForProperty(PropertyDocumentCreateDto propertyDoc);
 
         Task<List<DocumentType>> GetDocumentTypes(ApplicationUser user);
     }

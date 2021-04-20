@@ -33,21 +33,24 @@
                 <span asp-validation-for="DocumentTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Expires" class="control-label"></label>
+                <input asp-for="Expires" class="form-control" />
+                <span asp-validation-for="Expires" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActiveFrom" class="control-label"></label>
+                <input asp-for="ActiveFrom" class="form-control" />
+                <span asp-validation-for="ActiveFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ExpirationDate" class="control-label"></label>
                 <input asp-for="ExpirationDate" class="form-control" />
                 <span asp-validation-for="ExpirationDate" class="text-danger"></span>
             </div>
+
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedDate" class="control-label"></label>
-                <input asp-for="UpdatedDate" class="form-control" />
-                <span asp-validation-for="UpdatedDate" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="CreatedDate" />
+            <input type="hidden" asp-for="UpdatedDate" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
