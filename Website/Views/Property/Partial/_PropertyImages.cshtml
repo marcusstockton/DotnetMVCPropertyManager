@@ -20,7 +20,7 @@ else
             @foreach (var image in Model)
             {
                 <div class="carousel-item @(image == Model.First() ? "active" : "")">
-                    <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: 100%; height: auto;">
+                    <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: auto; height: 60vh;">
                 </div>
             }
         </div>
