@@ -52,7 +52,7 @@ namespace Website.Controllers
         }
 
         // GET: PropertyImages/Create
-        public async Task<IActionResult> Create(Guid propertyId)
+        public IActionResult Create(Guid propertyId)
         {
             return View();
         }

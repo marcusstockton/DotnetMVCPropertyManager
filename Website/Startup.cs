@@ -85,6 +85,7 @@ namespace Website
             services.TryAddTransient<DataSeeder>();
 
             services.AddResponseCaching();
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,7 +97,6 @@ namespace Website
                 loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
                 seeder.SeedData(false).Wait();
             }
