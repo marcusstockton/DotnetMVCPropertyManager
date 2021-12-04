@@ -35,6 +35,7 @@ namespace Website.Data
                     _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
                     // Delete Images....leaving examples
+
                 }
 
                 if (!_context.Users.Any())
@@ -46,7 +47,7 @@ namespace Website.Data
 
                     _logger.LogInformation("Creating users");
                     var user1 = new ApplicationUser { FirstName = "Marcus", LastName = "Stockton", Email = "marcus_stockton@hotmail.co.uk", UserName = "marcus_stockton@hotmail.co.uk", };
-                    var user2 = new ApplicationUser { FirstName = "Becky", LastName = "Stockton", Email = "beckystockton84@hotmail.co.uk", UserName = "beckystockton84@hotmail.co.uk", };
+                    var user2 = new ApplicationUser { FirstName = "Dave", LastName = "Stockton", Email = "davestockton84@hotmail.co.uk", UserName = "davestockton84@hotmail.co.uk", };
                     await _userManager.CreateAsync(user1, "P@55w0rd1");
                     await _userManager.CreateAsync(user2, "P@55w0rd1");
 
@@ -86,7 +87,7 @@ namespace Website.Data
                     await _context.AddRangeAsync(
                         new Portfolio
                         {
-                            Owner = await _userManager.FindByEmailAsync("beckystockton84@hotmail.co.uk"),
+                            Owner = await _userManager.FindByEmailAsync("davestockton84@hotmail.co.uk"),
                             Name = "South West",
                             CreatedDate = DateTime.Now,
                             Properties = new List<Property> {
@@ -188,7 +189,7 @@ namespace Website.Data
                         {
                             CreatedDate = DateTime.Now,
                             Name = "North West",
-                            Owner = await _userManager.FindByEmailAsync("beckystockton84@hotmail.co.uk"),
+                            Owner = await _userManager.FindByEmailAsync("davestockton84@hotmail.co.uk"),
                             Properties = new List<Property>
                             {
                                 new Property

@@ -90,7 +90,7 @@ namespace Website.Controllers.Tests
         }
 
         [TestMethod()]
-        public async Task CreateTest1()
+        public async Task Can_Create_New_Portfolio()
         {
             var newPortfolio = new Portfolio
             {

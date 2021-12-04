@@ -5,21 +5,64 @@
     ViewData["Title"] = "Log in";
 }
 
+<style type="text/css">
+    body {
+        background-image: url('/Images/properties-wallpaper.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+</style>
+
 <div class="row">
-    <div class="col-md-4 offset-md-3" style="padding-top:10%;">
-        <section>
+
+    <div class="card col-md-4 offset-md-3">
+        <article class="card-body">
+            <a class="float-right btn btn-outline-primary" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            <h4 class="card-title mb-4 mt-1">@ViewData["Title"]</h4>
+            <form>
+                <div class="form-group">
+                    <label>Your email</label>
+                    <input name="" asp-for="Input.Email" class="form-control" placeholder="Email" type="email" value="davestockton84@hotmail.co.uk">
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <a class="float-right" asp-page="./ForgotPassword">Forgot?</a>
+                    <label>Your password</label>
+                    <input class="form-control" placeholder="******" type="password" value="P@55w0rd1">
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <div class="checkbox">
+                        <div class="checkbox">
+                            <label asp-for="Input.RememberMe">
+                                <input asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </div> <!-- checkbox .// -->
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article>
+    </div> <!-- card.// -->
+
+    @*<div class="col-md-4 offset-md-3" style="padding-top:10%;">
+        <section class="card">
             <form id="account" method="post">
                 <h4>@ViewData["Title"]</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" value="beckystockton84@hotmail.co.uk" />
+                    <input asp-for="Input.Email" class="form-control" value="davestockton84@hotmail.co.uk" /> 
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" value="P@55w0rd1" />
+                    <input asp-for="Input.Password" class="form-control" value="P@55w0rd1" />                  
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -44,7 +87,7 @@
             </form>
         </section>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
