@@ -23,7 +23,8 @@ namespace Website.Services
 
         public async Task<List<Property>> GetPropertiesForPortfolio(Guid portfolioId)
         {
-            return await _context.Properties.Include(x => x.Address)
+            return await _context.Properties
+                .Include(x => x.Address)
                 .Where(x => x.Portfolio.Id == portfolioId)
                 .AsNoTracking()
                 .ToListAsync();

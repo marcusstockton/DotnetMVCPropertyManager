@@ -22,7 +22,7 @@ namespace Website.Areas
             _mapper = mapper;
         }
 
-        [HttpGet("GetMyPortfolios")]
+        [HttpGet("GetMyPortfolios"), ResponseCache(CacheProfileName = "Default60")]
         public async Task<ActionResult<IList<PortfolioDetailsDto>>> GetMyPortfolios()
         {
             var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());

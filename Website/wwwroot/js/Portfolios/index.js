@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
     var table = $('#portfolioIndexTable').DataTable({
         "processing": true,
-        "cache": false,
+        "cache": true,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
             dataSrc: '',
-            cache: false,
+            cache: true,
         },
         columns: [
             { "data": "name" },

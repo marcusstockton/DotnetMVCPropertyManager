@@ -20,7 +20,7 @@ namespace Website.Areas
             _countryCode = "GBP";
         }
 
-        [HttpGet, Route("getautosuggestion")]
+        [HttpGet, Route("getautosuggestion"), ResponseCache(CacheProfileName = "Default30")]
         public async Task<IActionResult> GetAutoSuggestion(string search)
         {
             using (HttpClient client = new HttpClient())

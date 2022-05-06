@@ -67,7 +67,10 @@ namespace Website
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            services.AddControllersWithViews(options => {
+                options.CacheProfiles.Add("Default30", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 30, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Client });
+                options.CacheProfiles.Add("Default60", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 60, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Client });
+            }).AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
