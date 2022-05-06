@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using CountryData.Bogus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -243,6 +244,7 @@ namespace Website.Data
 
 
                     // Bogus this stuff up!:
+                    _logger.LogInformation("Going ballz to the wall and generating random data with bogus!!");
                     var tenantFaker = new Faker<Tenant>("en_GB")
                         .RuleFor(x => x.FirstName, f => f.Person.FirstName)
                         .RuleFor(x => x.LastName, f => f.Person.LastName)
@@ -252,17 +254,24 @@ namespace Website.Data
                         .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
                         .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
 
+                    var propertyImageFaker = new Faker<PropertyImage>("en_GB")
+                        .RuleFor(x => x.FilePath, f=>f.Image.LoremFlickrUrl(800, 600, "building,home"))
+                        .RuleFor(x => x.FileName, f => f.System.FileName())
+                        .RuleFor(x=>x.CreatedDate, f=>f.Date.Recent(100));
+
                     var propertyFaker = new Faker<Property>("en_GB")
                         .RuleFor(x=>x.NoOfRooms, f => f.Random.Number(1,4))
                         .RuleFor(x=>x.Address, f=> new Address {
                             Line1 = f.Address.BuildingNumber(),
                             Line2 = f.Address.StreetAddress(),
+                            Town = f.Country().UnitedKingdom().Place().Name,
                             City = f.Address.City(),
                             Latitude = f.Address.Latitude(),
                             Longitude = f.Address.Longitude(),
-                            Postcode = f.Address.ZipCode(),
+                            Postcode = f.Country().UnitedKingdom().PostCode(),
                         })
                         .RuleFor(x=>x.Description, f=>f.Lorem.Paragraph())
+                        .RuleFor(x=>x.Images, f => propertyImageFaker.Generate(f.Random.Number(2,5)))
                         .RuleFor(x=>x.MonthlyRentAmount, f=>f.Random.Number(500,4000))
                         .RuleFor(x=>x.PurchaseDate, f=>f.Date.Past())
                         .RuleFor(x=>x.Tenants, f=>tenantFaker.Generate(f.Random.Number(3,8)))
