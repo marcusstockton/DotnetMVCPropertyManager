@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Bogus;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Models;
@@ -35,7 +35,6 @@ namespace Website.Data
                     _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
                     // Delete Images....leaving examples
-
                 }
 
                 if (!_context.Users.Any())
@@ -133,8 +132,8 @@ namespace Website.Data
                                     Line2 = "Wayside Crescent",
                                     City = "Exeter",
                                     Postcode = "EX2 2EX",
-                                    Latitude = 50.72704m,
-                                    Longitude = -3.49282m,
+                                    Latitude = 50.72704,
+                                    Longitude = -3.49282,
                                     CreatedDate = DateTime.Now
                                 },
                                 Documents = new List<PropertyDocument>
@@ -158,8 +157,8 @@ namespace Website.Data
                                     Line1 = "12",
                                     Line2 = "New Lane",
                                     Town = "Bodmin",
-                                    Latitude = 50.476529600000006M,
-                                    Longitude = -4.702104499999998M
+                                    Latitude = 50.476529600000006,
+                                    Longitude = -4.702104499999998
                                 },
                                 Description = "Lovely 2 bed property",
                                 MonthlyRentAmount = 790,
@@ -200,8 +199,8 @@ namespace Website.Data
                                         Line1 = "12",
                                         Line2 = "The Gables",
                                         Line3 = "Third Line",
-                                        Latitude = 53.41009M,
-                                        Longitude = -2.97843M,
+                                        Latitude = 53.41009,
+                                        Longitude = -2.97843,
                                         Postcode = "L1 4RT",
                                     },
                                     CreatedDate = DateTime.Now,
@@ -240,6 +239,43 @@ namespace Website.Data
                                 }
                             }
                         });
+                    await _context.SaveChangesAsync();
+
+
+                    // Bogus this stuff up!:
+                    var tenantFaker = new Faker<Tenant>("en_GB")
+                        .RuleFor(x => x.FirstName, f => f.Person.FirstName)
+                        .RuleFor(x => x.LastName, f => f.Person.LastName)
+                        .RuleFor(x => x.JobTitle, f => f.Name.JobTitle())
+                        .RuleFor(x => x.PhoneNumber, f => f.Person.Phone)
+                        .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
+                        .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
+                        .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
+
+                    var propertyFaker = new Faker<Property>("en_GB")
+                        .RuleFor(x=>x.NoOfRooms, f => f.Random.Number(1,4))
+                        .RuleFor(x=>x.Address, f=> new Address {
+                            Line1 = f.Address.BuildingNumber(),
+                            Line2 = f.Address.StreetAddress(),
+                            City = f.Address.City(),
+                            Latitude = f.Address.Latitude(),
+                            Longitude = f.Address.Longitude(),
+                            Postcode = f.Address.ZipCode(),
+                        })
+                        .RuleFor(x=>x.Description, f=>f.Lorem.Paragraph())
+                        .RuleFor(x=>x.MonthlyRentAmount, f=>f.Random.Number(500,4000))
+                        .RuleFor(x=>x.PurchaseDate, f=>f.Date.Past())
+                        .RuleFor(x=>x.Tenants, f=>tenantFaker.Generate(f.Random.Number(3,8)))
+                        .RuleFor(x=>x.PropertyValue, f=>f.Random.Double(100000, 1000000));
+
+                    var PortFolioFaker = new Faker<Portfolio>("en_GB")
+                     .RuleFor(o => o.Name, f => f.Address.County())
+                     .RuleFor(o => o.Owner, f => f.PickRandom(_context.Users.ToArray()))
+                     .RuleFor(x => x.Properties, f=> propertyFaker.Generate(f.Random.Number(4,12)))
+                     .RuleFor(o => o.CreatedDate, f => f.Date.Past());
+
+                    var bogusPortilios = PortFolioFaker.Generate(10);
+                    await _context.Portfolios.AddRangeAsync(bogusPortilios);
                     await _context.SaveChangesAsync();
                 }
             }

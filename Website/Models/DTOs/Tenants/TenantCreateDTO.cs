@@ -8,8 +8,8 @@ namespace Website.Models.DTOs.Tenants
     public class TenantCreateDTO
     {
         public Guid Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset UpdatedDate { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -28,11 +28,11 @@ namespace Website.Models.DTOs.Tenants
 
         [Display(Name = "Date Tenancy Started")]
         [DataType(DataType.Date)]
-        public DateTime TenancyStartDate { get; set; }
+        public DateTimeOffset TenancyStartDate { get; set; }
 
         [Display(Name = "Date Tenancy Ended")]
         [DataType(DataType.Date)]
-        public DateTime? TenancyEndDate { get; set; }
+        public DateTimeOffset? TenancyEndDate { get; set; }
 
         public virtual Property Property { get; set; }
 

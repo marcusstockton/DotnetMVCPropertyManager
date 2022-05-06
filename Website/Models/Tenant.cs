@@ -16,10 +16,10 @@ namespace Website.Models
         public string Nationality { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime TenancyStartDate { get; set; }
+        public DateTimeOffset TenancyStartDate { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime? TenancyEndDate { get; set; }
+        public DateTimeOffset? TenancyEndDate { get; set; }
 
         public virtual Property Property { get; set; }
         public string TenantImage { get; set; }

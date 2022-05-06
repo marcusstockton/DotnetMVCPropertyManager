@@ -17,7 +17,7 @@ namespace Website.Models.DTOs.Properties
         public Guid Id { get; set; }
 
         [Display(Name = "Date Purchased"), DataType(DataType.Date)]
-        public DateTime PurchaseDate { get; set; }
+        public DateTimeOffset PurchaseDate { get; set; }
 
         [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed"), DisplayFormat(DataFormatString = "{0:C}")]
         public double PropertyValue { get; set; }
@@ -45,9 +45,9 @@ namespace Website.Models.DTOs.Properties
         public virtual List<Models.PropertyImage> Images { get; set; }
 
         [Display(Name = "Date Created"), DataType(DataType.DateTime)]
-        public DateTime CreatedDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
 
         [Display(Name = "Date Updated"), DataType(DataType.DateTime)]
-        public DateTime? UpdatedDate { get; set; }
+        public DateTimeOffset? UpdatedDate { get; set; }
     }
 }

@@ -11,19 +11,22 @@ namespace Website.Models.DTOs.Portfolios
         public Guid Id { get; set; }
 
         [Display(Name = "Created Date")]
-        public DateTime CreatedDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
 
         [Display(Name = "Updated Date")]
-        public DateTime? UpdatedDate { get; set; }
+        public DateTimeOffset? UpdatedDate { get; set; }
 
         [Display(Name = "# Properties")]
-        public int NumberOfProperties { get { return Properties.Count(); } }
+        public int NumberOfProperties
+        { get { return Properties.Count(); } }
 
         [Display(Name = "Total Property Value")]
-        public double TotalPropertyValue { get { return Properties.Select(x => x.PropertyValue).Sum(); } }
+        public double TotalPropertyValue
+        { get { return Properties.Select(x => x.PropertyValue).Sum(); } }
 
         [Display(Name = "Gross Income")]
-        public double GrossIncome { get { return Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
+        public double GrossIncome
+        { get { return Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
 
         public string Name { get; set; }
         public virtual ApplicationUser Owner { get; set; }

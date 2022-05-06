@@ -41,7 +41,7 @@ namespace Website.Areas
         {
             using (HttpClient client = new HttpClient())
             {
-                var url = $"https://image.maps.ls.hereapi.com/mia/1.6/mapview?apiKey={_apiKey}&lat={lat}&lon={lon}&vt=0&z=12";
+                var url = $"https://image.maps.ls.hereapi.com/mia/1.6/mapview?apiKey={_apiKey}&c={lat},{lon}&vt=0&z=12";
                 var response = await client.GetByteArrayAsync(url);
                 return Ok("image/jpeg;base64," + Convert.ToBase64String(response));
             }

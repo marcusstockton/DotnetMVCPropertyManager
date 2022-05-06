@@ -11,12 +11,14 @@ namespace Website.Models.DTOs.PropertyDocuments
 
         [Display(Name = "Document Type")]
         public Guid DocumentTypeId { get; set; }
-        public bool Expires { get; set; }
-        [Display(Name = "Active From")]
-        public DateTime? ActiveFrom { get; set; }
 
-        [Display(Name ="Expiry Date")]
-        public DateTime? ExpiryDate { get; set; }
+        public bool Expires { get; set; }
+
+        [Display(Name = "Active From")]
+        public DateTimeOffset? ActiveFrom { get; set; }
+
+        [Display(Name = "Expiry Date")]
+        public DateTimeOffset? ExpiryDate { get; set; }
 
         public Guid PropertyId { get; set; }
     }

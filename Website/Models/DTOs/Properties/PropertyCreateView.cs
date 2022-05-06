@@ -15,7 +15,7 @@ namespace Website.Models.DTOs.Properties
         }
 
         [Display(Name = "Date Of Purchase"), DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}"), DataType(DataType.Date)]
-        public DateTime? PurchaseDate { get; set; }
+        public DateTimeOffset? PurchaseDate { get; set; }
 
         [Display(Name = "Property Value")]
         public double PropertyValue { get; set; }

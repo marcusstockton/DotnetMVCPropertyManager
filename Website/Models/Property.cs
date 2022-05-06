@@ -11,7 +11,7 @@ namespace Website.Models
             Documents = new List<PropertyDocument> { };
         }
 
-        public DateTime PurchaseDate { get; set; }
+        public DateTimeOffset PurchaseDate { get; set; }
 
         [Range(1, 100)]
         public int NoOfRooms { get; set; }

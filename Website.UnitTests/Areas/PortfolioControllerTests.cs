@@ -30,7 +30,7 @@ namespace Website.Areas.Tests
             var config = new MapperConfiguration(cfg => cfg.AddProfile(portfolioProfile));
             _mapper = new Mapper(config);
 
-            _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com")}, "Owner"));
+            _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
         }
 
         [TestMethod()]
@@ -60,6 +60,5 @@ namespace Website.Areas.Tests
             Assert.AreEqual(portfolioId, firstRecord.Id);
             Assert.AreEqual("Test", firstRecord.Name);
         }
-
     }
 }

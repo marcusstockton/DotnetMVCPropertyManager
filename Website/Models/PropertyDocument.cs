@@ -12,7 +12,7 @@ namespace Website.Models
         public virtual DocumentType DocumentType { get; set; } // EPC, Certificates etc...
         public virtual Property Property { get; set; }
         public bool Expires { get; set; }
-        public DateTime? ActiveFrom { get; set; }
-        public DateTime? ExpirationDate { get; set; } // When the document runs out.
+        public DateTimeOffset? ActiveFrom { get; set; }
+        public DateTimeOffset? ExpirationDate { get; set; } // When the document runs out.
     }
 }

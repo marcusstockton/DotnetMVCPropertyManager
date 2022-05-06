@@ -20,7 +20,7 @@ namespace Website.Controllers.Tests
         private readonly Mock<IPortfolioService> _portfolioServiceMock = new Mock<IPortfolioService>();
         private readonly IMapper _mapper;
 
-        private Guid _portfolio1Id;
+        private readonly Guid _portfolio1Id;
         private Portfolio _portfolio1;
         private ClaimsPrincipal _user;
 
@@ -122,7 +122,8 @@ namespace Website.Controllers.Tests
                 Id = existingPortfolioId
             };
 
-            _portfolioServiceMock.Setup(x => x.UpdatePortfolio(portfolio)).ReturnsAsync(new Portfolio {
+            _portfolioServiceMock.Setup(x => x.UpdatePortfolio(portfolio)).ReturnsAsync(new Portfolio
+            {
                 CreatedDate = DateTime.Now.AddDays(-23),
                 Name = "Updated Test",
                 OwnerId = "1",
