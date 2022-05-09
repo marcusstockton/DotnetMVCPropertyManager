@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,17 +12,44 @@ namespace Website.Areas
     [ApiController]
     public class TenantController : ControllerBase
     {
-        [HttpGet("job-title-autocomplete")]
+        private readonly ILogger<TenantController> _logger;
+        private List<string> JobTitles = new List<string>(); // move this into a singleton service? 
+
+        public TenantController(ILogger<TenantController> logger)
+        {
+            _logger = logger;
+        }
+
+        private async Task GetJobTitles()
+        {
+            var url = "https://raw.githubusercontent.com/jneidel/job-titles/master/job-titles.json";
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var data = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<JobTitleAutocompleteResponse>(data);
+                JobTitles = result.JobTitles.ToList();
+            }
+        }
+
+        // /api/Tenant/job-title-autocomplete?jobTitle="software"
+        [HttpGet("job-title-autocomplete")] 
         public async Task<ActionResult> JobTitleAutoComplete(string jobTitle)
         {
-            var url = $"http://api.dataatwork.org/v1/jobs/autocomplete?begins_with={jobTitle}";
-            HttpClient req = new HttpClient();
-            var content = await req.GetAsync(url);
-            if (content.IsSuccessStatusCode)
+            _logger.LogInformation($"{nameof(JobTitleAutoComplete)} finding job titles with {jobTitle}");
+
+            if (!JobTitles.Any())
             {
-                return Ok(content.Content.ReadAsStringAsync().Result);
+                await GetJobTitles();
             }
-            return BadRequest(content);
+            var jobTitles = JobTitles.Where(x => x.Contains(jobTitle)).ToList();
+            return Ok(jobTitles);
         }
+    }
+
+    class JobTitleAutocompleteResponse
+    {
+        [JsonProperty("job-titles")]
+        public string[] JobTitles { get; set; }
     }
 }

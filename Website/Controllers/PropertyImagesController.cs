@@ -51,6 +51,18 @@ namespace Website.Controllers
             return View(propertyImage);
         }
 
+        public async Task<IActionResult> ImagesForProperty(Guid propertyId)
+        {
+            if(propertyId == Guid.Empty)
+            {
+                return NotFound();
+            }
+            var propertyImages = await _context.PropertyImages
+                .Where(m => m.Property.Id == propertyId).ToListAsync();
+
+            return View(propertyImages);
+        }
+
         // GET: PropertyImages/Create
         public IActionResult Create(Guid propertyId)
         {
@@ -68,6 +80,10 @@ namespace Website.Controllers
             {
                 var property = await _context.Properties.Include(x => x.Portfolio).SingleOrDefaultAsync(x => x.Id == propertyImage.PropertyId);
                 var file = await _propertyImageService.CreateImageForProperty(property, propertyImage.Image);
+                if (file)
+                {
+                    return RedirectToAction(nameof(ImagesForProperty), new { propertyId = property.Id });
+                }
                 return RedirectToAction("GetPropertyById", nameof(PropertyController), new { portfolioId = property.Portfolio.Id, propertyId = propertyImage.PropertyId });
             }
             return View(propertyImage);
@@ -145,12 +161,17 @@ namespace Website.Controllers
         // POST: PropertyImages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, Guid? propertyId, string returnUrl)
         {
             var propertyImage = await _context.PropertyImages.FindAsync(id);
             _context.PropertyImages.Remove(propertyImage);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return Redirect(returnUrl + "?propertyId=" + propertyId);
+            
         }
 
         private bool PropertyImageExists(Guid id)

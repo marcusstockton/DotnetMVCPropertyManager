@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    console.log("createTenantModal.js loaded!");
     $('#tenantCreateButton').click(function () {
         var portfolioId = $('#portfolio_id').val();
         var propertyId = $('#property_id').val();

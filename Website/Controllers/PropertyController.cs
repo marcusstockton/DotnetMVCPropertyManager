@@ -64,14 +64,14 @@ namespace Website.Controllers
             {
                 var updatedProperty = _mapper.Map<Property>(property);
                 var portfolio = _mapper.Map<Portfolio>(property.Portfolio);
-                if (images.Any())
-                {
-                    var imagesSaved = await _propertyImageService.CreateImagesForProperty(updatedProperty, images);
-                }
-                if (documents.Any())
-                {
-                    await _propertyDocumentService.CreatePropertyDocumentsForProperty(updatedProperty, documents);
-                }
+                //if (images.Any())
+                //{
+                //    var imagesSaved = await _propertyImageService.CreateImagesForProperty(updatedProperty, images);
+                //}
+                //if (documents.Any())
+                //{
+                //    await _propertyDocumentService.CreatePropertyDocumentsForProperty(updatedProperty, documents);
+                //}
 
                 await _propertyService.UpdateProperty(updatedProperty);
                 return RedirectToAction(nameof(Detail), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })

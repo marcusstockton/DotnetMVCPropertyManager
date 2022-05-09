@@ -65,7 +65,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="NoOfRooms" class="control-label"></label>
-                        <input asp-for="NoOfRooms" class="form-control" />
+                        <input asp-for="NoOfRooms" class="form-control" type="number"/>
                         <span asp-validation-for="NoOfRooms" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -75,13 +75,17 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="MonthlyRentAmount" class="control-label"></label>
-                        <input asp-for="MonthlyRentAmount" class="form-control" />
+                        <input asp-for="MonthlyRentAmount" type="number" class="form-control" />
                         <span asp-validation-for="MonthlyRentAmount" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Images" class="control-label"></label>
-                        <input type="file" asp-for="Images" name="images" />
+                        @foreach(var image in Model.Images)
+                        {
+                            <p>@image.FileName</p>
+                        }
                     </div>
+                        <a asp-action="ImagesForProperty" asp-controller="PropertyImages" asp-route-propertyId="@Model.Id" class="btn btn-primary">Manage Images</a>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
@@ -94,6 +98,9 @@
 <div>
     <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id">Back to List</a>
 </div>
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

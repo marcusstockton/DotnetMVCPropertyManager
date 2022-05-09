@@ -117,6 +117,7 @@ namespace Website.Services
                                 FileType = Path.GetExtension(filePath),
                                 Property = property,
                             });
+                        await _context.SaveChangesAsync();
                     }
                 }
                 else

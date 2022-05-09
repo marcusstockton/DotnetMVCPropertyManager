@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    console.log("jobTitleAutocomplete.js loaded!");
     $('#JobTitle').autocomplete({
         delay: 500,
         source: function (request, response) {

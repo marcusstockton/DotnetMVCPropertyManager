@@ -2,8 +2,35 @@
 @{
     ViewData["Title"] = "Property Details";
 }
-
-@functions{
+<style>
+dd {
+    margin: 0;
+}
+dd::after {
+    content: '\A';
+    white-space: pre-line;
+}
+dd:last-of-type::after {
+    content: '';
+}
+dd, dt {
+    display: inline;
+}
+dd, dt, .address {
+    vertical-align: middle;
+}
+dt {
+    font-weight: bolder;
+}
+dt::after {
+    content: ': ';
+}
+.address {
+    display: inline-block;
+    white-space: pre;
+}
+</style>
+@functions {
     string Title()
     {
         if (Model != null)
@@ -75,146 +102,142 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div class="container row">
-                <dl class="col-md-12">
-                    @Html.HiddenFor(x => x.Portfolio.Id, new { @id = "portfolio_id" })
-                    @Html.HiddenFor(x => x.Id, new { @id = "property_id" })
-                    @Html.HiddenFor(x => x.Address.Latitude)
-                    @Html.HiddenFor(x => x.Address.Longitude)
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.PurchaseDate)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.PurchaseDate)
-                        </dd>
-                    </div>
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.PropertyValue)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.PropertyValue)
-                        </dd>
-                    </div>
-                    <div class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Address)
-                        </dt>
-                        <dd class="col-sm-6">
-                            <dl>
-                                <div class="row">
-                                    <dt class="col-sm-3 small text-muted text-uppercase">@Html.DisplayNameFor(address => address.Address.Line1)</dt>
-                                    <dd class="col-sm-9">@Html.DisplayFor(address => address.Address.Line1)</dd>
-                                </div>
-                                <div class="row">
-                                    <dt class="col-sm-3 small text-muted text-uppercase">@Html.DisplayNameFor(address => address.Address.Line2)</dt>
-                                    <dd class="col-sm-9">@Html.DisplayFor(address => address.Address.Line2)</dd>
-                                </div>
-                                <div class="row">
-                                    <dt class="col-sm-3 small text-muted text-uppercase">@Html.DisplayNameFor(address => address.Address.Line3)</dt>
-                                    <dd class="col-sm-9">@Html.DisplayFor(address => address.Address.Line3)</dd>
-                                </div>
-                                <div class="row">
-                                    <dt class="col-sm-3 small text-muted text-uppercase">@Html.DisplayNameFor(address => address.Address.Postcode)</dt>
-                                    <dd class="col-sm-9">@Html.DisplayFor(address => address.Address.Postcode)</dd>
-                                </div>
-                                <div class="row">
-                                    <dt class="col-sm-3 small text-muted text-uppercase">@Html.DisplayNameFor(address => address.Address.Town)</dt>
-                                    <dd class="col-sm-9">@Html.DisplayFor(address => address.Address.Town)</dd>
-                                </div>
-                                <div class="row">
-                                    <dt class="col-sm-3 small text-muted text-uppercase">@Html.DisplayNameFor(address => address.Address.City)</dt>
-                                    <dd class="col-sm-9">@Html.DisplayFor(address => address.Address.City)</dd>
-                                </div>
+            @Html.HiddenFor(x => x.Portfolio.Id, new { @id = "portfolio_id" })
+            @Html.HiddenFor(x => x.Id, new { @id = "property_id" })
+            @Html.HiddenFor(x => x.Address.Latitude)
+            @Html.HiddenFor(x => x.Address.Longitude)
+            <div class="row">
+                <div class="col-md-8">
+                    <dl>
+                        <dt>@Html.DisplayNameFor(model => model.PurchaseDate)</dt>
+                        <dd>@Html.DisplayFor(model => model.PurchaseDate)</dd>
+
+                        <dt>@Html.DisplayNameFor(model => model.PropertyValue)</dt>
+                        <dd>@Html.DisplayFor(model => model.PropertyValue)</dd>
+
+                        <dt>@Html.DisplayNameFor(model => model.Address)</dt>
+                        <dd>
+                            <dl style="padding-left:15px;">
+                                <dt>@Html.DisplayNameFor(address => address.Address.Line1)</dt>
+                                <dd>@Html.DisplayFor(model => model.Address.Line1)</dd>
+                                <dt>@Html.DisplayNameFor(address => address.Address.Line2)</dt>
+                                <dd>@Html.DisplayFor(model => model.Address.Line2)</dd>
+                                <dt>@Html.DisplayNameFor(address => address.Address.Line3)</dt>
+                                <dd>@Html.DisplayFor(model => model.Address.Line3)</dd>
+                                <dt>@Html.DisplayNameFor(address => address.Address.Postcode)</dt>
+                                <dd>@Html.DisplayFor(model => model.Address.Postcode)</dd>
+                                <dt>@Html.DisplayNameFor(address => address.Address.Town)</dt>
+                                <dd>@Html.DisplayFor(model => model.Address.Town)</dd>
+                                <dt>@Html.DisplayNameFor(address => address.Address.City)</dt>
+                                <dd>@Html.DisplayFor(model => model.Address.City)</dd>
                             </dl>
                         </dd>
-                        <span class="col-sm-4">
-                            <img src="#" alt="Postcode image" width="200" height="200" hidden="hidden" id="postcodeImg" />
-                        </span>
-                    </div>
+                    </dl>
+                </div>
+                <div class="col-md-4">
+                    <img src="#" alt="Postcode image" hidden="hidden" id="postcodeImg" class="img-thumbnail"/>
+                </div>
+            </div>
+            <div class="row">
+                <dl>
+                    <dt>@Html.DisplayNameFor(model => model.MonthlyRentAmount)</dt>
+                    <dd>@Html.DisplayFor(model => model.MonthlyRentAmount)</dd>
 
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.MonthlyRentAmount)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.MonthlyRentAmount)
-                        </dd>
-                    </div>
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.NoOfRooms)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.NoOfRooms)
-                        </dd>
-                    </div>
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.Description)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Description)
-                        </dd>
-                    </div>
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.CreatedDate)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.CreatedDate)
-                        </dd>
-                    </div>
-                    <div class="row">
-                        <dt class="col-sm-2 small text-muted text-uppercase">
-                            @Html.DisplayNameFor(model => model.UpdatedDate)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.UpdatedDate)
-                        </dd>
-                    </div>
+                    <dt>@Html.DisplayNameFor(model => model.NoOfRooms)</dt>
+                    <dd>@Html.DisplayFor(model => model.NoOfRooms)</dd>
 
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(x => x.Images)
-                    </dt>
-                    <dd class="col-sm-10 table-responsive">
+                    <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+                    <dd>@Html.DisplayFor(model => model.Description)</dd>
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(x => x.Images.First().FileName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(x => x.Images.First().FileType)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(x => x.Images.First().CreatedDate)
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.Images.Count; i++)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(x => x.Images[i].FileName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(x => x.Images[i].FileType)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(x => x.Images[i].CreatedDate)
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </dd>
+                    <dt>@Html.DisplayNameFor(model => model.UpdatedDate)</dt>
+                    <dd>@Html.DisplayFor(model => model.UpdatedDate)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.CreatedDate)</dt>
+                    <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>
+                </dl>
+            </div>
+
+            @*
+                <div class="row">
+                <dt class="col-sm-2 small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.MonthlyRentAmount)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MonthlyRentAmount)
+                </dd>
+                </div>
+                <div class="row">
+                <dt class="col-sm-2 small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.NoOfRooms)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.NoOfRooms)
+                </dd>
+                </div>
+                <div class="row">
+                <dt class="col-sm-2 small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+                </dd>
+                </div>
+                <div class="row">
+                <dt class="col-sm-2 small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
+                </div>
+                <div class="row">
+                <dt class="col-sm-2 small text-muted text-uppercase">
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UpdatedDate)
+                </dd>
+                </div>
+
+                <dt class="col-sm-2">
+                @Html.DisplayNameFor(x => x.Images)
+                </dt>
+                <dd class="col-sm-10 table-responsive">
+
+                <table class="table">
+                <thead>
+                <tr>
+                <th>
+                @Html.DisplayNameFor(x => x.Images.First().FileName)
+                </th>
+                <th>
+                @Html.DisplayNameFor(x => x.Images.First().FileType)
+                </th>
+                <th>
+                @Html.DisplayNameFor(x => x.Images.First().CreatedDate)
+                </th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.Images.Count; i++)
+                {
+                <tr>
+                <td>
+                @Html.DisplayFor(x => x.Images[i].FileName)
+                </td>
+                <td>
+                @Html.DisplayFor(x => x.Images[i].FileType)
+                </td>
+                <td>
+                @Html.DisplayFor(x => x.Images[i].CreatedDate)
+                </td>
+                </tr>
+                }
+                </tbody>
+                </table>
+                </dd>
                 </dl>
 
-            </div>
+                </div>*@
         </div>
         <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
             @await Html.PartialAsync("/Views/Property/Partial/_PropertyImages.cshtml", Model.Images, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
@@ -238,55 +261,55 @@
     </div>
 </div>
 @section Scripts {
-    <script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
-    <script src=@Url.Content("~/js/Tenant/jobTitleAutocomplete.js")></script>
-    <script type="text/javascript">
-        $(document).ready(() => {
+<script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
+<script src=@Url.Content("~/js/Tenant/jobTitleAutocomplete.js")></script>
+<script type="text/javascript">
+    $(document).ready(() => {
 
-            let url = location.href.replace(/\/$/, "");
+        let url = location.href.replace(/\/$/, "");
 
-            if (location.hash) {
-                const hash = url.split("#");
-                $('#nav-tab a[href="#' + hash[1] + '"]').tab("show");
-                url = location.href.replace(/\/#/, "#");
-                history.replaceState(null, null, url);
-                setTimeout(() => {
-                    $(window).scrollTop(0);
-                }, 400);
+        if (location.hash) {
+            const hash = url.split("#");
+            $('#nav-tab a[href="#' + hash[1] + '"]').tab("show");
+            url = location.href.replace(/\/#/, "#");
+            history.replaceState(null, null, url);
+            setTimeout(() => {
+                $(window).scrollTop(0);
+            }, 400);
+        }
+
+        $('a[data-toggle="tab"]').on("click", function () {
+            let newUrl;
+            const hash = $(this).attr("href");
+            if (hash == "#nav-home") {
+                newUrl = url.split("#")[0];
+            } else {
+                newUrl = url.split("#")[0] + hash;
             }
-
-            $('a[data-toggle="tab"]').on("click", function () {
-                let newUrl;
-                const hash = $(this).attr("href");
-                if (hash == "#nav-home") {
-                    newUrl = url.split("#")[0];
-                } else {
-                    newUrl = url.split("#")[0] + hash;
-                }
-                newUrl += "/";
-                history.replaceState(null, null, newUrl);
-            });
-
-            var addressLat = $('#Address_Latitude').val();
-            var addressLon = $('#Address_Longitude').val();
-            if (addressLat != '0.000000000' && addressLon != '0.000000000') {
-                $.ajax({
-                    url: "../api/address/GetMapFromLatLong",
-                    data: {
-                        "lat": addressLat,
-                        "lon": addressLon
-                    },
-                    cache: false,
-                    type: "GET",
-                    success: function (response) {
-                        $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
-                    },
-                    error: function (xhr) {
-                        console.error(xhr);
-                    }
-                });
-            }
-
+            newUrl += "/";
+            history.replaceState(null, null, newUrl);
         });
-    </script>
+
+        var addressLat = $('#Address_Latitude').val();
+        var addressLon = $('#Address_Longitude').val();
+        if (addressLat != '0.000000000' && addressLon != '0.000000000') {
+            $.ajax({
+                url: "../api/address/GetMapFromLatLong",
+                data: {
+                    "lat": addressLat,
+                    "lon": addressLon
+                },
+                cache: false,
+                type: "GET",
+                success: function (response) {
+                    $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
+                },
+                error: function (xhr) {
+                    console.error(xhr);
+                }
+            });
+        }
+
+    });
+</script>
 }
