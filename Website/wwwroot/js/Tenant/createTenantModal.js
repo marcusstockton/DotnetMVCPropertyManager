@@ -49,4 +49,32 @@
             }
         });
     });
+
+    $('#tenantCreateModal').on('keyup', '#JobTitle', function (event) {
+        var target = $(this);
+        var url = "../api/Tenant/job-title-autocomplete"
+        target.autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: url,
+                    dataType: "json",
+                    data: {
+                        jobTitle: request.term
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item,
+                                value: item
+                            };
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+        });
+    });
+    
 });
