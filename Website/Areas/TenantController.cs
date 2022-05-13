@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Website.Services;
 
 namespace Website.Areas
 {
@@ -13,37 +14,24 @@ namespace Website.Areas
     public class TenantController : ControllerBase
     {
         private readonly ILogger<TenantController> _logger;
-        private List<string> JobTitles = new List<string>(); // move this into a singleton service? 
+        private readonly IJobTitleService _jobTitleService;
 
-        public TenantController(ILogger<TenantController> logger)
+        public TenantController(ILogger<TenantController> logger, IJobTitleService jobTitleService)
         {
             _logger = logger;
+            _jobTitleService = jobTitleService;
         }
 
-        private async Task GetJobTitles()
-        {
-            var url = "https://raw.githubusercontent.com/jneidel/job-titles/master/job-titles.json";
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.GetAsync(url);
-                var data = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<JobTitleAutocompleteResponse>(data);
-                JobTitles = result.JobTitles.ToList();
-            }
-        }
 
         // /api/Tenant/job-title-autocomplete?jobTitle="software"
         [HttpGet("job-title-autocomplete")] 
         public async Task<ActionResult> JobTitleAutoComplete(string jobTitle)
         {
             _logger.LogInformation($"{nameof(JobTitleAutoComplete)} finding job titles with {jobTitle}");
-
-            if (!JobTitles.Any())
-            {
-                await GetJobTitles();
-            }
-            var jobTitles = JobTitles.Where(x => x.Contains(jobTitle)).ToList();
-            return Ok(jobTitles);
+            var jobTitles = await _jobTitleService.JobTitlesAsync();
+            
+            var jobTitlesFiltered = jobTitles.Where(x => x.Contains(jobTitle)).ToList();
+            return Ok(jobTitlesFiltered);
         }
     }
 

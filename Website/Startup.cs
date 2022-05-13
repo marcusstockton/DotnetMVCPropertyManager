@@ -83,6 +83,8 @@ namespace Website
             services.TryAddScoped<IPropertyImageService, PropertyImageService>();
             services.TryAddScoped<IPropertyService, PropertyService>();
             services.TryAddScoped<ITenantService, TenantService>();
+            services.TryAddScoped<IJobTitleService, JobTitleServiceCache>();
+
 
             services.TryAddTransient<IEmailSender, EmailService>();
             services.TryAddTransient<DataSeeder>();

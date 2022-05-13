@@ -21,10 +21,11 @@ namespace Website.Services
             _logger = logger;
         }
 
-        public async Task<List<Portfolio>> GetPortfolios()
+        public IQueryable<Portfolio> GetPortfolios()
         {
             _logger.LogInformation("Retrieving all portfolio's");
-            return await _context.Portfolios.ToListAsync();
+            var portfolios = _context.Portfolios.AsQueryable();
+            return portfolios;
         }
 
         public async Task<List<Portfolio>> GetMyPortfolios(string userId)
