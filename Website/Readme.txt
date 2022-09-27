@@ -11,7 +11,7 @@ https://docs.microsoft.com/en-us/bingmaps/articles/create-a-custom-map-url
 https://www.bing.com/maps?cp=50.7218017578125~-3.5336170196533205&lvl=15&style=r
 
 
-
+Move the HttpClient creation into startup ala: services.AddHttpClient() - Update AddressController to use this.
 
 
 Migrations:
