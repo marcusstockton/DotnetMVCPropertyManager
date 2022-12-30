@@ -1,5 +1,9 @@
 ﻿@model Website.Models.DTOs.Tenants.TenantDTO
 
+@{
+    var nationalityList = ViewData["Nationalities"] as IEnumerable<SelectListItem>;
+}
+
 <h4>TenantDTO</h4>
 <hr />
 <div>
@@ -36,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Nationality" class="control-label"></label>
-                        <input asp-for="Nationality" class="form-control" />
+                        <select asp-for="Nationality.Id" class="form-control" asp-items="@nationalityList" />
                         <span asp-validation-for="Nationality" class="text-danger"></span>
                     </div>
                 </div>
@@ -75,4 +79,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/Tenant/image-preview.js"></script>
+    <script src="~/js/Tenant/tenantForm.js"></script>
+
 }

@@ -13,8 +13,7 @@ namespace Website.Models
         public string PhoneNumber { get; set; }
 
         public string JobTitle { get; set; }
-        public string Nationality { get; set; }
-
+        
         [DataType(DataType.Date)]
         public DateTimeOffset TenancyStartDate { get; set; }
 
@@ -24,5 +23,6 @@ namespace Website.Models
         public virtual Property Property { get; set; }
         public string TenantImage { get; set; }
         public virtual List<Note> Notes { get; set; }
+        public virtual Nationality? Nationality { get; set; }
     }
 }

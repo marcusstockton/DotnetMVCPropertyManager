@@ -26,19 +26,17 @@ namespace Website.Models.DTOs.Tenants
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
 
-        public string Nationality { get; set; }
-
         [Display(Name = "Date Tenancy Started"), DataType(DataType.Date)]
         public DateTimeOffset TenancyStartDate { get; set; }
 
         [Display(Name = "Date Tenancy Ended"), DataType(DataType.Date)]
         public DateTimeOffset? TenancyEndDate { get; set; }
 
-        public virtual Property Property { get; set; }
-
         [Display(Name = "Tenant Profile")]
         public string TenantImage { get; set; }
 
         public virtual List<Note> Notes { get; set; }
+        public virtual Nationality Nationality { get; set; }
+        public virtual Property Property { get; set; }
     }
 }

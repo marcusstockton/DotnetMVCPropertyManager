@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Website.Models;
 
@@ -16,6 +17,7 @@ namespace Website.Interfaces
         Task<Tenant> GetTenantByIdAsync(Guid tenantId);
 
         Task<Tenant> UpdateTenant(Tenant obj);
+        Task<List<Nationality>> GetNationalitiesAsync();
 
         Task<int> SaveAsync();
     }

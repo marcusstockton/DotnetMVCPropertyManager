@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Website.Extensions.Alerts;
 using Website.Interfaces;
@@ -92,11 +94,13 @@ namespace Website.Controllers
             }
 
             var tenant = await _tenantService.GetTenantByIdAsync(id.Value);
+            var nationalities = await _tenantService.GetNationalitiesAsync();
             if (tenant == null)
             {
                 return NotFound();
             }
             var viewData = _mapper.Map<TenantDTO>(tenant);
+            ViewData["Nationalities"] = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             return View(viewData);
         }
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Models;
@@ -81,6 +82,20 @@ namespace Website.Data
                     });
                     await _context.SaveChangesAsync();
                 }
+
+                if (!_context.Nationalities.Any())
+                {
+                    _logger.LogInformation("Creating Nationalities data");
+
+                    var nationalityList = new List<string>() { "Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanee", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiriati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Microneian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean" };
+                    foreach (var nationality in nationalityList)
+                    {
+                        await _context.Nationalities.AddAsync( new Nationality { Name = nationality });
+                    }
+                    await _context.SaveChangesAsync();
+                
+                }
+
                 if (!_context.Portfolios.Any())
                 {
                     _logger.LogInformation("Creating portfolio and related data");
@@ -106,7 +121,7 @@ namespace Website.Data
                                         LastName = "Davidson",
                                         JobTitle = "Art Critic",
                                         PhoneNumber = "074625174385",
-                                        Nationality = "British",
+                                        Nationality = _context.Nationalities.First(x=>x.Name == "British"),
                                         TenancyStartDate = new DateTime(2019, 11, 23),
                                         TenantImage = @"\TenantImages\Example\Male1\download.jpg",
                                         Notes = new List<Note>{ new Note {Description = "An overall good tenant. Keeps himself to himself, and looks after the property" } }
@@ -116,7 +131,7 @@ namespace Website.Data
                                         FirstName = "Tony",
                                         LastName = "Montana",
                                         JobTitle = "Professional Cleaner",
-                                        Nationality = "Cuban",
+                                        Nationality = _context.Nationalities.First(x=>x.Name ==  "Cuban"),
                                         PhoneNumber = "0192838456",
                                         TenancyStartDate = new DateTime(2018, 7, 17),
                                         TenancyEndDate = new DateTime(2019, 11, 12),
@@ -173,7 +188,7 @@ namespace Website.Data
                                         FirstName = "Sally",
                                         LastName = "McBride",
                                         JobTitle = "HR",
-                                        Nationality = "Brazillian",
+                                        Nationality = _context.Nationalities.First(x=>x.Name == "Brazilian"),
                                         Notes = new List<Note>
                                         {
                                             new Note{CreatedDate = DateTime.Now, Description = "Initial meeting she seems lovely"}
@@ -227,7 +242,7 @@ namespace Website.Data
                                             FirstName = "Jane",
                                             LastName = "Eyre",
                                             JobTitle = "Author",
-                                            Nationality = "English",
+                                            Nationality = _context.Nationalities.First(x=>x.Name == "British"),
                                             Notes = new List<Note>
                                             {
                                                 new Note{CreatedDate = DateTime.Now, Description = "Bookish"}
@@ -251,6 +266,7 @@ namespace Website.Data
                         .RuleFor(x => x.JobTitle, f => f.Name.JobTitle())
                         .RuleFor(x => x.PhoneNumber, f => f.Person.Phone)
                         .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
+                        .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
                         .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
                         .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
 

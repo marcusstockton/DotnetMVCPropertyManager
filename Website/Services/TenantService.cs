@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,6 +68,11 @@ namespace Website.Services
         public async Task<Tenant> GetTenantByIdAsync(Guid tenantId)
         {
             return await _context.Tenants.FindAsync(tenantId);
+        }
+
+        public async Task<List<Nationality>> GetNationalitiesAsync()
+        {
+            return await _context.Nationalities.ToListAsync();
         }
 
         public async Task<Tenant> UpdateTenant(Tenant obj)

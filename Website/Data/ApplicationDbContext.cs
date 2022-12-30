@@ -23,6 +23,7 @@ namespace Website.Data
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -62,6 +63,7 @@ namespace Website.Data
             builder.Entity<PropertyDocument>().HasKey(x => x.Id);
             builder.Entity<PropertyImage>().HasKey(x => x.Id);
             builder.Entity<Tenant>().HasKey(x => x.Id);
+            builder.Entity<Nationality>().HasKey(x => x.Id);
             builder.Entity<Note>().HasKey(x => x.Id);
             builder.Entity<DocumentType>(b =>
             {
