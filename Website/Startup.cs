@@ -93,7 +93,6 @@ namespace Website
                 loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
                 seeder.SeedData(true).Wait();
             }
             else
