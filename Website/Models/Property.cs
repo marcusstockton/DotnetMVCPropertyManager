@@ -28,6 +28,7 @@ namespace Website.Models
         [DataType(DataType.Currency)]
         public double PropertyValue { get; set; }
 
+        public byte[] MapImage { get; set; }
         public virtual Portfolio Portfolio { get; set; }
         public Guid AddressId { get; set; }
         public virtual Address Address { get; set; }

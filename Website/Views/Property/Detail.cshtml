@@ -3,7 +3,7 @@
     ViewData["Title"] = "Property Details";
 }
 <style>
-    dd {
+    /*dd {
         margin: 0;
     }
 
@@ -44,7 +44,7 @@
         /* prevent horizontal scrollbar */
         overflow-x: hidden;
     }
-    .ui-autocomplete-loading { background:url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif) no-repeat right center }
+    .ui-autocomplete-loading { background:url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif) no-repeat right center }*/
 
 </style>
 @functions {
@@ -278,55 +278,7 @@
     </div>
 </div>
 @section Scripts {
-<script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
-@*<script src=@Url.Content("~/js/Tenant/jobTitleAutocomplete.js")></script>*@
-<script type="text/javascript">
-    $(document).ready(() => {
+    <script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
+    <script src="~/js/property/property-detail.js" asp-append-version="true"></script>
 
-        let url = location.href.replace(/\/$/, "");
-
-        if (location.hash) {
-            const hash = url.split("#");
-            $('#nav-tab a[href="#' + hash[1] + '"]').tab("show");
-            url = location.href.replace(/\/#/, "#");
-            history.replaceState(null, null, url);
-            setTimeout(() => {
-                $(window).scrollTop(0);
-            }, 400);
-        }
-
-        $('a[data-toggle="tab"]').on("click", function () {
-            let newUrl;
-            const hash = $(this).attr("href");
-            if (hash == "#nav-home") {
-                newUrl = url.split("#")[0];
-            } else {
-                newUrl = url.split("#")[0] + hash;
-            }
-            newUrl += "/";
-            history.replaceState(null, null, newUrl);
-        });
-
-        var addressLat = $('#Address_Latitude').val();
-        var addressLon = $('#Address_Longitude').val();
-        if (addressLat != '0.000000000' && addressLon != '0.000000000') {
-            $.ajax({
-                url: "../api/address/GetMapFromLatLong",
-                data: {
-                    "lat": addressLat,
-                    "lon": addressLon
-                },
-                cache: false,
-                type: "GET",
-                success: function (response) {
-                    $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
-                },
-                error: function (xhr) {
-                    console.error(xhr);
-                }
-            });
-        }
-
-    });
-</script>
 }
