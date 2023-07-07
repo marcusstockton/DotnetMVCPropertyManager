@@ -6,7 +6,7 @@
 }
 else
 {
-    <table class="table table-hover table-sm">
+    <table class="table table-hover table-sm" id="propertiesTable">
         <thead>
             <tr>
                 <th>
@@ -33,7 +33,9 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr onclick="location.href = '@(Url.Action("Detail", "Property", new { portfolioId = item.Portfolio.Id, propertyId = item.Id }))'" style="cursor: pointer;">
+                    @Html.HiddenFor(x=> item.Id)
+                    @Html.HiddenFor(x=> item.Portfolio.Id)
                     <td>
                         @Html.DisplayFor(modelItem => item.NoOfRooms)
                     </td>

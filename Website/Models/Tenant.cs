@@ -11,7 +11,8 @@ namespace Website.Models
 
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirth { get; set; }
         public string JobTitle { get; set; }
         
         [DataType(DataType.Date)]

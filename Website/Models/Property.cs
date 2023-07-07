@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Website.Models
 {
@@ -13,12 +15,16 @@ namespace Website.Models
 
         public DateTimeOffset PurchaseDate { get; set; }
 
+
         [Range(1, 100)]
         public int NoOfRooms { get; set; }
 
+        [Column(TypeName = "decimal(18, 2)")]
+        [DataType(DataType.Currency)]
         public double MonthlyRentAmount { get; set; }
         public string Description { get; set; }
 
+        [Column(TypeName = "decimal(18, 2)")]
         [DataType(DataType.Currency)]
         public double PropertyValue { get; set; }
 

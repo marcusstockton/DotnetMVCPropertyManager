@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website.Data;
 
@@ -11,9 +12,11 @@ using Website.Data;
 namespace Website.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230706162028_Adding nullable DateOfBirth to tenant")]
+    partial class AddingnullableDateOfBirthtotenant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,8 +380,8 @@ namespace Website.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("MonthlyRentAmount")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<double>("MonthlyRentAmount")
+                        .HasColumnType("float");
 
                     b.Property<int>("NoOfRooms")
                         .HasColumnType("int");
@@ -386,8 +389,8 @@ namespace Website.Data.Migrations
                     b.Property<Guid?>("PortfolioId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("PropertyValue")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<double>("PropertyValue")
+                        .HasColumnType("float");
 
                     b.Property<DateTimeOffset>("PurchaseDate")
                         .HasColumnType("datetimeoffset");

@@ -7,11 +7,11 @@
     }
     else
     {
-        <div class="card-columns">
+        <div class="card-deck">
             @foreach (var tenant in Model.OrderByDescending(x => x.TenancyStartDate))
             {
-                <div class="card" style="width: 22rem;">
-                    <img class="card-img-top" src="@tenant.TenantImage" style="max-width:340px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
+                <div class="card mb-3" style="min-width: 18rem;">
+                    <img class="card-img-top rounded mx-auto d-block" src="@tenant.TenantImage" style="max-width:340px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
                     <div class="card-body">
                         <h3 class="card-title">@tenant.FirstName @tenant.LastName</h3>
                         <p class="card-text">
@@ -34,6 +34,16 @@
                                 <dd class="col-sm-6">
                                     @Html.DisplayFor(model => tenant.Nationality.Name)
                                 </dd>
+                                @if (tenant.DateOfBirth.HasValue)
+                                {
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.DateOfBirth)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.DateOfBirth)
+                                    </dd>
+                                }
+                                
                                 <dt class="col-sm-6 small text-muted">
                                     @Html.DisplayNameFor(model => tenant.TenancyStartDate)
                                 </dt>

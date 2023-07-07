@@ -25,7 +25,12 @@ namespace Website.Models.DTOs.Tenants
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
 
-        public string Nationality { get; set; }
+        [Display(Name = "Nationality")]
+        public int NationalityId { get; set; }
+
+        [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date)]
+        public DateTimeOffset? DateOfBirth { get; set; }
 
         [Display(Name = "Date Tenancy Started")]
         [DataType(DataType.Date)]

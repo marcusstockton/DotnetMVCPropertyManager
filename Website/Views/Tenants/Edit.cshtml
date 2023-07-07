@@ -1,7 +1,6 @@
 ﻿@model Website.Models.DTOs.Tenants.TenantDTO
 
 @{
-    var nationalityList = ViewData["Nationalities"] as IEnumerable<SelectListItem>;
 }
 
 <h4>TenantDTO</h4>
@@ -11,7 +10,7 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="TenantImage" />
+            @*<input type="hidden" asp-for="TenantImage" />*@
             <input type="hidden" asp-for="CreatedDate" />
             <input type="hidden" asp-for="UpdatedDate" />
             <input type="hidden" asp-for="Property" />
@@ -39,9 +38,14 @@
                         <span asp-validation-for="JobTitle" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Nationality" class="control-label"></label>
-                        <select asp-for="Nationality.Id" class="form-control" asp-items="@nationalityList" />
+                        <label asp-for="NationalityId" class="control-label"></label>
+                        <select asp-for="NationalityId" class="form-control" asp-items="@ViewBag.Nationalities"></select>
                         <span asp-validation-for="Nationality" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth" class="control-label"></label>
+                        <input asp-for="DateOfBirth" class="form-control" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -66,8 +70,11 @@
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </div>
+
+                
+
             </div>
-            
+
         </form>
     </div>
 </div>
@@ -77,7 +84,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script src="~/js/Tenant/image-preview.js"></script>
     <script src="~/js/Tenant/tenantForm.js"></script>
 

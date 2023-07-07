@@ -37,7 +37,9 @@
         </div>
     </div>
 
-    @{await Html.RenderPartialAsync("../Property/Partial/_PropertyList", Model.Properties);}
+    @{
+        await Html.RenderPartialAsync("../Property/Partial/_PropertyList", Model.Properties);
+    }
 
     <a asp-controller="Property" asp-action="Create" asp-route-portfolioId="@Model.Id" class="btn btn-success d-inline-flex align-items-center"><i class="material-icons md-24">add</i> Add New Property</a>
 </div>

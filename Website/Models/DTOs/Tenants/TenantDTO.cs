@@ -7,6 +7,8 @@ namespace Website.Models.DTOs.Tenants
     public class TenantDTO
     {
         public Guid Id { get; set; }
+        [Display(Name ="Nationality")]
+        public int? NationalityId { get; set; }
 
         [Display(Name = "Created Date")]
         public DateTimeOffset CreatedDate { get; set; }
@@ -25,6 +27,8 @@ namespace Website.Models.DTOs.Tenants
 
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
+        [Display(Name = "Date Of Birth"), DataType(DataType.Date)]
+        public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Date Tenancy Started"), DataType(DataType.Date)]
         public DateTimeOffset TenancyStartDate { get; set; }
@@ -34,9 +38,8 @@ namespace Website.Models.DTOs.Tenants
 
         [Display(Name = "Tenant Profile")]
         public string TenantImage { get; set; }
-
         public virtual List<Note> Notes { get; set; }
-        public virtual Nationality Nationality { get; set; }
+        public virtual Nationality? Nationality { get; set; }
         public virtual Property Property { get; set; }
     }
 }

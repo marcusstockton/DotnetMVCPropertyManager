@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Extensions.Alerts;
@@ -58,6 +60,8 @@ namespace Website.Controllers
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
             var tenant = new Tenant { Property = property };
             var tenantDto = _mapper.Map<TenantCreateDTO>(tenant);
+            var nationalities = await _tenantService.GetNationalitiesAsync();
+            ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name}).ToList();
             return PartialView("_TenantCreate", tenantDto);
         }
 
@@ -100,7 +104,8 @@ namespace Website.Controllers
                 return NotFound();
             }
             var viewData = _mapper.Map<TenantDTO>(tenant);
-            ViewData["Nationalities"] = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+
+            ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name, Selected = x.Id == viewData.NationalityId }).ToList();            
             return View(viewData);
         }
 

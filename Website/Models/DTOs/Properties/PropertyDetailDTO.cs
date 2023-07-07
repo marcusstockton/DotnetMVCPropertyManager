@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Website.Models.DTOs.PropertyDocuments;
 using Website.Models.DTOs.Tenants;
 
@@ -19,13 +21,14 @@ namespace Website.Models.DTOs.Properties
         [Display(Name = "Date Purchased"), DataType(DataType.Date)]
         public DateTimeOffset PurchaseDate { get; set; }
 
-        [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed"), DisplayFormat(DataFormatString = "{0:C}")]
+        
+        [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double PropertyValue { get; set; }
 
         [Display(Name = "# Rooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
         public int NoOfRooms { get; set; }
 
-        [Display(Name = "Monthly Rent"), Range(1, 10000, ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:C}")]
+        [DataType(DataType.Currency), Display(Name = "Monthly Rent"), RegularExpression(@"^(\d{4,})|((\d+(\,|\.))+\d{2,})$", ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:#,###0.00}", ApplyFormatInEditMode = true)] 
         public double MonthlyRentAmount { get; set; }
 
         [MaxLength(1000), Description("Describe the property")]
