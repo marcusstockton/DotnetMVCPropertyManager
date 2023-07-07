@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Website.Models.DTOs.Address;
 
 namespace Website.Areas
 {
@@ -14,13 +16,15 @@ namespace Website.Areas
         private string _ukLatLong;
         private string _countryCode;
         private readonly ILogger<AddressController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public AddressController(ILogger<AddressController> logger)
+        public AddressController(ILogger<AddressController> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _apiKey = Environment.GetEnvironmentVariable("HERE_Maps_API_Key", EnvironmentVariableTarget.User);
             _ukLatLong = "55.3781,3.4360"; // UK lat/lon
             _countryCode = "GBP";
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet, Route("getautosuggestion"), ResponseCache(CacheProfileName = "Default30")]
@@ -73,17 +77,61 @@ namespace Website.Areas
         {
             _logger.LogInformation($"{nameof(PostcodeAutoComplete)} querying postcode {postcode}");
 
-            using (HttpClient client = new HttpClient())
+            var client = _httpClientFactory.CreateClient("postcodesioClient");
+            var url = $"{postcode}/autocomplete";
+            var response = await client.GetFromJsonAsync<PostcodeAutoCompleteResult>(url);
+            if (response.status == 200)
             {
-                var url = $"api.postcodes.io/postcodes/{postcode}/autocomplete";
-                var response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
+                return Ok(response.result);
+            }
+
+            return Ok();
+        }
+
+        [HttpGet, Route("postcode-lookup")]
+        public async Task<PostcodeLookup> PostCodeLookup(string postcode)
+        {
+            _logger.LogInformation($"{nameof(PostcodeAutoComplete)} querying postcode {postcode}");
+            if (await VerifyPostcode(postcode))
+            {
+                var client = _httpClientFactory.CreateClient("postcodesioClient");
+                var url = $"{postcode}";
+                var response = await client.GetFromJsonAsync<PostcodeLookup>(url);
+                if (response.status == 200)
                 {
-                    var data = await response.Content.ReadAsStringAsync();
-                    return Ok(data);
+                    return response;
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid Postcode");
                 }
             }
-            return Ok();
+            throw new ArgumentException("Invalid Postcode supplied");
+        }
+
+        private async Task<bool> VerifyPostcode(string postcode)
+        {
+            var client = _httpClientFactory.CreateClient("postcodesioClient");
+            var url = $"{postcode}/validate";
+            var response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonData = await response.Content.ReadFromJsonAsync<VerifyPostcodeResult>();
+                return jsonData.Result;
+            }
+            return false;
+        }
+
+        private class PostcodeAutoCompleteResult
+        {
+            public int status { get; set; }
+            public string[] result { get; set; }
+        }
+
+        public class VerifyPostcodeResult
+        {
+            public int Status { get; set; }
+            public bool Result { get; set; }
         }
     }
 }

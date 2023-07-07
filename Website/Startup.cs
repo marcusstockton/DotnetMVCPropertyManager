@@ -75,7 +75,11 @@ namespace Website
             services.TryAddScoped<ITenantService, TenantService>();
             services.TryAddScoped<IJobTitleService, JobTitleServiceCache>();
 
-            
+            services.AddHttpClient("postcodesioClient", client =>
+            {
+                var url = Configuration.GetSection("ThirdPartyClients:PostcodesIo").GetValue<string>("BaseUrl");
+                client.BaseAddress = new Uri(url);
+            });
 
             services.TryAddTransient<IEmailSender, EmailService>();
             services.TryAddTransient<DataSeeder>();
@@ -93,7 +97,7 @@ namespace Website
                 loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
                 app.UseDeveloperExceptionPage();
-                seeder.SeedData(true).Wait();
+                seeder.SeedData(false).Wait();
             }
             else
             {

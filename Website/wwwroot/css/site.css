@@ -7,6 +7,9 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+.navbar {
+    background-image: linear-gradient(to bottom right, rgba(0, 130, 74,0), rgba(255,255,255,1)) !important;
+}
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
