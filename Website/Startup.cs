@@ -81,6 +81,24 @@ namespace Website
                 client.BaseAddress = new Uri(url);
             });
 
+            services.AddHttpClient("hereApiLookup", client =>
+            {
+                var url = Configuration.GetSection("ThirdPartyClients:HereApiLookup").GetValue<string>("BaseUrl");
+                client.BaseAddress = new Uri(url);
+            });
+
+            services.AddHttpClient("hereApiImages", client =>
+            {
+                var url = Configuration.GetSection("ThirdPartyClients:HereApiImages").GetValue<string>("BaseUrl");
+                client.BaseAddress = new Uri(url);
+            });
+
+            services.AddHttpClient("hereApiAutosuggest", client =>
+            {
+                var url = Configuration.GetSection("ThirdPartyClients:HereApiAutoSuggest").GetValue<string>("BaseUrl");
+                client.BaseAddress = new Uri(url);
+            });
+
             services.TryAddTransient<IEmailSender, EmailService>();
             services.TryAddTransient<DataSeeder>();
 
