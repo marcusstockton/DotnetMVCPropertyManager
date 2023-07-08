@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "Details";
+    var fileLocation = Model.FilePath.Replace(@"D:\Repos\DotnetMVCPropertyManager\Website\wwwroot", @"../..");
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>PropertyDocument</h4>
+    <h4>Property Documents</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -32,7 +33,7 @@
             @Html.DisplayNameFor(model => model.DocumentType)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DocumentType.Id)
+            @Html.DisplayFor(model => model.DocumentType.Description)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ExpirationDate)
@@ -53,6 +54,7 @@
             @Html.DisplayFor(model => model.UpdatedDate)
         </dd>
     </dl>
+    <iframe src="@fileLocation" width="1000" height="400"></iframe>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

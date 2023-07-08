@@ -97,12 +97,12 @@
                         <label asp-for="Images" class="control-label"></label>
                         @foreach(var image in Model.Images)
                         {
-                            <p>@image.FileName</p>
+                            <li>@image.FileName</li>
                         }
                     </div>
                         <a asp-action="ImagesForProperty" asp-controller="PropertyImages" asp-route-propertyId="@Model.Id" class="btn btn-primary">Manage Images</a>
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <input type="submit" value="Save" class="btn btn-success" />
                     </div>
                 </div>
             </div>
@@ -112,6 +112,7 @@
 
 <div>
     <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id">Back to List</a>
+    <a class="btn btn-primary" asp-controller="Property" asp-action="Detail" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" title="View Property">View Property</a>
 </div>
 
 

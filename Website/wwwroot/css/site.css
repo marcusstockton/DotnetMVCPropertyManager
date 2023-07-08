@@ -15,8 +15,7 @@ a {
     color: #0366d6;
 }
 
-.active {
-    /*color: blue !important;*/
+.nav-link.active {
     font-weight: bold;
     /*background-color: lightsteelblue;*/
 }

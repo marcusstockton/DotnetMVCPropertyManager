@@ -126,10 +126,8 @@ namespace Website.Controllers
                 if (profilePic != null)
                 {
                     // Uploaded a new image, delete the existing...
-                    if (await _tenantService.DeleteTenantImage(tenant.TenantImage))
-                    {
-                        tenant.TenantImage = await _tenantService.CreateTenantImage(tenant.Id, profilePic);
-                    }
+                    await _tenantService.DeleteTenantImage(tenant.TenantImage);
+                    tenant.TenantImage = await _tenantService.CreateTenantImage(tenant.Id, profilePic);
                 }
                 var result = await _tenantService.UpdateTenant(tenant);
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Website.Helpers;
 using Website.Interfaces;
@@ -29,7 +30,11 @@ namespace Website.Areas
         public async Task<ActionResult<IList<PortfolioDetailsDto>>> GetMyPortfolios()
         {
             _logger.LogInformation($"{nameof(GetMyPortfolios)} getting my portfolios");
+            var sw = new Stopwatch();
+            sw.Start();
             var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());
+            sw.Stop();
+            _logger.LogInformation($"{nameof(GetMyPortfolios)} took {sw.ElapsedMilliseconds}ms to complete.");
             var portfolioList = _mapper.Map<IList<PortfolioDetailsDto>>(portfolios);
             return Ok(portfolioList);
         }

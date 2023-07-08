@@ -265,7 +265,7 @@ namespace Website.Data
                         .RuleFor(x => x.JobTitle, f => f.Name.JobTitle())
                         .RuleFor(x => x.PhoneNumber, f => f.Person.Phone)
                         .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
-                        .RuleFor(x=>x.DateOfBirth, f=>f.Date.Past(80).OrNull(f))
+                        .RuleFor(x=>x.DateOfBirth, f=>f.Date.Past(80, DateTime.Now.AddYears(-17)))
                         .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
                         .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
                         .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
