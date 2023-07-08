@@ -49,7 +49,7 @@ namespace Website.Areas
         }
 
         [HttpGet, Route("GetMapFromLatLong"), ResponseCache(VaryByQueryKeys = new string[] { "portfolioId", "propertyId", "lat","lon" }, Duration = 1400)]
-        public async Task<IActionResult> GetMapFromLatLong(string portfolioId, string propertyId, decimal lat, decimal lon)
+        public async Task<IActionResult> GetMapFromLatLong(string portfolioId, string propertyId, double lat, double lon)
         {
             _logger.LogInformation($"{nameof(GetMapFromLatLong)} Getting Map for lat lon {lat} {lon}");
             if(Guid.Parse(portfolioId) == Guid.Empty || Guid.Parse(propertyId) == Guid.Empty)
@@ -60,7 +60,7 @@ namespace Website.Areas
             var property = await _propertyService.GetPropertyById(Guid.Parse(portfolioId), Guid.Parse(propertyId));
             if(property != null)
             {
-                if(property.MapImage != null && (decimal)property.Address.Latitude == lat && (decimal)property.Address.Longitude ==lon)
+                if(property.MapImage != null && property.Address.Latitude == lat && property.Address.Longitude ==lon)
                 {
                     return Ok("image/jpeg;base64," + Convert.ToBase64String(property.MapImage));
                 }
