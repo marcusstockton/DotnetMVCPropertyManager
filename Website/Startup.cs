@@ -44,18 +44,7 @@ namespace Website
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            // Auto Mapper Configurations
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new PropertyProfile());
-                mc.AddProfile(new AddressProfile());
-                mc.AddProfile(new TenantProfile());
-                mc.AddProfile(new PortfolioProfile());
-                mc.AddProfile(new DocumentTypeProfile());
-                mc.AddProfile(new PropertyDocumentProfile());
-            });
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews(options => {
                 options.CacheProfiles.Add("Default30", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 30, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Client });
@@ -104,6 +93,7 @@ namespace Website
 
             services.AddResponseCaching();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,6 +117,8 @@ namespace Website
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseHealthChecks("/healthz");
 
             app.UseAuthentication();
             app.UseAuthorization();
