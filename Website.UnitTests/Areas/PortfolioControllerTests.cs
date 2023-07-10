@@ -40,11 +40,11 @@ namespace Website.Areas.Tests
         {
             // Arrange
             var portfolioId = Guid.NewGuid();
-            var results = new List<Portfolio> { new Portfolio { Id = portfolioId, Name = "Test", OwnerId = "1" } };
+            var results = new List<PortfolioDetailsDto> { new PortfolioDetailsDto { Id = portfolioId, Name = "Test", Owner = new ApplicationUser { Id = "1"} } };
 
             _portfolioServiceMock.Setup(x => x.GetMyPortfolios(It.IsAny<string>())).ReturnsAsync(results);
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _mapper, _logger);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _logger);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 

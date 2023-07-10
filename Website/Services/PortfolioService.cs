@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,18 +9,21 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
+using Website.Models.DTOs.Portfolios;
 
 namespace Website.Services
 {
     public class PortfolioService : IPortfolioService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger _logger;
+        private readonly ILogger<PortfolioService> _logger;
+        private readonly IMapper _mapper;
 
-        public PortfolioService(ApplicationDbContext context, ILogger<PortfolioService> logger)
+        public PortfolioService(ApplicationDbContext context, ILogger<PortfolioService> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public IQueryable<Portfolio> GetPortfolios()
@@ -28,13 +33,16 @@ namespace Website.Services
             return portfolios;
         }
 
-        public async Task<List<Portfolio>> GetMyPortfolios(string userId)
+        public async Task<IList<PortfolioDetailsDto>> GetMyPortfolios(string userId)
         {
             _logger.LogInformation($"Retrieving all portfolio's for user id {userId}");
-            return await _context.Portfolios
+            var portfolios = await _context.Portfolios
                 .Include(x => x.Owner)
                 .Where(x => x.Owner.Id == userId)
+                .ProjectTo<PortfolioDetailsDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
+
+            return portfolios;
         }
 
         public async Task<Portfolio> GetPortfolioById(Guid id)

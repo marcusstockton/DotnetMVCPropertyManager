@@ -16,13 +16,11 @@ namespace Website.Areas
     public class PortfolioController : ControllerBase
     {
         private readonly IPortfolioService _context;
-        private readonly IMapper _mapper;
         private readonly ILogger<PortfolioController> _logger;
 
-        public PortfolioController(IPortfolioService context, IMapper mapper, ILogger<PortfolioController> logger)
+        public PortfolioController(IPortfolioService context, ILogger<PortfolioController> logger)
         {
             _context = context;
-            _mapper = mapper;
             _logger = logger;
         }
 
@@ -35,8 +33,8 @@ namespace Website.Areas
             var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());
             sw.Stop();
             _logger.LogInformation($"{nameof(GetMyPortfolios)} took {sw.ElapsedMilliseconds}ms to complete.");
-            var portfolioList = _mapper.Map<IList<PortfolioDetailsDto>>(portfolios);
-            return Ok(portfolioList);
+            sw.Reset();
+            return Ok(portfolios);
         }
     }
 }

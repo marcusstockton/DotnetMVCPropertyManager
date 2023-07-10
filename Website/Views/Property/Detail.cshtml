@@ -154,7 +154,15 @@
     </div>
 </div>
 @section Scripts {
-    <script src="@Url.Content("~/js/Tenant/createTenantModal.js")"></script>
+    <script src="@Url.Content("~/js/Tenant/createTenantModal.js")" asp-append-version="true"></script>
     <script src="~/js/property/property-detail.js" asp-append-version="true"></script>
-
 }
+
+<style>
+    .ui-autocomplete {
+        max-height: 400px;
+        max-width: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>

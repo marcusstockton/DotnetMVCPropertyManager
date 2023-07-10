@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Models;
+using Website.Models.DTOs.Portfolios;
 
 namespace Website.Interfaces
 {
@@ -10,7 +11,7 @@ namespace Website.Interfaces
     {
         IQueryable<Portfolio> GetPortfolios();
 
-        Task<List<Portfolio>> GetMyPortfolios(string userId);
+        Task<IList<PortfolioDetailsDto>> GetMyPortfolios(string userId);
 
         Task<Portfolio> GetPortfolioById(Guid id);
 

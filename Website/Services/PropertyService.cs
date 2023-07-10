@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
+using Website.Models.DTOs.Properties;
 
 namespace Website.Services
 {
@@ -14,11 +17,13 @@ namespace Website.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
-        public PropertyService(ApplicationDbContext context, ILogger<PropertyService> logger)
+        public PropertyService(ApplicationDbContext context, ILogger<PropertyService> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async Task<List<Property>> GetPropertiesForPortfolio(Guid portfolioId)
@@ -26,6 +31,7 @@ namespace Website.Services
             return await _context.Properties
                 .Include(x => x.Address)
                 .Where(x => x.Portfolio.Id == portfolioId)
+                //.ProjectTo<PropertyDetailDTO>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .ToListAsync();
         }

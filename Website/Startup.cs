@@ -44,7 +44,7 @@ namespace Website
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(Program));
 
             services.AddControllersWithViews(options => {
                 options.CacheProfiles.Add("Default30", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 30, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Client });

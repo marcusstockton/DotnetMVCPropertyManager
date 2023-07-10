@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Website.Models;
+using Website.Models.DTOs.Properties;
 
 namespace Website.Interfaces
 {

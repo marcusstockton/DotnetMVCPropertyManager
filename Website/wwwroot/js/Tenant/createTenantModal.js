@@ -55,6 +55,7 @@
         var url = "../api/Tenant/job-title-autocomplete"
         target.autocomplete({
             delay: 500,
+            appendTo: "#tenantCreateForm",
             source: function (request, response) {
                 $.ajax({
                     url: url,
@@ -66,14 +67,20 @@
                     success: function (data) {
                         response($.map(data, function (item) {
                             return {
-                                label: item,
-                                value: item
+                                label: item.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()), // capitalises first letter of each word
+                                value: item.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())
                             };
                         }));
                     }
                 });
             },
             minLength: 2,
+            open: function () {
+                $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+            },
+            close: function () {
+                $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+            }
         });
     });
     
