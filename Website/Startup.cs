@@ -47,8 +47,8 @@ namespace Website
             services.AddAutoMapper(typeof(Program));
 
             services.AddControllersWithViews(options => {
-                options.CacheProfiles.Add("Default30", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 30, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Client });
-                options.CacheProfiles.Add("Default60", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 60, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Client });
+                options.CacheProfiles.Add("Default30", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 30, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Any });
+                options.CacheProfiles.Add("Default60", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 60, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Any });
             }).AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

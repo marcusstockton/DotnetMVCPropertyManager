@@ -28,12 +28,8 @@ namespace Website.Areas
         public async Task<ActionResult<IList<PortfolioDetailsDto>>> GetMyPortfolios()
         {
             _logger.LogInformation($"{nameof(GetMyPortfolios)} getting my portfolios");
-            var sw = new Stopwatch();
-            sw.Start();
             var portfolios = await _context.GetMyPortfolios(this.User.GetUserId());
-            sw.Stop();
-            _logger.LogInformation($"{nameof(GetMyPortfolios)} took {sw.ElapsedMilliseconds}ms to complete.");
-            sw.Reset();
+            _logger.LogInformation($"{nameof(GetMyPortfolios)} complete.");
             return Ok(portfolios);
         }
     }

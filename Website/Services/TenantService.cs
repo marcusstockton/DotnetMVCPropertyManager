@@ -70,6 +70,7 @@ namespace Website.Services
             return await _context.Tenants.FindAsync(tenantId);
         }
 
+
         public async Task<List<Nationality>> GetNationalitiesAsync()
         {
             return await _context.Nationalities.ToListAsync();
