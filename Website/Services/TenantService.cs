@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,18 @@ namespace Website.Services
 {
     public class TenantService : ITenantService
     {
+        private const string nationalityListCacheKey = "nationalityList";
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly ILogger _logger;
+        private IMemoryCache _cache;
 
-        public TenantService(ApplicationDbContext context, IWebHostEnvironment env, ILogger<TenantService> logger)
+        public TenantService(ApplicationDbContext context, IWebHostEnvironment env, ILogger<TenantService> logger, IMemoryCache cache)
         {
             _context = context;
             _env = env;
             _logger = logger;
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task<Tenant> CreateTenant(Tenant tenant)
@@ -73,7 +77,22 @@ namespace Website.Services
 
         public async Task<List<Nationality>> GetNationalitiesAsync()
         {
-            return await _context.Nationalities.ToListAsync();
+            if (_cache.TryGetValue(nationalityListCacheKey, out IEnumerable<Nationality> nationalities))
+            {
+                _logger.Log(LogLevel.Information, "Nationalities list found in cache.");
+            }
+            else
+            {
+                nationalities = await _context.Nationalities.ToListAsync();
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromSeconds(120))
+                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                        .SetPriority(CacheItemPriority.Normal)
+                        .SetSize(1024);
+                _cache.Set(nationalityListCacheKey, nationalities, cacheEntryOptions);
+            }
+            return nationalities.ToList();
         }
 
         public async Task<Tenant> UpdateTenant(Tenant obj)
