@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
@@ -17,6 +18,7 @@ namespace Website.Services
     public class TenantService : ITenantService
     {
         private const string nationalityListCacheKey = "nationalityList";
+        private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly ILogger _logger;
@@ -77,20 +79,37 @@ namespace Website.Services
 
         public async Task<List<Nationality>> GetNationalitiesAsync()
         {
+            _logger.LogInformation("Fetching list of nationalities");
             if (_cache.TryGetValue(nationalityListCacheKey, out IEnumerable<Nationality> nationalities))
             {
-                _logger.Log(LogLevel.Information, "Nationalities list found in cache.");
+                _logger.LogInformation("Nationalities list found in cache.");
             }
             else
             {
-                nationalities = await _context.Nationalities.ToListAsync();
+                try
+                {
+                    await semaphore.WaitAsync();
+                    if (_cache.TryGetValue(nationalityListCacheKey, out nationalities))
+                    {
+                        _logger.LogInformation("Nationalities list found in cache.");
+                    }
+                    else
+                    {
+                        _logger.LogInformation("Nationalities List not found in cache. Fetching from database.");
+                        nationalities = await _context.Nationalities.ToListAsync();
 
-                var cacheEntryOptions = new MemoryCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromSeconds(120))
-                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
-                        .SetPriority(CacheItemPriority.Normal)
-                        .SetSize(1024);
-                _cache.Set(nationalityListCacheKey, nationalities, cacheEntryOptions);
+                        var cacheEntryOptions = new MemoryCacheEntryOptions()
+                                .SetSlidingExpiration(TimeSpan.FromSeconds(120))
+                                .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                                .SetPriority(CacheItemPriority.Normal)
+                                .SetSize(1024);
+                        _cache.Set(nationalityListCacheKey, nationalities, cacheEntryOptions);
+                    }
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
             }
             return nationalities.ToList();
         }
