@@ -40,13 +40,14 @@ namespace Website.Services
             var sw = new Stopwatch();
             sw.Start();
             var portfolios = await _context.Portfolios
-                .Include(x => x.Owner)
-                .Where(x => x.OwnerId == userId)
+                .Include(x=>x.Owner)
+                .Where(x => x.Owner.Id == userId)
                 .ProjectTo<PortfolioDetailsDto>(_mapper.ConfigurationProvider)
-                //.AsNoTracking()
+                .AsNoTracking()
                 .ToListAsync();
             sw.Stop();
             _logger.LogInformation($"{nameof(GetMyPortfolios)} took {sw.ElapsedMilliseconds}ms to complete");
+
             return portfolios;
         }
 

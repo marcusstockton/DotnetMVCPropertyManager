@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Website.Models.DTOs.Portfolios;
 using Website.Models.DTOs.PropertyDocuments;
 using Website.Models.DTOs.Tenants;
 
@@ -34,7 +33,7 @@ namespace Website.Models.DTOs.Properties
         [MaxLength(1000), Description("Describe the property")]
         public string Description { get; set; }
 
-        public virtual Portfolio Portfolio { get; set; }
+        public virtual PortfolioDetailsDto Portfolio { get; set; }
         public Guid AddressId { get; set; }
 
         public string AddressString

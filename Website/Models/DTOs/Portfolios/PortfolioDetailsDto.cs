@@ -30,6 +30,6 @@ namespace Website.Models.DTOs.Portfolios
 
         public string Name { get; set; }
         public virtual ApplicationUser Owner { get; set; }
-        public virtual IList<PropertyDetailDTO> Properties { get; set; }
+        public virtual IList<PropertyListDTO> Properties { get; set; }
     }
 }
