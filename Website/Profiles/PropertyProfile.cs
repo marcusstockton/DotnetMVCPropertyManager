@@ -16,6 +16,9 @@ namespace Website.Profiles
 
             CreateMap<Property, PropertyDetailDTO>().ReverseMap()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
+
+            CreateMap<Property, PropertyListDTO>().ReverseMap()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
         }
     }
 }

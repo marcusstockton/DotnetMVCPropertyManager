@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Data;
@@ -35,13 +36,17 @@ namespace Website.Services
 
         public async Task<IList<PortfolioDetailsDto>> GetMyPortfolios(string userId)
         {
-            _logger.LogInformation($"Retrieving all portfolio's for user id {userId}");
+            _logger.LogInformation($"{nameof(GetMyPortfolios)} > Retrieving all portfolio's for user id {userId}");
+            var sw = new Stopwatch();
+            sw.Start();
             var portfolios = await _context.Portfolios
                 .Include(x => x.Owner)
-                .Where(x => x.Owner.Id == userId)
+                .Where(x => x.OwnerId == userId)
                 .ProjectTo<PortfolioDetailsDto>(_mapper.ConfigurationProvider)
+                //.AsNoTracking()
                 .ToListAsync();
-
+            sw.Stop();
+            _logger.LogInformation($"{nameof(GetMyPortfolios)} took {sw.ElapsedMilliseconds}ms to complete");
             return portfolios;
         }
 

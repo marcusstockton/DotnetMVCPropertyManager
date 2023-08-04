@@ -30,6 +30,7 @@ namespace Website.Services
         {
             return await _context.Properties
                 .Include(x => x.Address)
+                .Include(x=>x.Portfolio)
                 .Where(x => x.Portfolio.Id == portfolioId)
                 //.ProjectTo<PropertyDetailDTO>(_mapper.ConfigurationProvider)
                 .AsNoTracking()

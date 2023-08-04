@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\lib\bootstrap\**" />
+    <Compile Remove="wwwroot\lib\jquery\**" />
     <Content Remove="wwwroot\lib\bootstrap\**" />
+    <Content Remove="wwwroot\lib\jquery\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
     <None Remove="wwwroot\lib\bootstrap\**" />
+    <None Remove="wwwroot\lib\jquery\**" />
   </ItemGroup>
 
 
@@ -44,19 +48,6 @@
     <Folder Include="wwwroot\Images\" />
     <!--<Folder Include="wwwroot\PropertyDocuments\" />
     <Folder Include="wwwroot\PropertyImages\" />-->
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
-    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
-    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
-    <None Include="wwwroot\lib\jquery\jquery.js" />
-    <None Include="wwwroot\lib\jquery\jquery.min.js" />
-    <None Include="wwwroot\lib\jquery\jquery.min.map" />
-    <None Include="wwwroot\lib\jquery\jquery.slim.js" />
-    <None Include="wwwroot\lib\jquery\jquery.slim.min.js" />
-    <None Include="wwwroot\lib\jquery\jquery.slim.min.map" />
   </ItemGroup>
 
 </Project>
