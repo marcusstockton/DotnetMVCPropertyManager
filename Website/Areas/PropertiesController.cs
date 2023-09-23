@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Website.Helpers;
 using Website.Interfaces;
-using Website.Models.DTOs.Portfolios;
 using Website.Models.DTOs.Properties;
 
 namespace Website.Areas

@@ -18,15 +18,15 @@ namespace Website.Models.DTOs.Portfolios
 
         [Display(Name = "# Properties")]
         public int NumberOfProperties
-        { get { return Properties.Count(); } }
+        { get { return (Properties == null) ? 0 :  Properties.Count(); } }
 
         [Display(Name = "Total Property Value")]
         public double TotalPropertyValue
-        { get { return Properties.Select(x => x.PropertyValue).Sum(); } }
+        { get { return (Properties == null) ? 0 : Properties.Select(x => x.PropertyValue).Sum(); } }
 
         [Display(Name = "Gross Income")]
         public double GrossIncome
-        { get { return Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
+        { get { return (Properties == null) ? 0 : Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
 
         public string Name { get; set; }
         public virtual ApplicationUser Owner { get; set; }
