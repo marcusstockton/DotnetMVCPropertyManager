@@ -1,7 +1,8 @@
 $(document).ready(() => {
     console.log("property-datatable called");
     var portfolioId = $("#portfolio_id").val();
-    var url = "../api/Properties/GetPropertiesForPortfolio/" + portfolioId;
+    console.log("PortfolioId: " + portfolioId);
+    var url = "../../api/Properties/GetPropertiesForPortfolio/" + portfolioId;
     var table = $('#portfolioIndexTable').DataTable({
         "processing": true,
         ajax: {
