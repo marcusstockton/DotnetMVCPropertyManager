@@ -76,7 +76,6 @@ namespace Website.Services
             return await _context.Tenants.FindAsync(tenantId);
         }
 
-
         public async Task<List<Nationality>> GetNationalitiesAsync()
         {
             _logger.LogInformation("Fetching list of nationalities");
@@ -145,6 +144,11 @@ namespace Website.Services
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        public async Task<List<Tenant>> GetTenantsForPropertyId(Guid propertyId)
+        {
+            return await _context.Tenants.Where(x=>x.Property.Id == propertyId).ToListAsync();
         }
     }
 }

@@ -7,9 +7,13 @@ namespace Website.Models.DTOs.DocumentTypes
     {
         public Guid Id { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [Display(Name = "Created Date")]
         public DateTimeOffset CreatedDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [Display(Name = "Updated Date")]
         public DateTimeOffset? UpdatedDate { get; set; }
 

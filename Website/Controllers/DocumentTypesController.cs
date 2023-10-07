@@ -52,7 +52,7 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            return View(documentType);
+            return View(_mapper.Map<DocumentTypeDetailDto>(documentType));
         }
 
         // GET: DocumentTypes/Create
@@ -107,7 +107,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,CreatedDate,UpdatedDate,Expires,Owner,OwnerId")] DocumentType documentType)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,CreatedDate,UpdatedDate,Expires,ExpiryDate,Owner,OwnerId")] DocumentType documentType)
         {
             if (id != documentType.Id)
             {

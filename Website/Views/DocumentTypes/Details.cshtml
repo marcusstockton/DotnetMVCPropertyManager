@@ -1,4 +1,4 @@
-﻿@model Website.Models.DocumentType
+﻿@model Website.Models.DTOs.DocumentTypes.DocumentTypeDetailDto
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,6 @@
 <h1>Details</h1>
 
 <div>
-    <h4>DocumentType</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -15,6 +14,18 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Expires)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Expires)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExpiryDate)
         </dd>
     </dl>
 </div>

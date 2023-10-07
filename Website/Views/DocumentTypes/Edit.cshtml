@@ -23,6 +23,21 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Expires" class="control-label">
+                    Expires?
+                    <input asp-for="Expires" type="checkbox" />
+                    <i title="Whether Documents of this type have an expiry i.e every year" class="material-icons" style="font-size: 15px">help</i>
+                </label>
+                <span asp-validation-for="Expires" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiryDate" class="control-label">
+                    Expiry Date
+                    <input asp-for="ExpiryDate" type="date" />
+                </label>
+                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

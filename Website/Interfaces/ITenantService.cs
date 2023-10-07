@@ -16,6 +16,8 @@ namespace Website.Interfaces
 
         Task<Tenant> GetTenantByIdAsync(Guid tenantId);
 
+        Task<List<Tenant>> GetTenantsForPropertyId(Guid propertyId);
+
         Task<Tenant> UpdateTenant(Tenant obj);
         Task<List<Nationality>> GetNationalitiesAsync();
 

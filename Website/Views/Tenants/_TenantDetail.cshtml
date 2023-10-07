@@ -16,11 +16,11 @@
             </ul>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-3">
+        <div class="row row-cols-1 row-cols-md-4">
             @foreach (var tenant in Model.OrderBy(x => x.TenancyEndDate).ThenByDescending(x => x.TenancyStartDate))
             {
                 <div class="col mb-4">
-                    <div class="card @(tenant.TenancyEndDate == null ? "current":"past")">
+                    <div class="card @(tenant.TenancyEndDate == null ? "current":"past")" >
                         @* <img src="..." class="card-img-top" alt="..."> *@
                         <img class="card-img-top rounded mx-auto d-block" src="@tenant.TenantImage" style="max-width:250px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
                         <div class="card-body">
