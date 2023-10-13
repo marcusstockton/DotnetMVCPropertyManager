@@ -10,10 +10,10 @@ namespace Website.Models.DTOs.Portfolios
     {
         public Guid Id { get; set; }
 
-        [Display(Name = "Created Date")]
+        [Display(Name = "Created Date"), DataType(DataType.DateTime), DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd MMM yyyy HH:mm tt}")]
         public DateTimeOffset CreatedDate { get; set; }
 
-        [Display(Name = "Updated Date")]
+        [Display(Name = "Updated Date"), DataType(DataType.DateTime), DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd MMM yyyy HH:mm tt}")]
         public DateTimeOffset? UpdatedDate { get; set; }
 
         [Display(Name = "# Properties")]

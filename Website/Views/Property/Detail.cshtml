@@ -62,16 +62,20 @@
 <div>
     <h4>Property Details</h4>
     <hr />
-
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Details</a>
-            <a class="nav-item nav-link" id="nav-images-tab" data-toggle="tab" href="#nav-images" role="tab" aria-controls="nav-images" aria-selected="false">Images <span class="badge badge-pill badge-primary">@Model.Images.Count</span></a>
-
-            <a class="nav-item nav-link" id="nav-document-tab" data-toggle="tab" href="#nav-document" role="tab" aria-controls="nav-document" aria-selected="false">Documents <span class="badge badge-pill badge-primary">@Model.Documents.Count</span></a>
-            <a class="nav-item nav-link" id="nav-tenant-tab" data-toggle="tab" href="#nav-tenant" role="tab" aria-controls="nav-tenant" aria-selected="false">Tenants <span class="badge badge-pill badge-primary">@Model.Tenants.Count</span></a>
-        </div>
-    </nav>
+    <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" href="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nav-images-tab" data-bs-toggle="tab" data-bs-target="#nav-images" href="#nav-images" type="button" role="tab" aria-controls="nav-images" aria-selected="false">Images</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nav-document-tab" data-bs-toggle="tab" data-bs-target="#nav-document" href="#nav-document" type="button" role="tab" aria-controls="nav-document" aria-selected="false">Documents</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nav-tenant-tab" data-bs-toggle="tab" data-bs-target="#nav-tenant" href="#nav-tenant" type="button" role="tab" aria-controls="nav-tenant" aria-selected="false">Tenants</button>
+        </li>
+    </ul>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             @Html.HiddenFor(x => x.Portfolio.Id, new { @id = "portfolio_id" })
@@ -140,7 +144,7 @@
         </div>
         <div class="tab-pane fade" id="nav-tenant" role="tabpanel" aria-labelledby="nav-tenant-tab">
             @await Html.PartialAsync("/Views/Tenants/_TenantDetail.cshtml", Model.Tenants)
-            <button type="button" class="btn btn-primary" data-toggle="modal" id="tenantCreateButton" data-target="#tenantCreateModal" data-url='@Url.Action("Create", "Tenants")'>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="tenantCreateButton" data-bs-target="#tenantCreateModal" data-url='@Url.Action("Create", "Tenants")'>
                 <span class="material-icons">add</span> Add Tenant
             </button>
 

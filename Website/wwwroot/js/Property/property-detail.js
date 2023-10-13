@@ -4,15 +4,24 @@
 
     if (location.hash) {
         const hash = url.split("#");
-        $('#nav-tab a[href="#' + hash[1] + '"]').tab("show");
-        url = location.href.replace(/\/#/, "#");
-        history.replaceState(null, null, url);
-        setTimeout(() => {
-            $(window).scrollTop(0);
-        }, 400);
+        //var tabSelect = $('#nav-tab a[href="#' + hash[1] + '"]');
+        //tabSelect.tab("show")
+        //url = location.href.replace(/\/#/, "#");
+        //history.replaceState(null, null, url);
+        //setTimeout(() => {
+        //    $(window).scrollTop(0);
+        //}, 400);
+
+
+        var buttons = $('#nav-tab').find(":button[data-bs-target='# " + hash[1] + "']");
+
+        
+
+        var triggerEl = document.querySelector("button[data-bs-target=' #" + hash[1] + " ']");
+        bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
     }
 
-    $('a[data-toggle="tab"]').on("click", function () {
+    $('a[data-bs-toggle="tab"]').on("click", function () {
         let newUrl;
         const hash = $(this).attr("href");
         if (hash == "#nav-home") {

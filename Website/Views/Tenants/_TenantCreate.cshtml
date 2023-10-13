@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label asp-for="NationalityId" class="control-label"></label>
-                    <select asp-for="NationalityId" class="form-control" asp-items="@ViewBag.Nationalities">
+                    <select asp-for="NationalityId" class="form-select" asp-items="@ViewBag.Nationalities">
                         <option disabled selected>--Please Select--</option>
                     </select>
                     <span asp-validation-for="NationalityId" class="text-danger"></span>
