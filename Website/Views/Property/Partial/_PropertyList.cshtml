@@ -13,6 +13,9 @@ else
                     @Html.DisplayNameFor(model => model.NoOfRooms)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Bathrooms)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Address)
                 </th>
                 <th>
@@ -38,6 +41,9 @@ else
                     @Html.HiddenFor(x=> item.Portfolio.Id)
                     <td>
                         @Html.DisplayFor(modelItem => item.NoOfRooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bathrooms)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.AddressString)

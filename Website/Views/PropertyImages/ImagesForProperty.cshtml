@@ -5,8 +5,8 @@
 }
 
 <ul style="list-style-type: none;">
-    <a asp-action="Create" asp-route-propertyId="@Model.First().Property.Id">Create New</a>
-    @foreach (var image in Model)
+    <a asp-action="Create" class="btn btn-success" asp-route-propertyId="@Model.First().Property.Id">Create New</a>
+    @foreach (var image in Model.OrderByDescending(x=>x.CreatedDate))
     {
         <li>
             <div class="row col-sm-12 p-2">
@@ -16,6 +16,7 @@
                 <div class="col-sm-4">
                     <p>@image.FileName</p>
                     <p>@image.Id</p>
+                    <p>@image.CreatedDate</p>
                 </div>
                 <div class="col-sm-4">
                     <div class="btn-group mr-2" role="group" aria-label="button-group">

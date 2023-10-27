@@ -104,7 +104,7 @@ namespace Website
                 loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
                 app.UseDeveloperExceptionPage();
-                seeder.SeedData(false).Wait();
+                seeder.SeedData(true).Wait();
             }
             else
             {

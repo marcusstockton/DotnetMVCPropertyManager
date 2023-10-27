@@ -19,6 +19,9 @@ namespace Website.Models
         [Range(1, 100)]
         public int NoOfRooms { get; set; }
 
+        [Range(1, 100)]
+        public int Bathrooms { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
         [DataType(DataType.Currency)]
         public double MonthlyRentAmount { get; set; }

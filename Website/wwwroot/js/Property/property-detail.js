@@ -2,6 +2,7 @@
 
     let url = location.href.replace(/\/$/, "");
 
+    // Handles opening correct tab if the url contains the hash of a tab
     if (location.hash) {
         const hash = url.split("#");
         var tabSelect = $('#nav-tab button[href="#' + hash[1] + '"]');

@@ -19,6 +19,9 @@ namespace Website.Models.DTOs.Properties
         [Display(Name = "# Rooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 rooms.")]
         public int NoOfRooms { get; set; }
 
+        [Display(Name = "# Bathrooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 Bathrooms.")]
+        public int Bathrooms { get; set; }
+
         [DataType(DataType.Currency), Display(Name = "Monthly Rent"), RegularExpression(@"^(\d{4,})|((\d+(\,|\.))+\d{2,})$", ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:#,###0.00}", ApplyFormatInEditMode = true)]
         public double MonthlyRentAmount { get; set; }
 

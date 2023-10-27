@@ -112,6 +112,7 @@ namespace Website.Data
                                 CreatedDate = DateTime.Now,
                                 Description = "A well presented 1 bed apartment with views",
                                 NoOfRooms = 1,
+                                Bathrooms = 1,
                                 Tenants = new List<Tenant>
                                 {
                                     new Tenant
@@ -178,6 +179,7 @@ namespace Website.Data
                                 Description = "Lovely 2 bed property",
                                 MonthlyRentAmount = 790,
                                 NoOfRooms = 2,
+                                Bathrooms = 1,
                                 PurchaseDate = DateTime.Now.AddDays(-38),
                                 Tenants = new List<Tenant>
                                 {
@@ -221,6 +223,7 @@ namespace Website.Data
                                     CreatedDate = DateTime.Now,
                                     Description = "Lovely 3 bed house",
                                     NoOfRooms = 3,
+                                    Bathrooms = 2,
                                     MonthlyRentAmount = 1200,
                                     PropertyValue = 210000,
                                     PurchaseDate = new DateTime(2014, 4, 29),
@@ -277,6 +280,7 @@ namespace Website.Data
 
                     var propertyFaker = new Faker<Property>("en_GB")
                         .RuleFor(x=>x.NoOfRooms, f => f.Random.Number(1,4))
+                        .RuleFor(x => x.Bathrooms, f => f.Random.Number(1, 4))
                         .RuleFor(x=>x.Address, f=> new Address {
                             Line1 = f.Address.BuildingNumber(),
                             Line2 = f.Address.StreetAddress(),

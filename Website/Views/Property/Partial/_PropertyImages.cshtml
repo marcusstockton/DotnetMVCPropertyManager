@@ -9,11 +9,11 @@
 else
 {
     <div class="col-md-9 offset-1">
-        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleInterval" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 @foreach (var image in Model)
                 {
-                    <div class="carousel-item @(image == Model.First() ? "active" : "")">
+                    <div class="carousel-item @(image == Model.First() ? "active" : "")" data-bs-interval="10000">
                         <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: auto; height: 60vh;">
                     </div>
                 }
