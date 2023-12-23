@@ -14,7 +14,6 @@ namespace Website.Profiles
                 .ForMember(x => x.TotalPropertyValue, opt => opt.Ignore())
                 .ReverseMap();
 
-
             CreateMap<Portfolio, PortfolioAdminIndexDto>().ReverseMap();
         }
     }

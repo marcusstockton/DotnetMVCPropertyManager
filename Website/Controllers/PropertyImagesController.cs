@@ -53,7 +53,7 @@ namespace Website.Controllers
 
         public async Task<IActionResult> ImagesForProperty(Guid propertyId)
         {
-            if(propertyId == Guid.Empty)
+            if (propertyId == Guid.Empty)
             {
                 return NotFound();
             }
@@ -171,7 +171,6 @@ namespace Website.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return Redirect(returnUrl + "?propertyId=" + propertyId);
-            
         }
 
         private bool PropertyImageExists(Guid id)

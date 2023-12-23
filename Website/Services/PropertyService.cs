@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
-using Website.Models.DTOs.Properties;
 
 namespace Website.Services
 {
@@ -30,7 +28,7 @@ namespace Website.Services
         {
             return await _context.Properties
                 .Include(x => x.Address)
-                .Include(x=>x.Portfolio)
+                .Include(x => x.Portfolio)
                 .Where(x => x.Portfolio.Id == portfolioId)
                 //.ProjectTo<PropertyDetailDTO>(_mapper.ConfigurationProvider)
                 .AsNoTracking()

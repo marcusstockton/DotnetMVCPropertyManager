@@ -32,7 +32,6 @@ namespace Website.Areas
             _tenantService = tenantService;
         }
 
-
         // /api/Tenant/job-title-autocomplete?jobTitle="software"
         [HttpGet("job-title-autocomplete")]
         public async Task<ActionResult> JobTitleAutoComplete(string jobTitle)
@@ -54,7 +53,7 @@ namespace Website.Areas
         }
     }
 
-    class JobTitleAutocompleteResponse
+    internal class JobTitleAutocompleteResponse
     {
         [JsonProperty("job-titles")]
         public string[] JobTitles { get; set; }

@@ -31,7 +31,7 @@ namespace Website.Areas.Tests
             var portfolioProfile = new PortfolioProfile();
             var config = new MapperConfiguration(cfg => cfg.AddProfile(portfolioProfile));
             _mapper = new Mapper(config);
-            
+
             _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
         }
 
@@ -40,7 +40,7 @@ namespace Website.Areas.Tests
         {
             // Arrange
             var portfolioId = Guid.NewGuid();
-            var results = new List<PortfolioDetailsDto> { new PortfolioDetailsDto { Id = portfolioId, Name = "Test", Owner = new ApplicationUser { Id = "1"} } };
+            var results = new List<PortfolioDetailsDto> { new PortfolioDetailsDto { Id = portfolioId, Name = "Test", Owner = new ApplicationUser { Id = "1" } } };
 
             _portfolioServiceMock.Setup(x => x.GetMyPortfolios(It.IsAny<string>())).ReturnsAsync(results);
 

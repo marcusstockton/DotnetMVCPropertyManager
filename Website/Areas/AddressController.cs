@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
@@ -35,7 +34,7 @@ namespace Website.Areas
         public async Task<IActionResult> GetAutoSuggestion(string search)
         {
             _logger.LogInformation($"{nameof(GetAutoSuggestion)} Getting autosuggestions for {search}");
-            
+
             var client = _httpClientFactory.CreateClient("hereApiAutosuggest");
             var url = $"autosuggest?at={_ukLatLong}&countryCode={_countryCode}&limit=50&lang=en&q={search}&apiKey={_apiKey}";
             var response = await client.GetAsync(url);
@@ -46,19 +45,19 @@ namespace Website.Areas
             return BadRequest();
         }
 
-        [HttpGet, Route("GetMapFromLatLong"), ResponseCache(VaryByQueryKeys = new string[] { "portfolioId", "propertyId", "lat","lon" }, Duration = 1400)]
+        [HttpGet, Route("GetMapFromLatLong"), ResponseCache(VaryByQueryKeys = new string[] { "portfolioId", "propertyId", "lat", "lon" }, Duration = 1400)]
         public async Task<IActionResult> GetMapFromLatLong(string portfolioId, string propertyId, double lat, double lon)
         {
             _logger.LogInformation($"{nameof(GetMapFromLatLong)} Getting Map for lat lon {lat} {lon}");
-            if(Guid.Parse(portfolioId) == Guid.Empty || Guid.Parse(propertyId) == Guid.Empty)
+            if (Guid.Parse(portfolioId) == Guid.Empty || Guid.Parse(propertyId) == Guid.Empty)
             {
                 return BadRequest("Please pass in a portfolio id and property id");
             }
 
             var property = await _propertyService.GetPropertyById(Guid.Parse(portfolioId), Guid.Parse(propertyId));
-            if(property != null)
+            if (property != null)
             {
-                if(property.MapImage != null && property.Address.Latitude == lat && property.Address.Longitude ==lon)
+                if (property.MapImage != null && property.Address.Latitude == lat && property.Address.Longitude == lon)
                 {
                     return Ok("image/jpeg;base64," + Convert.ToBase64String(property.MapImage));
                 }

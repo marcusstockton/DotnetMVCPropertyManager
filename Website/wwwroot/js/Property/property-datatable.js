@@ -23,7 +23,7 @@ $(document).ready(() => {
                 sortable: false,
                 "mRender": function (data, type, row) {
                     return '<a href=/Property/Edit?portfolioId=' + portfolioId + '&propertyId=' + row.id + '><span class="material-icons">edit</span ></a>' + '  ' +
-                        '<a href=/Property/Delete?portfolioId=' + portfolioId + '&propertyId='+ row.id + '><span class="material-icons" style="color:red">delete</span ></a>';
+                        '<a href=/Property/Delete?portfolioId=' + portfolioId + '&propertyId=' + row.id + '><span class="material-icons" style="color:red">delete</span ></a>';
                 }
             }
         ],
@@ -45,7 +45,6 @@ $(document).ready(() => {
                     } else {
                         return data;
                     }
-                    
                 }
             }
         ]

@@ -20,7 +20,6 @@ namespace Website.Models.DTOs.Properties
         [Display(Name = "Date Purchased"), DataType(DataType.Date)]
         public DateTimeOffset PurchaseDate { get; set; }
 
-        
         [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double PropertyValue { get; set; }
 
@@ -30,7 +29,7 @@ namespace Website.Models.DTOs.Properties
         [Display(Name = "# Bathrooms"), Range(1, 100, ErrorMessage = "You cannot have a property with more than 100 bathrooms.")]
         public int Bathrooms { get; set; }
 
-        [DataType(DataType.Currency), Display(Name = "Monthly Rent"), RegularExpression(@"^(\d{4,})|((\d+(\,|\.))+\d{2,})$", ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:#,###0.00}", ApplyFormatInEditMode = true)] 
+        [DataType(DataType.Currency), Display(Name = "Monthly Rent"), RegularExpression(@"^(\d{4,})|((\d+(\,|\.))+\d{2,})$", ErrorMessage = "You cannot charge more than 10000 per month."), DisplayFormat(DataFormatString = "{0:#,###0.00}", ApplyFormatInEditMode = true)]
         public double MonthlyRentAmount { get; set; }
 
         [MaxLength(1000), Description("Describe the property")]

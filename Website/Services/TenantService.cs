@@ -148,7 +148,7 @@ namespace Website.Services
 
         public async Task<List<Tenant>> GetTenantsForPropertyId(Guid propertyId)
         {
-            return await _context.Tenants.Where(x=>x.Property.Id == propertyId).ToListAsync();
+            return await _context.Tenants.Where(x => x.Property.Id == propertyId).ToListAsync();
         }
     }
 }

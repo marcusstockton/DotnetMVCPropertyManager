@@ -16,6 +16,7 @@ namespace Website.Areas
         private readonly IPropertyService _propertyService;
         private readonly ILogger<PropertiesController> _logger;
         private readonly IMapper _mapper;
+
         public PropertiesController(IPropertyService propertyService, ILogger<PropertiesController> logger, IMapper mapper)
         {
             _logger = logger;

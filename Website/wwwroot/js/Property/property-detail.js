@@ -1,5 +1,4 @@
 ﻿$(document).ready(() => {
-
     let url = location.href.replace(/\/$/, "");
 
     // Handles opening correct tab if the url contains the hash of a tab
@@ -50,5 +49,4 @@
             }
         });
     }
-
 });

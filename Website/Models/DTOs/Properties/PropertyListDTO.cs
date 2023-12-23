@@ -1,7 +1,6 @@
-﻿using Bogus.DataSets;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
 using System.ComponentModel;
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Website.Models.DTOs.Properties
 {
@@ -11,7 +10,6 @@ namespace Website.Models.DTOs.Properties
 
         [Display(Name = "Date Purchased"), DataType(DataType.Date)]
         public DateTimeOffset PurchaseDate { get; set; }
-
 
         [DataType(DataType.Currency), Display(Name = "Property Value"), Range(1, int.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double PropertyValue { get; set; }
@@ -27,6 +25,7 @@ namespace Website.Models.DTOs.Properties
 
         [MaxLength(1000), Description("Describe the property")]
         public string Description { get; set; }
+
         public Guid AddressId { get; set; }
 
         public string AddressString

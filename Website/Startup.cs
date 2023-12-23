@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -45,7 +44,8 @@ namespace Website
 
             services.AddAutoMapper(typeof(Program));
 
-            services.AddControllersWithViews(options => {
+            services.AddControllersWithViews(options =>
+            {
                 options.CacheProfiles.Add("Default30", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 30, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Any });
                 options.CacheProfiles.Add("Default60", new Microsoft.AspNetCore.Mvc.CacheProfile { Duration = 60, Location = Microsoft.AspNetCore.Mvc.ResponseCacheLocation.Any });
             }).AddNewtonsoftJson(options =>

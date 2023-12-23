@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +20,15 @@ namespace Website.Services
 
     public class CacheSettings : ICacheSettings
     {
-        const bool DefaultForCacheRefreshNow = false;
-        const decimal DefaultCacheRefreshTimeOn24HourClockAsDecimalHours = 6.5m;
+        private const bool DefaultForCacheRefreshNow = false;
+        private const decimal DefaultCacheRefreshTimeOn24HourClockAsDecimalHours = 6.5m;
 
         public CacheSettings()
         {
             ForceCacheRefreshNow = DefaultForCacheRefreshNow;
             CacheRefreshTimeOn24HourClockAsDecimalHours = DefaultCacheRefreshTimeOn24HourClockAsDecimalHours;
         }
+
         public bool ForceCacheRefreshNow { get; set; }
 
         public decimal CacheRefreshTimeOn24HourClockAsDecimalHours { get; set; }
@@ -36,9 +36,9 @@ namespace Website.Services
 
     public class JobTitleServiceCache : IJobTitleService
     {
-        IMemoryCache _inMemoryCache;
-        static List<string> _cacheKeys = new List<string>();
-        static readonly object CacheLock = new object();
+        private IMemoryCache _inMemoryCache;
+        private static List<string> _cacheKeys = new List<string>();
+        private static readonly object CacheLock = new object();
 
         public JobTitleServiceCache(IMemoryCache inMemoryCache)
         {
@@ -59,7 +59,6 @@ namespace Website.Services
             _cacheKeys.Add("JobTitles");
 
             return jobTitles;
-
         }
 
         private async Task<IList<string>> GetJobTitles()
@@ -73,7 +72,8 @@ namespace Website.Services
                 return result.JobTitles.ToList();
             }
         }
-        class JobTitleAutocompleteResponse
+
+        private class JobTitleAutocompleteResponse
         {
             [JsonProperty("job-titles")]
             public string[] JobTitles { get; set; }

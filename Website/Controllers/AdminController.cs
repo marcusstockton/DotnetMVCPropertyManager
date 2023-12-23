@@ -3,8 +3,6 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Helpers;
@@ -35,7 +33,7 @@ namespace Website.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CreatedDateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            
+
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -45,7 +43,6 @@ namespace Website.Controllers
                 searchString = currentFilter;
             }
             ViewData["CurrentFilter"] = searchString;
-
 
             var portfolios = _portfolioService.GetPortfolios();
 
@@ -58,12 +55,15 @@ namespace Website.Controllers
                 case "name_desc":
                     portfolios = portfolios.OrderByDescending(s => s.Name);
                     break;
+
                 case "Date":
                     portfolios = portfolios.OrderBy(s => s.CreatedDate);
                     break;
+
                 case "date_desc":
                     portfolios = portfolios.OrderByDescending(s => s.CreatedDate);
                     break;
+
                 default:
                     portfolios = portfolios.OrderBy(s => s.Name);
                     break;

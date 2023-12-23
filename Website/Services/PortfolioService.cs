@@ -40,7 +40,7 @@ namespace Website.Services
             var sw = new Stopwatch();
             sw.Start();
             var portfolios = await _context.Portfolios
-                .Include(x=>x.Owner)
+                .Include(x => x.Owner)
                 .Where(x => x.Owner.Id == userId)
                 .ProjectTo<PortfolioDetailsDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()

@@ -59,7 +59,7 @@ namespace Website.Controllers
             var tenant = new Tenant { Property = property };
             var tenantDto = _mapper.Map<TenantCreateDTO>(tenant);
             var nationalities = await _tenantService.GetNationalitiesAsync();
-            ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name}).ToList();
+            ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             return PartialView("_TenantCreate", tenantDto);
         }
 
@@ -103,7 +103,7 @@ namespace Website.Controllers
             }
             var viewData = _mapper.Map<TenantDTO>(tenant);
 
-            ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name, Selected = x.Id == viewData.NationalityId }).ToList();            
+            ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name, Selected = x.Id == viewData.NationalityId }).ToList();
             return View(viewData);
         }
 

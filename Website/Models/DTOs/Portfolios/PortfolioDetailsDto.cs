@@ -18,7 +18,7 @@ namespace Website.Models.DTOs.Portfolios
 
         [Display(Name = "# Properties")]
         public int NumberOfProperties
-        { get { return (Properties == null) ? 0 :  Properties.Count(); } }
+        { get { return (Properties == null) ? 0 : Properties.Count(); } }
 
         [Display(Name = "Total Property Value")]
         public double TotalPropertyValue
