@@ -6,54 +6,27 @@
             addressAutocomplete();
         }
     });
-
-    //    $('#Address_Postcode').autocomplete({
-    ///*        delay: 500,*/
-    //        minLength: 3,
-    //        source: function (request, response) {
-    //            $.ajax({
-    //                url: "../api/address/postcode-auto-complete",
-    //                dataType: "json",
-    //                data: {
-    //                    postcode: request.term
-    //                },
-    //                type: "GET",
-    //                success: function (data) {
-    //                    response($.map(data, function (item) {
-    //                        return {
-    //                            label: item,
-    //                            value: item
-    //                        };
-    //                    }));
-    //                }
-    //            });
-    //        },
-    //        select: function (event, ui) {
-    //            $.get("../api/address/postcode-lookup", { postcode: ui.item.value }, function (data, status) {
-    //                //$("#Address_Line1").val(data.address.houseNumber);
-    //                //$("#Address_Line2").val(data.address.street);
-    //                $("#Address_Line3").val(data.result.parish);
-    //                $("#Address_City").val(data.result.admin_district);
-    //                //$("#Address_Postcode").val(data.address.postalCode);
-    //                $("#Address_Latitude").val(data.result.latitude);
-    //                $("#Address_Longitude").val(data.result.longitude);
-    //            });
-    //        },
-    //    });
 });
 
 function addressAutocomplete() {
+    var cache = {};
     $("#Address_Line1").autocomplete({
         delay: 500,
         source: function (request, response) {
-            $.ajax({
+            var term = request.term;
+            if (term in cache) {
+                response(cache[term]);
+                return;
+            }
+            $.getJSON({
                 url: "../api/address/GetAutoSuggestion",
                 dataType: "json",
                 data: {
-                    search: request.term
+                    search: term
                 },
                 type: "GET",
                 success: function (data) {
+                    cache[term] = data;
                     response($.map(data.items, function (item) {
                         return {
                             label: item.title,
@@ -63,8 +36,9 @@ function addressAutocomplete() {
                 }
             });
         },
-        minLength: 2,
+        minLength: 5,
         select: function (event, ui) {
+            console.log(`Item Selected: ${ui.item}`)
             $.get("../api/address/Lookup", { hereId: ui.item.value }, function (data, status) {
                 var data = JSON.parse(data);
                 $("#Address_Line1").val(data.address.houseNumber);

@@ -40,7 +40,7 @@ namespace Website.Areas
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                return Ok(await response.Content.ReadAsStringAsync());
+               return Ok(await response.Content.ReadAsStringAsync());
             }
             return BadRequest();
         }

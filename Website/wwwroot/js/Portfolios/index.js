@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     var table = $('#portfolioIndexTable').DataTable({
         "processing": true,
         //"cache": true,
@@ -35,7 +36,7 @@
                     if (data === null) {
                         return "-"
                     }
-                    return moment(data).format('lll');
+                    return dayjs(data).format('ddd DD MMM YYYY');
                 }
             }
         ]

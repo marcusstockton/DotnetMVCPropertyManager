@@ -35,7 +35,7 @@ $(document).ready(() => {
                     if (data === null) {
                         return "-"
                     }
-                    return moment(data).format('lll');
+                    return dayjs(data).format('ddd DD MMM YYYY HH:mm');
                 }
             }, {
                 "targets": [4, 5],
