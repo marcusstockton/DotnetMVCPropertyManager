@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<Website.Models.PropertyImage>
 
-@*@Html.ActionLink("Add Document", "Create", "PropertyDocuments", new { propertyId = ViewData["PropertyId"] })*@
-
 @if (!Model.Any())
 {
     <p>No Images Uploaded for this property.</p>
@@ -9,7 +7,7 @@
 else
 {
     <div class="col-md-9 offset-1">
-        <div id="carouselExampleInterval" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div id="propertyImageCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 @foreach (var image in Model)
                 {
@@ -18,11 +16,11 @@ else
                     </div>
                 }
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#propertyImageCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#propertyImageCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>

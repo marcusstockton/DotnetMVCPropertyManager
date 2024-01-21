@@ -22,7 +22,7 @@ namespace Website.Areas
             _logger = logger;
         }
 
-        [HttpGet("GetMyPortfolios"), ResponseCache(CacheProfileName = "Default60")]
+        [HttpGet("GetMyPortfolios"), ResponseCache(CacheProfileName = "Default30")]
         public async Task<ActionResult<IList<PortfolioDetailsDto>>> GetMyPortfolios()
         {
             _logger.LogInformation($"{nameof(GetMyPortfolios)} getting my portfolios");

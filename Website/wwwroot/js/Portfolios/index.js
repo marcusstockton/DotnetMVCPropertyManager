@@ -2,11 +2,9 @@
 $(document).ready(function () {
     var table = $('#portfolioIndexTable').DataTable({
         "processing": true,
-        //"cache": true,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
             dataSrc: '',
-            //cache: true,
         },
         columns: [
             { "data": "name" },
@@ -36,7 +34,7 @@ $(document).ready(function () {
                     if (data === null) {
                         return "-"
                     }
-                    return dayjs(data).format('ddd DD MMM YYYY');
+                    return dayjs(data).format('ddd, MMM D, YYYY HH:mm');
                 }
             }
         ]

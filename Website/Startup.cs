@@ -90,6 +90,13 @@ namespace Website
             services.TryAddTransient<IEmailSender, EmailService>();
             services.TryAddTransient<DataSeeder>();
 
+            services.AddMemoryCache((o) =>
+            {
+                o.CompactionPercentage = 0.9;
+                o.ExpirationScanFrequency = TimeSpan.FromMinutes(1.0);
+                o.SizeLimit = 1024 * 1024 * 8; // 8 mb
+            });
+
             services.AddResponseCaching();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddHealthChecks();

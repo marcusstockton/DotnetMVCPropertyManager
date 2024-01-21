@@ -30,19 +30,22 @@ namespace Website.Areas
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet, Route("getautosuggestion"), ResponseCache(CacheProfileName = "Default30")]
+        [HttpGet, Route("getautosuggestion"), ResponseCache(VaryByQueryKeys = new string[] { "search" }, Duration = 10)]
         public async Task<IActionResult> GetAutoSuggestion(string search)
         {
             _logger.LogInformation($"{nameof(GetAutoSuggestion)} Getting autosuggestions for {search}");
 
-            var client = _httpClientFactory.CreateClient("hereApiAutosuggest");
-            var url = $"autosuggest?at={_ukLatLong}&countryCode={_countryCode}&limit=50&lang=en&q={search}&apiKey={_apiKey}";
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            using (var client = _httpClientFactory.CreateClient("hereApiAutosuggest"))
             {
-               return Ok(await response.Content.ReadAsStringAsync());
+                var url = $"autosuggest?at={_ukLatLong}&countryCode={_countryCode}&limit=50&lang=en&q={search}&apiKey={_apiKey}";
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    return Ok(await response.Content.ReadAsStringAsync());
+                }
+                return BadRequest();
             }
-            return BadRequest();
+                
         }
 
         [HttpGet, Route("GetMapFromLatLong"), ResponseCache(VaryByQueryKeys = new string[] { "portfolioId", "propertyId", "lat", "lon" }, Duration = 1400)]
@@ -68,6 +71,14 @@ namespace Website.Areas
                     var response = await client.GetAsync(url);
                     if (response.IsSuccessStatusCode)
                     {
+                        // Save image back to property
+                        var imgString = await response.Content.ReadAsByteArrayAsync();
+                        property.MapImage = imgString;
+                        property.Address.Latitude = lat;
+                        property.Address.Longitude = lon;
+                        await _propertyService.SaveAsync();
+                        
+
                         return Ok("image/jpeg;base64," + Convert.ToBase64String(await response.Content.ReadAsByteArrayAsync()));
                     }
                 }
