@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Website.Interfaces;
 using Website.Models.DTOs.Address;
@@ -117,7 +118,7 @@ namespace Website.Areas
         }
 
         [HttpGet, Route("postcode-lookup")]
-        public async Task<PostcodeLookup> PostCodeLookup(string postcode)
+        public async Task<IActionResult> PostCodeLookup(string postcode)
         {
             _logger.LogInformation($"{nameof(PostcodeAutoComplete)} querying postcode {postcode}");
             if (await VerifyPostcode(postcode))
@@ -127,14 +128,15 @@ namespace Website.Areas
                 var response = await client.GetFromJsonAsync<PostcodeLookup>(url);
                 if (response.status == 200)
                 {
-                    return response;
+                    return Ok(JsonSerializer.Serialize<PostcodeLookup>(response));
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid Postcode");
+                    return BadRequest("Invalid Postcode");
+                    
                 }
             }
-            throw new ArgumentException("Invalid Postcode supplied");
+            return BadRequest("Invalid Postcode supplied");
         }
 
         private async Task<bool> VerifyPostcode(string postcode)

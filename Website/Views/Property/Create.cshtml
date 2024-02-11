@@ -8,8 +8,73 @@
 
 <h4>Property</h4>
 <hr />
-<div class="row">
-    <div class="col-md-8">
+
+<form asp-action="Create" enctype="multipart/form-data" id="propertyCreateForm" method="post" , name="propertyDocument" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Portfolio.Id" />
+    <input type="hidden" asp-for="Portfolio.CreatedDate" />
+    <input type="hidden" asp-for="Portfolio.Owner" />
+    <input type="hidden" asp-for="Portfolio.Properties" />
+    <input type="hidden" asp-for="Address.Latitude" />
+    <input type="hidden" asp-for="Address.Longitude" />
+    
+    <div class="col form-floating input-group mb-3">
+        <input asp-for="Address.Postcode" class="form-control" placeholder="Enter the postcode">
+        <label class="form-label" asp-for="Address.Postcode"></label>
+        <button class="btn btn-outline-secondary" type="button" id="postcode_btn">Search</button>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="PurchaseDate" class="form-control" placeholder="Date of Purchase">
+        <label for="PurchaseDate" class="form-label" asp-for="PurchaseDate"></label>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="Address.Line1" class="form-control" placeholder="Address Line 1" />
+        <label class="form-label" asp-for="Address.Line1"></label>
+        <span asp-validation-for="Address.Line1" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="PropertyValue" type="number" class="form-control" placeholder="Value of property">
+        
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="Address.Line2" class="form-control" placeholder="Address Line 2" />
+        <label class="form-label" asp-for="Address.Line2"></label>
+        <span asp-validation-for="Address.Line2" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <p>2</p>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="Address.Line3" class="form-control" placeholder="Address Line 3" />
+        <label asp-for="Address.Line3" class="form-label"></label>
+        <span asp-validation-for="Address.Line3" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <p>4</p>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="Address.Town" class="form-control" placeholder="Town" />
+        <label asp-for="Address.Town" class="form-label"></label>
+        <span asp-validation-for="Address.Town" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <p>6</p>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <input asp-for="Address.City" class="form-control" placeholder="City" />
+        <label asp-for="Address.City" class="form-label"></label>
+        <span asp-validation-for="Address.City" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 form-floating mb-3">
+        <p>8</p>
+    </div>
+
+    <div class="col-12">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+</form>
+    @* <div class="col-md-8">
         <form asp-action="Create" enctype="multipart/form-data" id="propertyCreateForm" method="post" , name="propertyDocument">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Portfolio.Id" />
@@ -103,7 +168,7 @@
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
 <div>
     <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id">Back to List</a>
@@ -132,5 +197,25 @@
                 }
             });
         });
+
+        $('#postcode_btn').on('click', function () {
+            var postcode = $('#Address_Postcode').val();
+            $.ajax({
+                url: '../api/address/postcode-lookup',
+                data: 'postcode=' + postcode,
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    var result_data = data.result;
+                    $('#Address_Line3').val(result_data.parish);
+                    $('#Address_Town').val(result_data.parliamentary_constituency);
+                    $('#Address.Latitude').val(result_data.latitude);
+                    $('#Address.Longitude').val(result_data.longitude);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseText);
+                }
+            });
+        })
     </script>
 }
