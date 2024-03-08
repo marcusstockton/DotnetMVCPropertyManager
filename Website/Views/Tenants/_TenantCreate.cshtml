@@ -31,6 +31,14 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col">
+                    <label asp-for="EmailAdresss" class="control-label"></label>
+                    <input asp-for="EmailAdresss" class="form-control" placeholder="Email Address" />
+                    <span asp-validation-for="EmailAdresss" class="text-danger"></span>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label asp-for="NationalityId" class="control-label"></label>
                     <select asp-for="NationalityId" class="form-select" asp-items="@ViewBag.Nationalities">
@@ -62,6 +70,23 @@
                     <label asp-for="TenantImage" class="control-label"></label>
                     <input asp-for="TenantImage" type="file" class="form-control" />
                     <span asp-validation-for="TenantImage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <input class="form-check-input" type="checkbox" asp-for="IsSmoker">
+                    <label asp-for="IsSmoker" class="control-label">
+                        Smoker?
+                        <input asp-for="IsSmoker" type="checkbox" />
+                    </label>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <input class="form-check-input" type="checkbox" asp-for="HasPets">
+                    <label asp-for="HasPets" class="control-label">
+                        Smoker?
+                        <input asp-for="HasPets" type="checkbox" />
+                    </label>
                 </div>
             </div>
         </form>

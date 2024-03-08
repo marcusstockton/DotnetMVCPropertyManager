@@ -44,6 +44,10 @@ namespace Website.Models.DTOs.Tenants
         public bool IsSmoker { get; set; }
         [Display(Name = "Has Pets?")]
         public bool HasPets { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
+
         public virtual List<Note> Notes { get; set; }
         public virtual Nationality? Nationality { get; set; }
         public virtual Property Property { get; set; }

@@ -124,6 +124,7 @@ namespace Website.Data
                                         TenancyStartDate = new DateTime(2019, 11, 23),
                                         TenantImage = @"\TenantImages\Example\Male1\download.jpg",
                                         IsSmoker = true,
+                                        EmailAddress = "dave.davidson@art.com",
                                         HasPets = true,
                                         Notes = new List<Note>{ new Note {Description = "An overall good tenant. Keeps himself to himself, and looks after the property" } }
                                     },
@@ -138,6 +139,7 @@ namespace Website.Data
                                         TenancyEndDate = new DateTime(2019, 11, 12),
                                         TenantImage = @"\TenantImages\Example\Male2\index.jpg",
                                         IsSmoker = true,
+                                        EmailAddress = "tony.montana@cleaners.com",
                                         HasPets = true,
                                         Notes = new List<Note>
                                         {
@@ -254,6 +256,7 @@ namespace Website.Data
                                             {
                                                 new Note{CreatedDate = DateTime.Now, Description = "Bookish"}
                                             },
+                                            EmailAddress = "Jane.Eyre@littleWomen.com",
                                             PhoneNumber = "07748975421",
                                             IsSmoker = true,
                                             HasPets = true,
@@ -274,6 +277,7 @@ namespace Website.Data
                         .RuleFor(x => x.JobTitle, f => f.Name.JobTitle())
                         .RuleFor(x => x.PhoneNumber, f => f.Person.Phone)
                         .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
+                        .RuleFor(x => x.EmailAddress, (f, u) => f.Person.Email)
                         .RuleFor(x => x.DateOfBirth, f => f.Date.Past(80, DateTime.Now.AddYears(-17)))
                         .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
                         .RuleFor(x => x.IsSmoker, f => f.PickRandomParam<bool>())

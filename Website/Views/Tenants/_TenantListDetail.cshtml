@@ -1,0 +1,111 @@
+﻿@model List<Website.Models.DTOs.Tenants.TenantDTO>
+
+<div class="container" style="padding-left:15px;">
+    @if (!Model.Any())
+    {
+        <p>No tenants at this property yet.</p>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            <ul class="legend">
+                <li><span class="current"></span> Current Tenant</li>
+                <li><span class="past"></span> Previous Tenant</li>
+            </ul>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-4">
+            @foreach (var tenant in Model.OrderBy(x => x.TenancyEndDate).ThenByDescending(x => x.TenancyStartDate))
+            {
+                <div class="col mb-4">
+                    <div class="card @(tenant.TenancyEndDate == null ? "current":"past")">
+                        <div class="btn-group" role="group">
+                            <a type="button" class="btn btn-info" asp-action="Edit" asp-controller="Tenants" asp-route-id="@tenant.Id">Edit</a>
+                            <button type="button" class="btn btn-primary tenantDetailsButton" data-bs-toggle="modal" data-bs-target="#tenantDetailsModal"
+                                    data-url='@Url.Action("Details", "Tenants", new { id = @tenant.Id })'>
+                                Details
+                            </button> 
+                            <!-- Modal -->
+                            @await Html.PartialAsync("./Modals/_tenantDetailsModal.cshtml")
+                        </div>
+                        <img class="card-img-top rounded mx-auto d-block p-2 img-fluid img-thumbnail" src="@tenant.TenantImage" style="max-width:250px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
+                        <div class="card-body">
+                            <h5 class="card-title">@tenant.FirstName @tenant.LastName</h5>
+                            <p class="card-text">
+                                <dl class="row">
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.PhoneNumber)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.PhoneNumber)
+                                    </dd>
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.JobTitle)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.JobTitle)
+                                    </dd>
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.Nationality)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.Nationality.Name)
+                                    </dd>
+                                    @if (tenant.DateOfBirth.HasValue)
+                                    {
+                                        <dt class="col-sm-6 small text-muted">
+                                            @Html.DisplayNameFor(model => tenant.DateOfBirth)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => tenant.DateOfBirth)
+                                        </dd>
+                                    }
+
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.TenancyStartDate)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.TenancyStartDate)
+                                    </dd>
+                                    @if (tenant.TenancyEndDate > DateTime.MinValue)
+                                    {
+                                        <dt class="col-sm-6 small text-muted">
+                                            @Html.DisplayNameFor(model => tenant.TenancyEndDate)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => tenant.TenancyEndDate)
+                                        </dd>
+
+@*                                         <dt class="col-sm-6 small text-muted">
+                                            @Html.DisplayNameFor(model => tenant.TotalMonthsAtProperty)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => tenant.TotalMonthsAtProperty)
+                                        </dd> *@
+                                    }
+                                    <dt class="col-sm-6 small text-muted">
+                                        @Html.DisplayNameFor(model => tenant.CreatedDate)
+                                    </dt>
+                                    <dd class="col-sm-6">
+                                        @Html.DisplayFor(model => tenant.CreatedDate)
+                                    </dd>
+                                    @if (tenant.UpdatedDate > DateTime.MinValue)
+                                    {
+                                        <dt class="col-sm-6 small text-muted">
+                                            @Html.DisplayNameFor(model => tenant.UpdatedDate)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => tenant.UpdatedDate)
+                                        </dd>
+                                    }
+                                </dl>
+                            </p>
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    }
+</div>

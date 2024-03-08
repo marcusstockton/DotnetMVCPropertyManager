@@ -21,6 +21,10 @@ namespace Website.Models.DTOs.Tenants
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "Email Address")]
+        [DataType(DataType.EmailAddress)]
+        public string EmailAdresss { get; set; }
+
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
 

@@ -1,21 +1,20 @@
-﻿$(document).ready(function () {
+﻿$(function () {
     console.log("createTenantModal.js loaded!");
-    $('#tenantCreateButton').click(function () {
+    $('#tenantCreateButton').on("click", function (event) {
         var portfolioId = $('#portfolio_id').val();
         var propertyId = $('#property_id').val();
         var url = $('#tenantCreateButton').data('url');
 
         $.ajax({
             url: url,
-            type: "get", //send it through get method
+            type: "get",
             data: {
                 portfolioId: portfolioId,
                 propertyId: propertyId,
             },
             success: function (response) {
-                //Do Something
-                $('#configureBody').html(response);
-                $('#tenantCreateModal').modal('hide');
+                $('#configureCreateBody').html(response);
+                //$('#tenantCreateModal').modal('hide');
             },
             error: function (ex) {
                 //Do Something to handle error

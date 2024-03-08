@@ -35,32 +35,31 @@ namespace Website.Controllers
         //}
 
         // GET: Tenants/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var tenant = await _tenantService.GetTenantByIdAsync(id.Value);
-                
-        //    if (tenant == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var tenant = await _tenantService.GetTenantByIdAsync(id.Value);
 
-        //    return PartialView("/Views/Tenants/Modals/_tenantDetailsModal.cshtml", _mapper.Map<TenantDTO>(tenant));
-        //}
+            if (tenant == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("_tenantDetail", _mapper.Map<TenantDTO>(tenant));
+        }
 
         // GET: Tenants/Create
         public async Task<IActionResult> Create(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
             var tenant = new Tenant { Property = property };
-            var tenantDto = _mapper.Map<TenantCreateDTO>(tenant);
             var nationalities = await _tenantService.GetNationalitiesAsync();
             ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            return PartialView("_TenantCreate", tenantDto);
+            return PartialView("_TenantCreate", _mapper.Map<TenantCreateDTO>(tenant));
         }
 
         // POST: Tenants/Create
@@ -68,7 +67,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Guid portfolioId, Guid propertyId, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate")] TenantCreateDTO tenant)
+        public async Task<IActionResult> Create(Guid portfolioId, Guid propertyId, [Bind("FirstName,LastName,PhoneNumber,EmailAddress,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets")] TenantCreateDTO tenant)
         {
             if (ModelState.IsValid)
             {
@@ -112,7 +111,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,DateOfBirth,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets")] Tenant tenant, IFormFile profilePic)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,DateOfBirth,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets, EmailAddress")] Tenant tenant, IFormFile profilePic)
         {
             if (id != tenant.Id)
             {

@@ -143,7 +143,7 @@
             @await Html.PartialAsync("/Views/Property/Partial/_PropertyDocumentList.cshtml", Model.Documents, new ViewDataDictionary(ViewData) { { "PropertyId", Model.Id } })
         </div>
         <div class="tab-pane fade" id="nav-tenant" role="tabpanel" aria-labelledby="nav-tenant-tab">
-            @await Html.PartialAsync("/Views/Tenants/_TenantDetail.cshtml", Model.Tenants)
+            @await Html.PartialAsync("/Views/Tenants/_TenantListDetail.cshtml", Model.Tenants)
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="tenantCreateButton" data-bs-target="#tenantCreateModal" data-url='@Url.Action("Create", "Tenants")'>
                 <span class="material-icons">add</span> Add Tenant
             </button>
@@ -159,6 +159,7 @@
 </div>
 @section Scripts {
     <script src="@Url.Content("~/js/Tenant/createTenantModal.js")" asp-append-version="true"></script>
+    <script src="@Url.Content("~/js/Tenant/tenantDetailsModal.js")" asp-append-version="true"></script>
     <script src="~/js/property/property-detail.js" asp-append-version="true"></script>
 }
 
