@@ -38,7 +38,10 @@ namespace Website.Models.DTOs.Tenants
         [Display(Name = "Date Tenancy Ended")]
         [DataType(DataType.Date)]
         public DateTimeOffset? TenancyEndDate { get; set; }
-
+        [Display(Name = "Smoker?")]
+        public bool IsSmoker { get; set; }
+        [Display(Name = "Has Pets?")]
+        public bool HasPets { get; set; }
         public virtual Property Property { get; set; }
 
         [Display(Name = "Tenant Profile"), DataType(DataType.Upload)]

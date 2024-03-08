@@ -34,7 +34,7 @@ namespace Website.Controllers
         //    return View(await _context.Tenants.ToListAsync());
         //}
 
-        //// GET: Tenants/Details/5
+        // GET: Tenants/Details/5
         //public async Task<IActionResult> Details(Guid? id)
         //{
         //    if (id == null)
@@ -42,14 +42,14 @@ namespace Website.Controllers
         //        return NotFound();
         //    }
 
-        //    var tenant = await _context.Tenants
-        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    var tenant = await _tenantService.GetTenantByIdAsync(id.Value);
+                
         //    if (tenant == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    return View(tenant);
+        //    return PartialView("/Views/Tenants/Modals/_tenantDetailsModal.cshtml", _mapper.Map<TenantDTO>(tenant));
         //}
 
         // GET: Tenants/Create
@@ -112,7 +112,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate")] Tenant tenant, IFormFile profilePic)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,DateOfBirth,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets")] Tenant tenant, IFormFile profilePic)
         {
             if (id != tenant.Id)
             {

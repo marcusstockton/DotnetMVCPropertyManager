@@ -60,6 +60,16 @@
                         <span asp-validation-for="TenancyEndDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="IsSmoker" class="control-label"></label>
+                        <input asp-for="IsSmoker" class="form-check-input" />
+                        <span asp-validation-for="IsSmoker" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HasPets" class="control-label"></label>
+                        <input asp-for="HasPets" class="form-check-input" />
+                        <span asp-validation-for="HasPets" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="TenantImage" class="control-label"></label>
                         <p><small>Uploading a new image will over-write the existing.</small></p>
                         <p><small id="preview">Currently the image is:</small></p>
@@ -70,11 +80,7 @@
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </div>
-
-                
-
             </div>
-
         </form>
     </div>
 </div>

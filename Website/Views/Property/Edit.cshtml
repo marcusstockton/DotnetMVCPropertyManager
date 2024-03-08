@@ -99,14 +99,35 @@
                         <span asp-validation-for="MonthlyRentAmount" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Images" class="control-label"></label>
-                        @foreach(var image in Model.Images)
-                        {
-                            <li>@image.FileName</li>
-                        }
+                        <div style="display: flex; justify-content: space-between">
+                            <label asp-for="Images" class="control-label"></label>
+                            <a asp-action="ImagesForProperty" asp-controller="PropertyImages" asp-route-propertyId="@Model.Id" class="btn btn-primary btn-sm">Manage Images</a>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">File Name</th>
+                                    <th scope="col">File Type</th>
+                                    <th scope="col">Created Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var image in Model.Images)
+                                {
+                                    <tr>
+                                        <td>@image.FileName</td>
+                                        <td>@image.FileType</td>
+                                        <td>@image.CreatedDate.ToString("F")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                        <a asp-action="ImagesForProperty" asp-controller="PropertyImages" asp-route-propertyId="@Model.Id" class="btn btn-primary">Manage Images</a>
-                    <div class="form-group">
+
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <a class="btn btn-primary" asp-controller="Property" asp-action="Detail" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" title="View Property">View Property</a>
+                        <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light">Back to List</a>
                         <input type="submit" value="Save" class="btn btn-success" />
                     </div>
                 </div>
@@ -115,10 +136,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id">Back to List</a>
-    <a class="btn btn-primary" asp-controller="Property" asp-action="Detail" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" title="View Property">View Property</a>
-</div>
+
 
 
 

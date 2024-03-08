@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Website.Extensions.Alerts;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Portfolios;
@@ -64,7 +65,7 @@ namespace Website.Controllers
                 await _context.CreatePortfolio(portfolio, username);
                 return RedirectToAction(nameof(Index));
             }
-            return View(portfolio);
+            return View(portfolio).WithSuccess("Success", "Property Created Sucessfully");
         }
 
         // GET: Portfolios/Edit/5
@@ -100,14 +101,14 @@ namespace Website.Controllers
                 try
                 {
                     await _context.UpdatePortfolio(portfolio);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index)).WithSuccess("Success", "Portfolio Sucessfully Updated");
                 }
                 catch
                 {
                     throw;
                 }
             }
-            return View(portfolio);
+            return View(portfolio).WithWarning("Warning", "Invalid details.");
         }
 
         // GET: Portfolios/Delete/5
@@ -135,7 +136,7 @@ namespace Website.Controllers
             var portfolio = await _context.GetPortfolioById(id);
             if (await _context.DeletePortfolio(portfolio))
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)).WithSuccess("Success", "Portfolio Deleted");
             }
             return View(portfolio);
         }

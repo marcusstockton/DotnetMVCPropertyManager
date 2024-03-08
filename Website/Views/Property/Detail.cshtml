@@ -1,4 +1,5 @@
-﻿@model Website.Models.DTOs.Properties.PropertyDetailDTO
+﻿@using Website.Models.DTOs.Tenants
+@model Website.Models.DTOs.Properties.PropertyDetailDTO
 @{
     ViewData["Title"] = "Property Details";
 }
@@ -27,39 +28,35 @@
         return "";
     }
 }
-<div class="row">
-    <div col-sm-6>
-        <h1>
-            @Title()
-        </h1>
-    </div>
-    <div class="col-sm-6">
-        <div class="float-right">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <a asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-primary btn-sm"
-                   data-toggle="tooltip" data-placement="top" title="Edit Portfolio">
-                    <span class="material-icons">
-                        edit
-                    </span>
-                </a>
-                <a asp-action="Delete" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger btn-sm"
-                   data-toggle="tooltip" data-placement="top" title="Delete Portfolio">
-                    <span class="material-icons">
-                        delete_forever
-                    </span>
-                </a>
-                <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light btn-sm"
-                   data-toggle="tooltip" data-placement="top" title="Back to list">
-                    <span class="material-icons">
-                        arrow_back
-                    </span>
-                </a>
-            </div>
+
+
+<div class="d-flex bd-highlight">
+    <div class="p-2 w-100 bd-highlight"><h1>@Title()</h1></div>
+    <div class="p-2 flex-shrink-1 bd-highlight">
+        <div class="btn-group" role="group">
+            <a asp-action="Edit" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-primary btn-sm"
+               data-toggle="tooltip" data-placement="top" title="Edit Portfolio">
+                <span class="material-icons">
+                    edit
+                </span>
+            </a>
+            <a asp-action="Delete" asp-route-portfolioId="@Model.Portfolio.Id" asp-route-propertyId="@Model.Id" class="btn btn-danger btn-sm"
+               data-toggle="tooltip" data-placement="top" title="Delete Portfolio">
+                <span class="material-icons">
+                    delete_forever
+                </span>
+            </a>
+            <a asp-action="Details" asp-controller="Portfolio" asp-route-id="@Model.Portfolio.Id" class="btn btn-light btn-sm"
+               data-toggle="tooltip" data-placement="top" title="Back to list">
+                <span class="material-icons">
+                    arrow_back
+                </span>
+            </a>
         </div>
     </div>
 </div>
 
-<div>
+<div class="container">
     <h4>Property Details</h4>
     <hr />
     <ul class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -82,7 +79,7 @@
             @Html.HiddenFor(x => x.Id, new { @id = "property_id" })
             @Html.HiddenFor(x => x.Address.Latitude)
             @Html.HiddenFor(x => x.Address.Longitude)
-            
+
             <div class="row">
                 <div class="col-sm-12 border rounded">
                     <dl class="row">

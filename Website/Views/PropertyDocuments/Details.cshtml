@@ -54,9 +54,23 @@
             @Html.DisplayFor(model => model.UpdatedDate)
         </dd>
     </dl>
-    <iframe src="@fileLocation" width="1000" height="400"></iframe>
+
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">View Document</button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">@Model.FileName</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <iframe src="@fileLocation" width="1000" height="90%"></iframe>
+        </div>
+    </div>
+
+    
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<link href="~/css/propertydocument/propertydocdetails.css" rel="stylesheet" />

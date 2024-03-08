@@ -123,6 +123,8 @@ namespace Website.Data
                                         Nationality = _context.Nationalities.First(x=>x.Name == "British"),
                                         TenancyStartDate = new DateTime(2019, 11, 23),
                                         TenantImage = @"\TenantImages\Example\Male1\download.jpg",
+                                        IsSmoker = true,
+                                        HasPets = true,
                                         Notes = new List<Note>{ new Note {Description = "An overall good tenant. Keeps himself to himself, and looks after the property" } }
                                     },
                                     new Tenant
@@ -135,6 +137,8 @@ namespace Website.Data
                                         TenancyStartDate = new DateTime(2018, 7, 17),
                                         TenancyEndDate = new DateTime(2019, 11, 12),
                                         TenantImage = @"\TenantImages\Example\Male2\index.jpg",
+                                        IsSmoker = true,
+                                        HasPets = true,
                                         Notes = new List<Note>
                                         {
                                             new Note{Description = "Definitley not a professional cleaner."}
@@ -195,6 +199,8 @@ namespace Website.Data
                                         },
                                         PhoneNumber = "01928374572",
                                         TenancyStartDate = new DateTime(2019, 3, 5),
+                                        IsSmoker = true,
+                                        HasPets = true,
                                         TenantImage = @"\TenantImages\Example\Female1\b0d7ebf6d72cc032ad123e3de1a2e8ca.jpg",
                                     }
                                 }
@@ -249,6 +255,8 @@ namespace Website.Data
                                                 new Note{CreatedDate = DateTime.Now, Description = "Bookish"}
                                             },
                                             PhoneNumber = "07748975421",
+                                            IsSmoker = true,
+                                            HasPets = true,
                                             TenancyStartDate = new DateTime(2020, 11, 15),
                                             TenantImage = @"\TenantImages\Example\Female2\images.jpg",
                                         }
@@ -268,6 +276,8 @@ namespace Website.Data
                         .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
                         .RuleFor(x => x.DateOfBirth, f => f.Date.Past(80, DateTime.Now.AddYears(-17)))
                         .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
+                        .RuleFor(x => x.IsSmoker, f => f.PickRandomParam<bool>())
+                        .RuleFor(x => x.HasPets, f => f.PickRandomParam<bool>())
                         .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
                         .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
 

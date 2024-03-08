@@ -11,7 +11,7 @@ $(document).ready(() => {
         },
         columns: [
             { data: "noOfRooms" },
-            { data: "purchaseDate", render: DataTable.render.datetime('DD/MM/YYYY') },
+            { data: "purchaseDate" },
             { data: "propertyValue", render: $.fn.dataTable.render.number(null, null, 2, '&pound;') },
             { data: "monthlyRentAmount", render: $.fn.dataTable.render.number(',', '.', 2, '&pound;') },
             { data: "description" },
@@ -29,15 +29,15 @@ $(document).ready(() => {
         ],
         columnDefs: [
             {
-                // Format dates...
-                "targets": [1, 6, 7],
+                "targets": [1],
                 "render": function (data) {
                     if (data === null) {
                         return "-"
                     }
-                    return dayjs(data).format('ddd DD MMM YYYY HH:mm');
+                    return dayjs(data).format("D MMM YYYY")
                 }
-            }, {
+            },
+            {
                 "targets": [4, 5],
                 "render": function (data, type, row) {
                     if (data.length > 60) {
@@ -45,6 +45,16 @@ $(document).ready(() => {
                     } else {
                         return data;
                     }
+                }
+            },
+            {
+                // Format dates...
+                "targets": [6, 7],
+                "render": function (data) {
+                    if (data === null) {
+                        return "-"
+                    }
+                    return dayjs(data).format('ddd DD MMM YYYY HH:mm');
                 }
             }
         ]
