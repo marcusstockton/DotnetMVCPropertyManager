@@ -297,11 +297,11 @@ namespace Website.Data
                         {
                             Line1 = f.Address.BuildingNumber(),
                             Line2 = f.Address.StreetAddress(),
-                            Town = f.Country().UnitedKingdom().Place().Name,
+                            Town = CountryDataSet.UnitedKingdom().Place().Name,
                             City = f.Address.City(),
                             Latitude = f.Address.Latitude(),
                             Longitude = f.Address.Longitude(),
-                            Postcode = f.Country().UnitedKingdom().PostCode(),
+                            Postcode = CountryDataSet.UnitedKingdom().PostCode(),
                         })
                         .RuleFor(x => x.Description, f => f.Lorem.Paragraph())
                         .RuleFor(x => x.Images, f => propertyImageFaker.Generate(f.Random.Number(2, 5)))
