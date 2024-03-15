@@ -106,8 +106,8 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
-            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Id", propertyDocument.DocumentTypeId);
-            return View(propertyDocument);
+            ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Description", propertyDocument.DocumentTypeId);
+            return View(_mapper.Map< PropertyDocumentDetailsDto>( propertyDocument));
         }
 
         // POST: PropertyDocuments/Edit/5
