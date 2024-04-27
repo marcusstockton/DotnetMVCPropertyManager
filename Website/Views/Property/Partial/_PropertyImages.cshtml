@@ -12,7 +12,7 @@ else
                 @foreach (var image in Model)
                 {
                     <div class="carousel-item @(image == Model.First() ? "active" : "")" data-bs-interval="10000">
-                        <img src="@image.FilePath" class="d-block w-100" alt="Property Image" style="display: block; width: auto; height: 60vh;">
+                        <img src="@image.FilePath" class="d-block w-100 img-fluid" alt="Property Image" style="display: block; width: auto; height: 60vh;">
                     </div>
                 }
             </div>
