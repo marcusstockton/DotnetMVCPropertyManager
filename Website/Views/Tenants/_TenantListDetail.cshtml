@@ -28,7 +28,11 @@
                             <!-- Modal -->
                             @await Html.PartialAsync("./Modals/_tenantDetailsModal.cshtml")
                         </div>
-                        <img class="card-img-top rounded mx-auto d-block p-2 img-fluid img-thumbnail" src="@tenant.TenantImage" style="max-width:250px; height:auto;" alt="@tenant.FirstName @tenant.LastName">
+                        @if (!string.IsNullOrEmpty(tenant.TenantImage))
+                        {
+                            <img class="card-img-top rounded mx-auto d-block p-2 img-fluid img-thumbnail" src="@tenant.TenantImage" style="max-width:250px; height:auto;" alt="@tenant.FirstName @tenant.LastName image">
+                        }
+                        
                         <div class="card-body">
                             <h5 class="card-title">@tenant.FirstName @tenant.LastName</h5>
                             <p class="card-text">
