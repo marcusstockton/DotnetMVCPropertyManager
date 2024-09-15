@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function () {
     $("#ExpiryDate").parent().hide();
 
     $("#Expires").on("change", function () {

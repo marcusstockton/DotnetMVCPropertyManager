@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function () {
     console.log("addressLookup.js loaded");
 
     $('#enableautocomplete').change(function () {

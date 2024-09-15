@@ -1,4 +1,4 @@
-$(document).ready(() => {
+$(() => {
     console.log("property-datatable called");
     var portfolioId = $("#portfolio_id").val();
     var url = "../../api/Properties/GetPropertiesForPortfolio/" + portfolioId;

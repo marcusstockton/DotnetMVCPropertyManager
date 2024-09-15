@@ -3,7 +3,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 
-@if (SignInManager.IsSignedIn(User))
+@if (User.Identity.IsAuthenticated)
 {
     if (User.IsInRole("Owner"))
     {
