@@ -13,9 +13,9 @@
     @* JQuery-UI *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.0/themes/base/jquery-ui.min.css" integrity="sha512-F8mgNaoH6SSws+tuDTveIu+hx6JkVcuLqTQ/S/KJaHJjGc8eUxIrBawMnasq2FDlfo7FYsD8buQXVwD+0upbcA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container">
@@ -44,16 +44,16 @@
         </nav>
     </header>
     <div class="container" id="main_body">
-        <main role="main" class="pb-3">
+        <main role="main" class="flex-shrink-0">
             @await Html.PartialAsync("_StatusMessages")
 
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer fixed-bottom mt-auto">
         <div class="container">
-            &copy; @DateTime.Now.Year - Website - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - EstateState - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
