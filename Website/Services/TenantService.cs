@@ -43,7 +43,7 @@ namespace Website.Services
         {
             var path = Path.Combine(_env.WebRootPath, "TenantImages", tenantId.ToString());
             var filename = Path.GetFileName(file.FileName);
-            var filePath = Path.Combine(path, filename);
+            var filePath = Path.Combine(path, string.Join("_", filename.Split(Path.GetInvalidFileNameChars())));
             var shortFilePath = filePath.Split(_env.WebRootPath).Last();
             if (!Directory.Exists(path))
             {
