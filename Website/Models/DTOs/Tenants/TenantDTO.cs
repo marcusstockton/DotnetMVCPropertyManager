@@ -40,8 +40,10 @@ namespace Website.Models.DTOs.Tenants
 
         [Display(Name = "Tenant Profile")]
         public string TenantImage { get; set; }
+
         [Display(Name = "Smoker?")]
         public bool IsSmoker { get; set; }
+
         [Display(Name = "Has Pets?")]
         public bool HasPets { get; set; }
 

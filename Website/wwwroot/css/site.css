@@ -12,7 +12,6 @@ a.navbar-brand {
     word-break: break-all;
 }
 
-
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -76,9 +75,8 @@ body {
     margin-bottom: 60px;
 }
 
-
 .footer {
     white-space: nowrap;
-    line-height: 30px;  
+    line-height: 30px;
     background-color: #dee2e6;
 }

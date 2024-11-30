@@ -46,7 +46,6 @@ namespace Website.Areas
                 }
                 return BadRequest();
             }
-                
         }
 
         [HttpGet, Route("GetMapFromLatLong"), ResponseCache(VaryByQueryKeys = new string[] { "portfolioId", "propertyId", "lat", "lon" }, Duration = 1400)]
@@ -78,7 +77,6 @@ namespace Website.Areas
                         property.Address.Latitude = lat;
                         property.Address.Longitude = lon;
                         await _propertyService.SaveAsync();
-                        
 
                         return Ok("image/jpeg;base64," + Convert.ToBase64String(await response.Content.ReadAsByteArrayAsync()));
                     }
@@ -133,7 +131,6 @@ namespace Website.Areas
                 else
                 {
                     return BadRequest("Invalid Postcode");
-                    
                 }
             }
             return BadRequest("Invalid Postcode supplied");

@@ -1,5 +1,4 @@
-﻿
-$(function () {
+﻿$(function () {
     var table = $('#portfolioIndexTable').DataTable({
         "processing": true,
         ajax: {

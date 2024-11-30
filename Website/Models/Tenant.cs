@@ -19,11 +19,13 @@ namespace Website.Models
         public DateTime? DateOfBirth { get; set; }
 
         public string JobTitle { get; set; }
+
         [DataType(DataType.Date)]
         public DateTimeOffset TenancyStartDate { get; set; }
 
         [DataType(DataType.Date)]
         public DateTimeOffset? TenancyEndDate { get; set; }
+
         public bool IsSmoker { get; set; }
         public bool HasPets { get; set; }
         public virtual Property Property { get; set; }

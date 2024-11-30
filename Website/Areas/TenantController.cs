@@ -51,7 +51,6 @@ namespace Website.Areas
             var result = _mapper.Map<IEnumerable<TenantDTO>>(tenants);
             return Ok(result);
         }
-
     }
 
     internal class JobTitleAutocompleteResponse
