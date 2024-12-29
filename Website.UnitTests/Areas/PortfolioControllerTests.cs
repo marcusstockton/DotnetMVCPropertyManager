@@ -23,15 +23,21 @@ namespace Website.Areas.Tests
         private readonly Mock<IPropertyImageService> _propertyImageService = new Mock<IPropertyImageService>();
         private readonly Mock<IPropertyDocumentService> _propertyDocumentService = new Mock<IPropertyDocumentService>();
         private readonly IMapper _mapper;
-        private readonly ILogger<PortfolioController> _logger;
+        private Mock<ILogger<PortfolioController>> _logger;
         private ClaimsPrincipal _user;
+
+        [TestInitialize()]
+        public void Setup()
+        {
+            _logger = new Mock<ILogger<PortfolioController>>();
+        }
 
         public PortfolioControllerTests()
         {
             var portfolioProfile = new PortfolioProfile();
             var config = new MapperConfiguration(cfg => cfg.AddProfile(portfolioProfile));
             _mapper = new Mapper(config);
-
+            
             _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
         }
 
@@ -44,7 +50,7 @@ namespace Website.Areas.Tests
 
             _portfolioServiceMock.Setup(x => x.GetMyPortfolios(It.IsAny<string>())).ReturnsAsync(results);
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _logger);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _logger.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 

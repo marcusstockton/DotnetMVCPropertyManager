@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Website.Extensions.Alerts;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Portfolios;
@@ -134,10 +135,11 @@ namespace Website.Controllers.Tests
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
-            var viewResult = await controller.Edit(existingPortfolioId, portfolio) as RedirectToActionResult;
+            var viewResult = await controller.Edit(existingPortfolioId, portfolio) as AlertDecoratorResult;
             Assert.IsNotNull(viewResult);
             // Successfull if it returns to an index page.
-            Assert.AreEqual("Index", viewResult.ActionName);
+            var viewResultResult = viewResult.Result as RedirectToActionResult;
+            Assert.AreEqual("Index", viewResultResult.ActionName);
         }
 
         [TestMethod()]
@@ -158,10 +160,11 @@ namespace Website.Controllers.Tests
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
-            var viewResult = await controller.DeleteConfirmed(existingPortfolioId) as RedirectToActionResult;
+            var viewResult = await controller.DeleteConfirmed(existingPortfolioId) as AlertDecoratorResult;
             Assert.IsNotNull(viewResult);
             // Successfull if it returns to an index page.
-            Assert.AreEqual("Index", viewResult.ActionName);
+            var viewResultResult = viewResult.Result as RedirectToActionResult;
+            Assert.AreEqual("Index", viewResultResult.ActionName);
         }
     }
 }
