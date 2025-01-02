@@ -18,18 +18,18 @@
 
     <div class="card col-md-4 offset-md-3 mx-auto">
         <article class="card-body">
-            <a class="float-right btn btn-outline-primary" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            <a class="float-end btn btn-sm btn-outline-info" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
             <h4 class="card-title mb-4 mt-1">@ViewData["Title"]</h4>
             <form id="account" method="post">
-                <div class="form-group">
-                    <label>Your email</label>
-                    <input asp-for="Input.Email" class="form-control" placeholder="Email" type="email" value="davestockton84@hotmail.co.uk">
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" id="emailInput" class="form-control" placeholder="Email" type="email" value="davestockton84@hotmail.co.uk">
+                    <label for="emailInput">Email Address</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" id="passwordInput" class="form-control" placeholder="******" type="password" value="P@55w0rd1">
+                    <label for="passwordInput">Your password</label>
                     <a class="float-right" asp-page="./ForgotPassword">Forgot?</a>
-                    <label>Your password</label>
-                    <input asp-for="Input.Password" class="form-control" placeholder="******" type="password" value="P@55w0rd1">
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -42,8 +42,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                <div class="form-group mt-3">
+                    <button type="submit" class="float-end btn btn-primary btn-block"> Login</button>
                 </div>
             </form>
         </article>
@@ -55,5 +55,7 @@
 <style>
     .card{
         margin-top:100px;
+        opacity:0.9;
+        border-radius: 15px;
     }
 </style>

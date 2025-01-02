@@ -6,12 +6,16 @@
   <ItemGroup>
     <Compile Remove="wwwroot\lib\bootstrap\**" />
     <Compile Remove="wwwroot\lib\jquery\**" />
+    <Compile Remove="wwwroot\TenantImages\467c17b9-c5fb-4d8a-219b-08dd2b6412a8\**" />
     <Content Remove="wwwroot\lib\bootstrap\**" />
     <Content Remove="wwwroot\lib\jquery\**" />
+    <Content Remove="wwwroot\TenantImages\467c17b9-c5fb-4d8a-219b-08dd2b6412a8\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
+    <EmbeddedResource Remove="wwwroot\TenantImages\467c17b9-c5fb-4d8a-219b-08dd2b6412a8\**" />
     <None Remove="wwwroot\lib\bootstrap\**" />
     <None Remove="wwwroot\lib\jquery\**" />
+    <None Remove="wwwroot\TenantImages\467c17b9-c5fb-4d8a-219b-08dd2b6412a8\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
@@ -39,6 +43,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Models\Enums\" />
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\PropertyDocuments\Test\" />
     <!--<Folder Include="wwwroot\PropertyDocuments\" />
     <Folder Include="wwwroot\PropertyImages\" />-->
   </ItemGroup>

@@ -3,25 +3,25 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 
-@if (User.Identity.IsAuthenticated)
+@if (User != null && User.Identity.IsAuthenticated)
 {
     if (User.IsInRole("Owner"))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" is-active-route asp-controller="Portfolio" asp-action="Index" title="Portfolios">Portfolios</a>
+            <a class="nav-link text-dark" asp-controller="Portfolio" asp-action="Index" title="Portfolios">Portfolios</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" is-active-route asp-controller="DocumentTypes" asp-action="Index" title="Document Types">Document Types</a>
+            <a class="nav-link text-dark" asp-controller="DocumentTypes" asp-action="Index" title="Document Types">Document Types</a>
         </li>
     }
 
     @if (User.IsInRole("Admin"))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" is-active-route asp-controller="Admin" asp-action="Index" title="Portfolios">Admin</a>
+            <a class="nav-link text-dark"  asp-controller="Admin" asp-action="Index" title="Portfolios">Admin</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" is-active-route asp-controller="DocumentTypes" asp-action="Index" title="Document Types">Document Types</a>
+            <a class="nav-link text-dark" asp-controller="DocumentTypes" asp-action="Index" title="Document Types">Document Types</a>
         </li>
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Models;
@@ -33,9 +34,11 @@ namespace Website.Data
                 if (reseedDatabase)
                 {
                     _logger.LogInformation("Blatting the database and reseeding...");
+                    ClearDownUploadFolders();
+
                     _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
-                    // Delete Images....leaving examples
+
                 }
 
                 if (!_context.Users.Any())
@@ -122,7 +125,7 @@ namespace Website.Data
                                         PhoneNumber = "074625174385",
                                         Nationality = _context.Nationalities.First(x=>x.Name == "British"),
                                         TenancyStartDate = new DateTime(2019, 11, 23),
-                                        TenantImage = @"\TenantImages\Example\Male1\download.jpg",
+                                        TenantImage = @"\TenantImages\Examples\thispersondoesntexist4.jpeg",
                                         IsSmoker = true,
                                         EmailAddress = "dave.davidson@art.com",
                                         HasPets = true,
@@ -137,7 +140,7 @@ namespace Website.Data
                                         PhoneNumber = "0192838456",
                                         TenancyStartDate = new DateTime(2018, 7, 17),
                                         TenancyEndDate = new DateTime(2019, 11, 12),
-                                        TenantImage = @"\TenantImages\Example\Male2\index.jpg",
+                                        TenantImage = @"\TenantImages\Examples\thispersondoesntexist6.jpeg",
                                         IsSmoker = true,
                                         EmailAddress = "tony.montana@cleaners.com",
                                         HasPets = true,
@@ -159,12 +162,12 @@ namespace Website.Data
                                 },
                                 Documents = new List<PropertyDocument>
                                 {
-                                    new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Tenancy Agreement"), FileName = "Tracked_Returns_label_NT350067989GB.pdf", FilePath = @"\PropertyDocuments\Example\Tracked_Returns_label_NT350067989GB.pdf", FileType = ".pdf" }
+                                    new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Tenancy Agreement"), FileName = "sample.pdf", FilePath = @"\PropertyDocuments\Examples\sample.pdf", FileType = ".pdf" }
                                 },
                                 Images = new List<PropertyImage>{
-                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "assets.simpleview-europe.com.jpg", FilePath = @"\PropertyImages\Example\Property1\assets.simpleview-europe.com.jpg", FileType = ".jpg"},
-                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "26C69756-012B-4C50-B431-88F5CE279CD2.jpeg", FilePath = @"\PropertyImages\Example\Property1\26C69756-012B-4C50-B431-88F5CE279CD2.jpeg", FileType = ".jpeg"},
-                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "1684d6d66862064eb404b0a7a70d7283.jpg", FilePath = @"\PropertyImages\Example\Property1\1684d6d66862064eb404b0a7a70d7283.jpg", FileType = ".jpeg"}
+                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (3).jpeg", FilePath = @"\PropertyImages\Examples\download (3).jpeg", FileType = ".jpeg"},
+                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "Hartford_Farm__Liverton__Newton_Abbot__1_.jpg", FilePath = @"\PropertyImages\Examples\Hartford_Farm__Liverton__Newton_Abbot__1_.jpg", FileType = ".jpeg"},
+                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "pexels-photo-280229.jpeg", FilePath = @"\PropertyImages\Examples\pexels-photo-280229.jpeg", FileType = ".jpeg"}
                                 }
                             }, new Property
                             {
@@ -203,7 +206,7 @@ namespace Website.Data
                                         TenancyStartDate = new DateTime(2019, 3, 5),
                                         IsSmoker = true,
                                         HasPets = true,
-                                        TenantImage = @"\TenantImages\Example\Female1\b0d7ebf6d72cc032ad123e3de1a2e8ca.jpg",
+                                        TenantImage = @"\TenantImages\Examples\thispersondoesntexist2.jpeg",
                                     }
                                 }
                             }
@@ -236,12 +239,12 @@ namespace Website.Data
                                     PurchaseDate = new DateTime(2014, 4, 29),
                                     Images = new List<PropertyImage>
                                     {
-                                        new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (1).jpg", FilePath = @"\PropertyImages\Example\Property2\download (1).jpg", FileType = ".jpg"},
-                                        new PropertyImage{CreatedDate = DateTime.Now, FileName = "Residential-property-2.jpg", FilePath = @"\PropertyImages\Example\Property2\Residential-property-2.jpg", FileType = ".jpg"},
+                                        new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (3).jpeg", FilePath = @"\PropertyImages\Examples\download (3).jpeg", FileType = ".jpeg"},
+                                        new PropertyImage{CreatedDate = DateTime.Now, FileName = "pexels-photo-280229.jpeg", FilePath = @"\PropertyImages\Examples\pexels-photo-280229.jpeg", FileType = ".jpg"},
                                     },
                                     Documents = new List<PropertyDocument>
                                     {
-                                        new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Gas Safety Certificate"), FileName = "Label-QR-Code-446103803.pdf", FilePath = @"\PropertyDocuments\Example\Label-QR-Code-446103803.pdf", FileType = ".pdf" }
+                                        new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Gas Safety Certificate"), FileName = "sample.pdf", FilePath = @"\PropertyDocuments\Examples\sample.pdf", FileType = ".pdf" }
                                     },
                                     Tenants = new List<Tenant>
                                     {
@@ -261,7 +264,7 @@ namespace Website.Data
                                             IsSmoker = true,
                                             HasPets = true,
                                             TenancyStartDate = new DateTime(2020, 11, 15),
-                                            TenantImage = @"\TenantImages\Example\Female2\images.jpg",
+                                            TenantImage = @"\TenantImages\Examples\thispersondoesnotexist13.jpg",
                                         }
                                     }
                                 }
@@ -280,8 +283,8 @@ namespace Website.Data
                         .RuleFor(x => x.EmailAddress, (f, u) => f.Person.Email)
                         .RuleFor(x => x.DateOfBirth, f => f.Date.Past(80, DateTime.Now.AddYears(-17)))
                         .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
-                        .RuleFor(x => x.IsSmoker, f => f.PickRandomParam<bool>())
-                        .RuleFor(x => x.HasPets, f => f.PickRandomParam<bool>())
+                        .RuleFor(x => x.IsSmoker, f => f.Random.Bool())
+                        .RuleFor(x => x.HasPets, f => f.Random.Bool())
                         .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
                         .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
 
@@ -325,6 +328,34 @@ namespace Website.Data
             {
                 Console.WriteLine(ex.Message);
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Loops over the file upload folders and clears them all down, except for the Examples folder in each
+        /// </summary>
+        private static void ClearDownUploadFolders()
+        {
+            string tenantImages = Environment.CurrentDirectory + "\\wwwroot\\TenantImages";
+            string propertyDocs = Environment.CurrentDirectory + "\\wwwroot\\PropertyDocuments";
+            string propertyImages = Environment.CurrentDirectory + "\\wwwroot\\PropertyImages";
+
+            var clearDownFolders = new string[] { tenantImages, propertyDocs, propertyImages };
+
+            foreach (var folderToClear in clearDownFolders)
+            {
+                DirectoryInfo di = new DirectoryInfo(folderToClear);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    if (!dir.Name.Equals("Examples"))
+                    {
+                        dir.Delete(true);
+                    }
+                }
             }
         }
     }
