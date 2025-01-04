@@ -7,63 +7,83 @@
             @Html.HiddenFor(c => c.Property.Portfolio.Id, new { @id = "portfolio_id" })
             @Html.HiddenFor(x => x.Property.Id, new { @id = "property_id" })
             <div class="row">
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="FirstName" class="form-control" placeholder="First Name" />
-                    <label class="form-label" asp-for="FirstName"></label>
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                        <label class="form-label" asp-for="FirstName"></label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="LastName" class="form-control" placeholder="Last Name" />
-                    <label class="form-label" asp-for="LastName"></label>
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
-                    <label class="form-label" asp-for="PhoneNumber"></label>
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="JobTitle" class="form-control" placeholder="Start typing..." />
-                    <label class="form-label" asp-for="JobTitle"></label>
-                    <span asp-validation-for="JobTitle" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                        <label class="form-label" asp-for="LastName"></label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="EmailAdresss" class="form-control" placeholder="Email Adresss" />
-                    <label class="form-label" asp-for="EmailAdresss"></label>
-                    <span asp-validation-for="EmailAdresss" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                        <label class="form-label" asp-for="PhoneNumber"></label>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="JobTitle" class="form-control" placeholder="Start typing..." />
+                        <label class="form-label" asp-for="JobTitle"></label>
+                        <span asp-validation-for="JobTitle" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="EmailAdresss" class="form-control" placeholder="Email Adresss" />
+                        <label class="form-label" asp-for="EmailAdresss"></label>
+                        <span asp-validation-for="EmailAdresss" class="text-danger"></span>
+                    </div>
+                </div>
+                
                 <div class="col"></div>
 
             </div>
             <div class="row">
-                <div class="form-floating col-md-6 mb-3">
-                    <select asp-for="NationalityId" class="form-select" asp-items="@ViewBag.Nationalities" id="floatingSelect">
-                        <option disabled selected>--Please Select--</option>
-                    </select>
-                    <label asp-for="NationalityId" class="control-label"></label>
-                    <span asp-validation-for="NationalityId" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <select asp-for="NationalityId" class="form-select" asp-items="@ViewBag.Nationalities" id="floatingSelect">
+                            <option disabled selected>--Please Select--</option>
+                        </select>
+                        <label asp-for="NationalityId" class="control-label"></label>
+                        <span asp-validation-for="NationalityId" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="DateOfBirth" class="form-control" placeholder="DoB" />
-                    <label class="form-label" asp-for="DateOfBirth"></label>
-                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="DateOfBirth" class="form-control" placeholder="DoB" />
+                        <label class="form-label" asp-for="DateOfBirth"></label>
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
                 </div>
-                
             </div>
             <div class="row">
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="TenancyStartDate" class="form-control" placeholder="DoB" />
-                    <label class="form-label" asp-for="TenancyStartDate"></label>
-                    <span asp-validation-for="TenancyStartDate" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="TenancyStartDate" class="form-control" placeholder="DoB" />
+                        <label class="form-label" asp-for="TenancyStartDate"></label>
+                        <span asp-validation-for="TenancyStartDate" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-md-6 form-floating mb-3">
-                    <input asp-for="TenancyEndDate" class="form-control" placeholder="DoB" />
-                    <label class="form-label" asp-for="TenancyEndDate"></label>
-                    <span asp-validation-for="TenancyEndDate" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="TenancyEndDate" class="form-control" placeholder="DoB" />
+                        <label class="form-label" asp-for="TenancyEndDate"></label>
+                        <span asp-validation-for="TenancyEndDate" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -97,6 +117,6 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        //<script src="~/js/Tenant/jobTitleAutocomplete.js" asp-append-version="true"></script>
+        <script src="~/js/Tenant/jobTitleAutocomplete.js" asp-append-version="true"></script>
      }
 }

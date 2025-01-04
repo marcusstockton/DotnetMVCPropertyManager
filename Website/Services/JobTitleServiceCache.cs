@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -47,18 +48,29 @@ namespace Website.Services
 
         public async Task<IList<string>> JobTitlesAsync()
         {
-            if (_inMemoryCache.TryGetValue("JobTitles", out IList<string> jobTitles))
-            {
-                return jobTitles;
-            }
+            var cachedValue = await _inMemoryCache.GetOrCreateAsync(
+                "JobTitles",
+                cacheEntry =>
+                {
+                    cacheEntry.SetSize(1000);
+                    cacheEntry.SlidingExpiration = TimeSpan.FromHours(12);
+                    cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(20);
+                    return GetJobTitles();
+                });
 
-            jobTitles = await GetJobTitles();
+            return cachedValue;
 
-            _inMemoryCache.Set("JobTitles", jobTitles);
+            //if (_inMemoryCache.TryGetValue("JobTitles", out IList<string> jobTitles))
+            //{
+            //    return jobTitles;
+            //}
 
-            _cacheKeys.Add("JobTitles");
+            //jobTitles = await GetJobTitles();
+            //_inMemoryCache.Set("JobTitles", jobTitles);
 
-            return jobTitles;
+            //_cacheKeys.Add("JobTitles");
+
+            //return jobTitles;
         }
 
         private async Task<IList<string>> GetJobTitles()

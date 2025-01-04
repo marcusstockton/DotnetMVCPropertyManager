@@ -39,7 +39,7 @@ namespace Website.Areas
             _logger.LogInformation($"{nameof(JobTitleAutoComplete)} finding job titles with {jobTitle}");
             var jobTitles = await _jobTitleService.JobTitlesAsync();
 
-            var jobTitlesFiltered = jobTitles.Where(x => x.Contains(jobTitle)).ToList();
+            var jobTitlesFiltered = jobTitles.Where(x => x.Contains(jobTitle, StringComparison.OrdinalIgnoreCase)).ToList();
             return Ok(jobTitlesFiltered);
         }
 
