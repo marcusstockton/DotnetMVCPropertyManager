@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Website.Interfaces;
@@ -22,6 +24,7 @@ namespace Website.Areas.Tests
         private readonly Mock<IPortfolioService> _portfolioServiceMock = new Mock<IPortfolioService>();
         private readonly Mock<IPropertyImageService> _propertyImageService = new Mock<IPropertyImageService>();
         private readonly Mock<IPropertyDocumentService> _propertyDocumentService = new Mock<IPropertyDocumentService>();
+        private Mock<IMemoryCache> _memoryCacheMock;
         private readonly IMapper _mapper;
         private Mock<ILogger<PortfolioController>> _logger;
         private ClaimsPrincipal _user;
@@ -29,6 +32,7 @@ namespace Website.Areas.Tests
         [TestInitialize()]
         public void Setup()
         {
+            _memoryCacheMock = new Mock<IMemoryCache>();
             _logger = new Mock<ILogger<PortfolioController>>();
         }
 
@@ -50,7 +54,9 @@ namespace Website.Areas.Tests
 
             _portfolioServiceMock.Setup(x => x.GetMyPortfolios(It.IsAny<string>())).ReturnsAsync(results);
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _logger.Object);
+            // Need to mock the _memoryCacheMock.GetOrCreateAsync method for this test to pass.
+
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCacheMock.Object, _logger.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 

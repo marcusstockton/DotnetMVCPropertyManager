@@ -1,9 +1,18 @@
 ﻿$(function () {
+
     var table = $('#portfolioIndexTable').DataTable({
-        "processing": true,
+        processing: true,
+        serverSide: true,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
             dataSrc: '',
+            type: "GET",
+            cache: false,
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
         },
         columns: [
             { "data": "name" },
@@ -45,4 +54,6 @@
         var url = "/Portfolio/Details/" + row.id;
         window.location.href = url;
     });
+
+
 });

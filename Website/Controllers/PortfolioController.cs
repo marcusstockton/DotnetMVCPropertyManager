@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 using Website.Extensions.Alerts;
+using Website.Helpers;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Portfolios;
@@ -14,11 +16,13 @@ namespace Website.Controllers
     public class PortfolioController : Controller
     {
         private readonly IPortfolioService _context;
+        private readonly IMemoryCache _memoryCache;
         private readonly IMapper _mapper;
 
-        public PortfolioController(IPortfolioService context, IMapper mapper)
+        public PortfolioController(IPortfolioService context, IMemoryCache memoryCache, IMapper mapper)
         {
             _context = context;
+            _memoryCache = memoryCache;
             _mapper = mapper;
         }
 
@@ -63,6 +67,7 @@ namespace Website.Controllers
             {
                 var username = User.Identity.Name;
                 await _context.CreatePortfolio(portfolio, username);
+                _memoryCache.Remove($"portfolio-{this.User.GetUserId()}");
                 return RedirectToAction(nameof(Index));
             }
             return View(portfolio).WithSuccess("Success", "Property Created Sucessfully");
@@ -101,6 +106,7 @@ namespace Website.Controllers
                 try
                 {
                     await _context.UpdatePortfolio(portfolio);
+                    _memoryCache.Remove($"portfolio-{this.User.GetUserId()}");
                     return RedirectToAction(nameof(Index)).WithSuccess("Success", "Portfolio Sucessfully Updated");
                 }
                 catch
@@ -136,6 +142,7 @@ namespace Website.Controllers
             var portfolio = await _context.GetPortfolioById(id);
             if (await _context.DeletePortfolio(portfolio))
             {
+                _memoryCache.Remove($"portfolio-{this.User.GetUserId()}");
                 return RedirectToAction(nameof(Index)).WithSuccess("Success", "Portfolio Deleted");
             }
             return View(portfolio);

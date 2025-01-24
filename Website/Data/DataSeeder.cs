@@ -39,74 +39,73 @@ namespace Website.Data
                     _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
 
-                }
 
-                if (!_context.Users.Any())
-                {
-                    _logger.LogInformation("Creating roles");
-                    // Create some roles:
-                    await _roleManager.CreateAsync(new IdentityRole { Name = "Owner" });
-                    await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
+                    if (!_context.Users.Any())
+                    {
+                        _logger.LogInformation("Creating roles");
+                        // Create some roles:
+                        await _roleManager.CreateAsync(new IdentityRole { Name = "Owner" });
+                        await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
 
-                    _logger.LogInformation("Creating users");
-                    var user1 = new ApplicationUser { FirstName = "Marcus", LastName = "Stockton", Email = "marcus_stockton@hotmail.co.uk", UserName = "marcus_stockton@hotmail.co.uk", };
-                    var user2 = new ApplicationUser { FirstName = "Dave", LastName = "Stockton", Email = "davestockton84@hotmail.co.uk", UserName = "davestockton84@hotmail.co.uk", };
-                    await _userManager.CreateAsync(user1, "P@55w0rd1");
-                    await _userManager.CreateAsync(user2, "P@55w0rd1");
+                        _logger.LogInformation("Creating users");
+                        var user1 = new ApplicationUser { FirstName = "Marcus", LastName = "Stockton", Email = "marcus_stockton@hotmail.co.uk", UserName = "marcus_stockton@hotmail.co.uk", };
+                        var user2 = new ApplicationUser { FirstName = "Dave", LastName = "Stockton", Email = "davestockton84@hotmail.co.uk", UserName = "davestockton84@hotmail.co.uk", };
+                        await _userManager.CreateAsync(user1, "P@55w0rd1");
+                        await _userManager.CreateAsync(user2, "P@55w0rd1");
 
-                    _logger.LogInformation("Adding users to roles");
-                    await _userManager.AddToRoleAsync(user1, "Admin");
-                    await _userManager.AddToRoleAsync(user2, "Owner");
-                    await _context.SaveChangesAsync();
-                }
-                if (!_context.DocumentTypes.Any())
-                {
-                    await _context.DocumentTypes.AddRangeAsync(new DocumentType
-                    {
-                        Description = "EPC",
-                        CreatedDate = DateTime.Now,
-                    }, new DocumentType
-                    {
-                        Description = "Gas Safety Certificate",
-                        CreatedDate = DateTime.Now,
-                    }, new DocumentType
-                    {
-                        Description = "Tenancy Agreement",
-                        CreatedDate = DateTime.Now,
-                    }, new DocumentType
-                    {
-                        Description = "Deposit Protection Scheme",
-                        CreatedDate = DateTime.Now,
-                    }, new DocumentType
-                    {
-                        Description = "Electrical Inspection Documentation",
-                        CreatedDate = DateTime.Now
-                    });
-                    await _context.SaveChangesAsync();
-                }
-
-                if (!_context.Nationalities.Any())
-                {
-                    _logger.LogInformation("Creating Nationalities data");
-
-                    var nationalityList = new List<string>() { "Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanee", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiriati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Microneian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean" };
-                    foreach (var nationality in nationalityList)
-                    {
-                        await _context.Nationalities.AddAsync(new Nationality { Name = nationality });
+                        _logger.LogInformation("Adding users to roles");
+                        await _userManager.AddToRoleAsync(user1, "Admin");
+                        await _userManager.AddToRoleAsync(user2, "Owner");
+                        await _context.SaveChangesAsync();
                     }
-                    await _context.SaveChangesAsync();
-                }
-
-                if (!_context.Portfolios.Any())
-                {
-                    _logger.LogInformation("Creating portfolio and related data");
-                    await _context.AddRangeAsync(
-                        new Portfolio
+                    if (!_context.DocumentTypes.Any())
+                    {
+                        await _context.DocumentTypes.AddRangeAsync(new DocumentType
                         {
-                            Owner = await _userManager.FindByEmailAsync("davestockton84@hotmail.co.uk"),
-                            Name = "South West",
+                            Description = "EPC",
                             CreatedDate = DateTime.Now,
-                            Properties = new List<Property> {
+                        }, new DocumentType
+                        {
+                            Description = "Gas Safety Certificate",
+                            CreatedDate = DateTime.Now,
+                        }, new DocumentType
+                        {
+                            Description = "Tenancy Agreement",
+                            CreatedDate = DateTime.Now,
+                        }, new DocumentType
+                        {
+                            Description = "Deposit Protection Scheme",
+                            CreatedDate = DateTime.Now,
+                        }, new DocumentType
+                        {
+                            Description = "Electrical Inspection Documentation",
+                            CreatedDate = DateTime.Now
+                        });
+                        await _context.SaveChangesAsync();
+                    }
+
+                    if (!_context.Nationalities.Any())
+                    {
+                        _logger.LogInformation("Creating Nationalities data");
+
+                        var nationalityList = new List<string>() { "Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanee", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiriati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Microneian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean" };
+                        foreach (var nationality in nationalityList)
+                        {
+                            await _context.Nationalities.AddAsync(new Nationality { Name = nationality });
+                        }
+                        await _context.SaveChangesAsync();
+                    }
+
+                    if (!_context.Portfolios.Any())
+                    {
+                        _logger.LogInformation("Creating portfolio and related data");
+                        await _context.AddRangeAsync(
+                            new Portfolio
+                            {
+                                Owner = await _userManager.FindByEmailAsync("davestockton84@hotmail.co.uk"),
+                                Name = "South West",
+                                CreatedDate = DateTime.Now,
+                                Properties = new List<Property> {
                             new Property
                             {
                                 PropertyValue = 120400,
@@ -210,14 +209,14 @@ namespace Website.Data
                                     }
                                 }
                             }
-                        }
-                        }, new Portfolio
-                        {
-                            CreatedDate = DateTime.Now,
-                            Name = "North West",
-                            Owner = await _userManager.FindByEmailAsync("davestockton84@hotmail.co.uk"),
-                            Properties = new List<Property>
+                            }
+                            }, new Portfolio
                             {
+                                CreatedDate = DateTime.Now,
+                                Name = "North West",
+                                Owner = await _userManager.FindByEmailAsync("davestockton84@hotmail.co.uk"),
+                                Properties = new List<Property>
+                                {
                                 new Property
                                 {
                                     Address = new Address
@@ -268,61 +267,64 @@ namespace Website.Data
                                         }
                                     }
                                 }
-                            }
-                        });
-                    await _context.SaveChangesAsync();
+                                }
+                            });
+                        await _context.SaveChangesAsync();
 
-                    // Bogus this stuff up!:
-                    _logger.LogInformation("Going ballz to the wall and generating random data with bogus!!");
-                    var tenantFaker = new Faker<Tenant>("en_GB")
-                        .RuleFor(x => x.FirstName, f => f.Person.FirstName)
-                        .RuleFor(x => x.LastName, f => f.Person.LastName)
-                        .RuleFor(x => x.JobTitle, f => f.Name.JobTitle())
-                        .RuleFor(x => x.PhoneNumber, f => f.Person.Phone)
-                        .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
-                        .RuleFor(x => x.EmailAddress, (f, u) => f.Person.Email)
-                        .RuleFor(x => x.DateOfBirth, f => f.Date.Past(80, DateTime.Now.AddYears(-17)))
-                        .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
-                        .RuleFor(x => x.IsSmoker, f => f.Random.Bool())
-                        .RuleFor(x => x.HasPets, f => f.Random.Bool())
-                        .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
-                        .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
+                        // Bogus this stuff up!:
+                        _logger.LogInformation("Going ballz to the wall and generating random data with bogus!!");
+                        var tenantFaker = new Faker<Tenant>("en_GB")
+                            .RuleFor(x => x.FirstName, f => f.Person.FirstName)
+                            .RuleFor(x => x.LastName, f => f.Person.LastName)
+                            .RuleFor(x => x.JobTitle, f => f.Name.JobTitle())
+                            .RuleFor(x => x.PhoneNumber, f => f.Person.Phone)
+                            .RuleFor(x => x.TenantImage, f => f.Person.Avatar)
+                            .RuleFor(x => x.EmailAddress, (f, u) => f.Person.Email)
+                            .RuleFor(x => x.DateOfBirth, f => f.Date.Past(80, DateTime.Now.AddYears(-17)))
+                            .RuleFor(x => x.Nationality, f => f.PickRandom(_context.Nationalities.ToList()))
+                            .RuleFor(x => x.IsSmoker, f => f.Random.Bool())
+                            .RuleFor(x => x.HasPets, f => f.Random.Bool())
+                            .RuleFor(x => x.TenancyStartDate, f => f.Date.Past())
+                            .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
 
-                    var propertyImageFaker = new Faker<PropertyImage>("en_GB")
-                        .RuleFor(x => x.FilePath, f => f.Image.LoremFlickrUrl(800, 600, "building,home"))
-                        .RuleFor(x => x.FileName, f => f.System.FileName())
-                        .RuleFor(x => x.CreatedDate, f => f.Date.Recent(100));
+                        var propertyImageFaker = new Faker<PropertyImage>("en_GB")
+                            .RuleFor(x => x.FilePath, f => f.Image.LoremFlickrUrl(800, 600, "building,home"))
+                            .RuleFor(x => x.FileName, f => f.System.FileName())
+                            .RuleFor(x => x.CreatedDate, f => f.Date.Recent(100));
 
-                    var propertyFaker = new Faker<Property>("en_GB")
-                        .RuleFor(x => x.NoOfRooms, f => f.Random.Number(1, 4))
-                        .RuleFor(x => x.Bathrooms, f => f.Random.Number(1, 4))
-                        .RuleFor(x => x.Address, f => new Address
-                        {
-                            Line1 = f.Address.BuildingNumber(),
-                            Line2 = f.Address.StreetAddress(),
-                            Town = CountryDataSet.UnitedKingdom().Place().Name,
-                            City = f.Address.City(),
-                            Latitude = f.Address.Latitude(),
-                            Longitude = f.Address.Longitude(),
-                            Postcode = CountryDataSet.UnitedKingdom().PostCode(),
-                        })
-                        .RuleFor(x => x.Description, f => f.Lorem.Paragraph())
-                        .RuleFor(x => x.Images, f => propertyImageFaker.Generate(f.Random.Number(2, 5)))
-                        .RuleFor(x => x.MonthlyRentAmount, f => f.Random.Number(500, 4000))
-                        .RuleFor(x => x.PurchaseDate, f => f.Date.Past())
-                        .RuleFor(x => x.Tenants, f => tenantFaker.Generate(f.Random.Number(3, 8)))
-                        .RuleFor(x => x.PropertyValue, f => f.Random.Double(100000, 1000000));
+                        var propertyFaker = new Faker<Property>("en_GB")
+                            .RuleFor(x => x.NoOfRooms, f => f.Random.Number(1, 4))
+                            .RuleFor(x => x.Bathrooms, f => f.Random.Number(1, 4))
+                            .RuleFor(x => x.Address, f => new Address
+                            {
+                                Line1 = f.Address.BuildingNumber(),
+                                Line2 = f.Address.StreetAddress(),
+                                Town = CountryDataSet.UnitedKingdom().Place().Name,
+                                City = f.Address.City(),
+                                Latitude = f.Address.Latitude(),
+                                Longitude = f.Address.Longitude(),
+                                Postcode = CountryDataSet.UnitedKingdom().PostCode(),
+                            })
+                            .RuleFor(x => x.Description, f => f.Lorem.Paragraph())
+                            .RuleFor(x => x.Images, f => propertyImageFaker.Generate(f.Random.Number(2, 5)))
+                            .RuleFor(x => x.MonthlyRentAmount, f => f.Random.Number(500, 4000))
+                            .RuleFor(x => x.PurchaseDate, f => f.Date.Past())
+                            .RuleFor(x => x.Tenants, f => tenantFaker.Generate(f.Random.Number(3, 8)))
+                            .RuleFor(x => x.PropertyValue, f => f.Random.Double(100000, 1000000));
 
-                    var PortFolioFaker = new Faker<Portfolio>("en_GB")
-                     .RuleFor(o => o.Name, f => f.Address.County())
-                     .RuleFor(o => o.Owner, f => f.PickRandom(_context.Users.ToArray()))
-                     .RuleFor(x => x.Properties, f => propertyFaker.Generate(f.Random.Number(4, 12)))
-                     .RuleFor(o => o.CreatedDate, f => f.Date.Past());
+                        var PortFolioFaker = new Faker<Portfolio>("en_GB")
+                         .RuleFor(o => o.Name, f => f.Address.County())
+                         .RuleFor(o => o.Owner, f => f.PickRandom(_context.Users.ToArray()))
+                         .RuleFor(x => x.Properties, f => propertyFaker.Generate(f.Random.Number(4, 12)))
+                         .RuleFor(o => o.CreatedDate, f => f.Date.Past());
 
-                    var bogusPortilios = PortFolioFaker.Generate(10);
-                    await _context.Portfolios.AddRangeAsync(bogusPortilios);
-                    await _context.SaveChangesAsync();
+                        var bogusPortilios = PortFolioFaker.Generate(10);
+                        await _context.Portfolios.AddRangeAsync(bogusPortilios);
+                        await _context.SaveChangesAsync();
+                    }
                 }
+
+
             }
             catch (Exception ex)
             {

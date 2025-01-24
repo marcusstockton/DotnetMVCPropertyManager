@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -19,6 +20,7 @@ namespace Website.Controllers.Tests
     public class PortfolioControllerTests
     {
         private readonly Mock<IPortfolioService> _portfolioServiceMock = new Mock<IPortfolioService>();
+        private readonly Mock<IMemoryCache> _memoryCache = new Mock<IMemoryCache>();
         private readonly IMapper _mapper;
 
         private readonly Guid _portfolio1Id;
@@ -78,7 +80,7 @@ namespace Website.Controllers.Tests
         {
             // Arrange
             _portfolioServiceMock.Setup(x => x.GetPortfolioById(_portfolio1Id)).ReturnsAsync(_portfolio1);
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
 
             // Act
             var viewResult = await controller.Details(_portfolio1Id) as ViewResult;
@@ -100,7 +102,7 @@ namespace Website.Controllers.Tests
             };
 
             _portfolioServiceMock.Setup(x => x.GetPortfolioById(_portfolio1Id)).ReturnsAsync(_portfolio1);
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
@@ -131,7 +133,7 @@ namespace Website.Controllers.Tests
                 Id = existingPortfolioId
             });
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
@@ -156,7 +158,7 @@ namespace Website.Controllers.Tests
             _portfolioServiceMock.Setup(x => x.GetPortfolioById(existingPortfolioId)).ReturnsAsync(portfolio);
             _portfolioServiceMock.Setup(x => x.DeletePortfolio(portfolio)).ReturnsAsync(true);
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
