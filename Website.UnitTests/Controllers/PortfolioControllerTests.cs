@@ -16,7 +16,7 @@ using Website.Profiles;
 
 namespace Website.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class PortfolioControllerTests
     {
         private readonly Mock<IPortfolioService> _portfolioServiceMock = new Mock<IPortfolioService>();
@@ -43,7 +43,7 @@ namespace Website.Controllers.Tests
             _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
         }
 
-        [TestInitialize()]
+        [TestInitialize]
         public void SetupData()
         {
             var _portfolio1Id = Guid.NewGuid();
@@ -75,7 +75,7 @@ namespace Website.Controllers.Tests
             };
         }
 
-        [TestMethod()]
+        [TestMethod]
         public async Task DetailsTest()
         {
             // Arrange
@@ -92,7 +92,7 @@ namespace Website.Controllers.Tests
             Assert.AreEqual(model.Properties.Count, model.NumberOfProperties);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public async Task Can_Create_New_Portfolio()
         {
             var newPortfolio = new Portfolio
@@ -113,7 +113,7 @@ namespace Website.Controllers.Tests
             Assert.AreEqual("Index", viewResult.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public async Task CanEditPortfolioAsync()
         {
             var existingPortfolioId = Guid.NewGuid();
@@ -144,7 +144,7 @@ namespace Website.Controllers.Tests
             Assert.AreEqual("Index", viewResultResult.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public async Task DeleteConfirmedTestAsync()
         {
             var existingPortfolioId = Guid.NewGuid();

@@ -1,78 +1,70 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Website.Areas;
 using Website.Interfaces;
-using Website.Models;
 using Website.Models.DTOs.Portfolios;
-using Website.Profiles;
 
-namespace Website.Areas.Tests
+namespace Website.Tests.Controllers
 {
-    [TestClass()]
+    [TestClass]
     public class PortfolioControllerTests
     {
-        private readonly Mock<IPortfolioService> _portfolioServiceMock = new Mock<IPortfolioService>();
-        private readonly Mock<IPropertyImageService> _propertyImageService = new Mock<IPropertyImageService>();
-        private readonly Mock<IPropertyDocumentService> _propertyDocumentService = new Mock<IPropertyDocumentService>();
+        private Mock<IPortfolioService> _portfolioServiceMock;
         private Mock<IMemoryCache> _memoryCacheMock;
-        private readonly IMapper _mapper;
-        private Mock<ILogger<PortfolioController>> _logger;
-        private ClaimsPrincipal _user;
+        private FakeLogger<PortfolioController> _fakeLogger;
+        private PortfolioController _controller;
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Setup()
         {
+            _portfolioServiceMock = new Mock<IPortfolioService>();
             _memoryCacheMock = new Mock<IMemoryCache>();
-            _logger = new Mock<ILogger<PortfolioController>>();
+            _fakeLogger = new FakeLogger<PortfolioController>();
+            _controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCacheMock.Object, _fakeLogger);
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, "test-user-id")
+            }, "mock"));
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
         }
 
-        public PortfolioControllerTests()
-        {
-            var portfolioProfile = new PortfolioProfile();
-            var config = new MapperConfiguration(cfg => cfg.AddProfile(portfolioProfile));
-            _mapper = new Mapper(config);
-            
-            _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
-        }
-
-        [TestMethod()]
-        public async Task GetMyPortfolios_Returns_Only_My_Portfolios()
+        [TestMethod]
+        public async Task GetMyPortfolios_ReturnsPortfolios()
         {
             // Arrange
-            var portfolioId = Guid.NewGuid();
-            var results = new List<PortfolioDetailsDto> { new PortfolioDetailsDto { Id = portfolioId, Name = "Test", Owner = new ApplicationUser { Id = "1" } } };
-
-            _portfolioServiceMock.Setup(x => x.GetMyPortfolios(It.IsAny<string>())).ReturnsAsync(results);
-
-            // Need to mock the _memoryCacheMock.GetOrCreateAsync method for this test to pass.
-
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCacheMock.Object, _logger.Object);
-            controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
+            var portfolios = new List<PortfolioDetailsDto> { new PortfolioDetailsDto { Id = Guid.NewGuid(), Name = "Test Portfolio" } };
+            var cacheEntryMock = new Mock<ICacheEntry>();
+            _memoryCacheMock.Setup(mc => mc.CreateEntry(It.IsAny<object>())).Returns(cacheEntryMock.Object);
+            _portfolioServiceMock.Setup(s => s.GetMyPortfolios(It.IsAny<string>())).ReturnsAsync(portfolios);
 
             // Act
-            var result = await controller.GetMyPortfolios();
+            var result = await _controller.GetMyPortfolios();
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult<IList<PortfolioDetailsDto>>));
             Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
-            var okResult = result.Result as OkObjectResult;
-            Assert.IsInstanceOfType(okResult.Value, typeof(List<PortfolioDetailsDto>));
-            var portfolioDetailsList = okResult.Value as List<PortfolioDetailsDto>;
-            Assert.AreEqual(1, portfolioDetailsList.Count());
-            var firstRecord = portfolioDetailsList.First();
-            Assert.AreEqual(portfolioId, firstRecord.Id);
-            Assert.AreEqual("Test", firstRecord.Name);
+            var response = result.Result as OkObjectResult;
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.StatusCode, StatusCodes.Status200OK);
+
+            var portfolioListResult = response.Value as List<PortfolioDetailsDto>;
+            Assert.IsNotNull(portfolioListResult);
+            Assert.AreEqual(1, portfolioListResult.Count);
+
+            _portfolioServiceMock.Verify(s => s.GetMyPortfolios("test-user-id"), Times.Once);
+            Assert.AreEqual(3, _fakeLogger.Collector.Count);
         }
     }
 }
