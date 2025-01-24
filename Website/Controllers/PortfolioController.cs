@@ -107,6 +107,11 @@ namespace Website.Controllers
                 {
                     await _context.UpdatePortfolio(portfolio);
                     _memoryCache.Remove($"portfolio-{this.User.GetUserId()}");
+                    if (this.User.IsInRole("Admin"))
+                    {
+                        _memoryCache.Remove($"portfolio-{portfolio.OwnerId}");
+                        return RedirectToAction(nameof(Index), "Admin");
+                    }
                     return RedirectToAction(nameof(Index)).WithSuccess("Success", "Portfolio Sucessfully Updated");
                 }
                 catch

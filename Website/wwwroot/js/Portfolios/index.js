@@ -2,7 +2,7 @@
 
     var table = $('#portfolioIndexTable').DataTable({
         processing: true,
-        serverSide: true,
+        //serverSide: true,
         ajax: {
             url: "../api/Portfolio/GetMyPortfolios/",
             dataSrc: '',
