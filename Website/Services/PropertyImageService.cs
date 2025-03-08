@@ -88,7 +88,7 @@ namespace Website.Services
             return new string(name.Select(c => invalids.Contains(c) ? replace : c).ToArray());
         }
 
-        public async Task<bool> CreateImageForProperty(Property property, IFormFile image)
+        public async Task<bool> CreateImageForProperty(Property property, IFormFile image, string? description)
         {
             if (image.Length > 0)
             {
@@ -116,6 +116,7 @@ namespace Website.Services
                                 FilePath = shortFilePath,
                                 FileType = Path.GetExtension(filePath),
                                 Property = property,
+                                Description = description
                             });
                         await _context.SaveChangesAsync();
                     }

@@ -74,12 +74,12 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Image,PropertyId")] PropertyImageCreateDto propertyImage)
+        public async Task<IActionResult> Create([Bind("Image,PropertyId,Description")] PropertyImageCreateDto propertyImage)
         {
             if (ModelState.IsValid)
             {
                 var property = await _context.Properties.Include(x => x.Portfolio).SingleOrDefaultAsync(x => x.Id == propertyImage.PropertyId);
-                var file = await _propertyImageService.CreateImageForProperty(property, propertyImage.Image);
+                var file = await _propertyImageService.CreateImageForProperty(property, propertyImage.Image, propertyImage.Description);
                 if (file)
                 {
                     return RedirectToAction(nameof(ImagesForProperty), new { propertyId = property.Id });
@@ -110,7 +110,7 @@ namespace Website.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FileName,FilePath,FileType,Id,CreatedDate,UpdatedDate")] PropertyImage propertyImage)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FileName,FilePath,FileType,Id,CreatedDate,UpdatedDate,Description")] PropertyImage propertyImage)
         {
             if (id != propertyImage.Id)
             {

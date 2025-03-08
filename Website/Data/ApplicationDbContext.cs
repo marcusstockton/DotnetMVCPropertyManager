@@ -62,6 +62,7 @@ namespace Website.Data
 
             builder.Entity<PropertyDocument>().HasKey(x => x.Id);
             builder.Entity<PropertyImage>().HasKey(x => x.Id);
+            builder.Entity<PropertyImage>().Property(x=>x.Description).HasMaxLength(200).IsRequired(false);
             builder.Entity<Tenant>().HasKey(x => x.Id);
             builder.Entity<Nationality>().HasKey(x => x.Id);
             builder.Entity<Note>().HasKey(x => x.Id);

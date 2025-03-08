@@ -23,6 +23,7 @@
                             <form asp-action="Delete" asp-route-id="@image.Id" asp-route-propertyId="@image.Property.Id" asp-route-returnUrl="@ViewContext.HttpContext.Request.Path">
                                 <input type="submit" value="Delete" class="btn btn-danger" />
                             </form>
+                        <a type="button" class="btn btn-info" asp-action="Edit" asp-route-id="@image.Id">Edit</a>
                     </div>
                 </div>
             </div>

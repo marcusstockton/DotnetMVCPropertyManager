@@ -13,6 +13,13 @@ else
                 {
                     <div class="carousel-item @(image == Model.First() ? "active" : "")" data-bs-interval="10000">
                         <img src="@image.FilePath" class="d-block w-100 img-fluid" alt="Property Image" style="display: block; width: auto; height: 60vh;">
+                        @if (!string.IsNullOrEmpty(image.Description))
+                        {
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Details:</h3>
+                                <h5>@image.Description</h5>
+                            </div>
+                        }
                     </div>
                 }
             </div>
