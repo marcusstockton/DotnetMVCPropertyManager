@@ -7,7 +7,7 @@
 else
 {
     <div class="col-md-9 offset-1">
-        <div id="propertyImageCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div id="propertyImageCarousel" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 @foreach (var image in Model)
                 {
@@ -36,3 +36,15 @@ else
     </div>
 
 }
+
+<style type="text/css">
+    .carousel-control-prev:hover, .carousel-control-next:hover {
+        background-color: rgba(204, 204, 204, 0.5);
+    }
+
+    .carousel-caption{
+        background-color: rgba(204, 204, 204, 0.6);
+        margin-left: calc(-100vw / 2 + 500px / 2);
+        margin-right: calc(-100vw / 2 + 500px / 2);
+    }
+</style>

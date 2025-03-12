@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -79,6 +80,12 @@ namespace Website.Areas
                         await _propertyService.SaveAsync();
 
                         return Ok("image/jpeg;base64," + Convert.ToBase64String(await response.Content.ReadAsByteArrayAsync()));
+                    }
+                    else
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        _logger.LogError($"{nameof(GetMapFromLatLong)} hereApiImages error: {error}");
+                        return Problem(error,null, (int)HttpStatusCode.InternalServerError, "Error");
                     }
                 }
             }

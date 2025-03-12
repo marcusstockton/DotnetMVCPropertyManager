@@ -45,6 +45,7 @@
                 $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
             },
             error: function (xhr) {
+                // Throw up a noticiation or something?
                 console.log(xhr);
             }
         });
