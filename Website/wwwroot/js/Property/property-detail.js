@@ -1,4 +1,7 @@
 ﻿$(() => {
+
+    $("#error-alert").hide();
+
     let url = location.href.replace(/\/$/, "");
 
     // Handles opening correct tab if the url contains the hash of a tab
@@ -45,7 +48,16 @@
                 $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
             },
             error: function (xhr) {
-                // Throw up a noticiation or something?
+                var error = xhr.responseJSON;
+                let jsonErr = JSON.parse(error.detail);
+                $('#error-alert').append(`<p> An error occured when looking up the postcode image.</p>`);
+                $('#error-alert').append(`<p> ${jsonErr.error}: ${jsonErr.error_description} </p>`);
+
+                $('#error-alert').fadeIn(1000);
+                setTimeout(function () {
+                    $('#error-alert').fadeOut(1000);
+                }, 5000);
+
                 console.log(xhr);
             }
         });
