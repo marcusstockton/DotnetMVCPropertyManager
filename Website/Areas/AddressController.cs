@@ -68,7 +68,8 @@ namespace Website.Areas
                 else
                 {
                     var client = _httpClientFactory.CreateClient("hereApiImages");
-                    var url = $"?apiKey={_apiKey}&c={lat},{lon}&vt=0&z=17&t=9";
+                    var url = $"mc/center:{lat},{lon};zoom=15/800x400/png?apiKey={_apiKey}&style=explore.satellite.day";
+
                     var response = await client.GetAsync(url);
                     if (response.IsSuccessStatusCode)
                     {
