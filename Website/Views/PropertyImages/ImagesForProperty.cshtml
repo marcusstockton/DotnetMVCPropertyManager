@@ -1,12 +1,16 @@
-﻿@model IEnumerable<Website.Models.PropertyImage>
+﻿@model Website.Models.DTOs.PropertyImage.PropertyImagesViewModel
 
 @{
     ViewData["Title"] = "Images for Property";
 }
 
 <ul style="list-style-type: none;">
-    <a asp-action="Create" class="btn btn-success" asp-route-propertyId="@Model.First().Property.Id">Create New</a>
-    @foreach (var image in Model.OrderByDescending(x=>x.CreatedDate))
+    <a asp-action="Create" class="btn btn-success" asp-route-propertyId="@Model.PropertyId">Create New</a>
+    @if (!Model.PropertyImages.Any())
+    {
+        <p>No images...</p>
+    }
+    @foreach (var image in Model.PropertyImages.OrderByDescending(x => x.CreatedDate))
     {
         <li>
             <div class="row col-sm-12 p-2">

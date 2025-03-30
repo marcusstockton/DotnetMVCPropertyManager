@@ -57,10 +57,13 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
-            var propertyImages = await _context.PropertyImages
-                .Where(m => m.Property.Id == propertyId).ToListAsync();
-
-            return View(propertyImages);
+            var propertyImages = _context.PropertyImages.Where(pi => pi.Property.Id == propertyId).ToList();
+            var viewModel = new PropertyImagesViewModel
+            {
+                PropertyId = propertyId,
+                PropertyImages = propertyImages
+            };
+            return View(viewModel);
         }
 
         // GET: PropertyImages/Create
