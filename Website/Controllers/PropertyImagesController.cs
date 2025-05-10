@@ -57,7 +57,7 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
-            var propertyImages = _context.PropertyImages.Where(pi => pi.Property.Id == propertyId).ToList();
+            var propertyImages = await _context.PropertyImages.Where(pi => pi.Property.Id == propertyId).ToListAsync();
             var viewModel = new PropertyImagesViewModel
             {
                 PropertyId = propertyId,
