@@ -37,3 +37,10 @@
     .legend .past {
         background-color: lightgray;
     }
+
+#postcodeImg {
+    height: 300px;
+    width: 400px;
+    border: 1px solid red;
+    position: relative;
+}

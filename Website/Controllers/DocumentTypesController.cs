@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Data;
@@ -18,13 +16,11 @@ namespace Website.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IMapper _mapper;
 
-        public DocumentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public DocumentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
-            _mapper = mapper;
         }
 
         // GET: DocumentTypes
@@ -32,7 +28,18 @@ namespace Website.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var docTypes = _context.DocumentTypes.Where(x => x.Owner == user || x.Owner == null);
-            var results = _mapper.Map<List<DocumentTypeDetailDto>>(docTypes);
+
+            var results = docTypes.Select(dt => new DocumentTypeDetailDto
+            {
+                Id = dt.Id,
+                Description = dt.Description,
+                Expires = dt.Expires,
+                ExpiryDate = dt.ExpiryDate,
+                OwnerId = dt.OwnerId,
+                Owner = dt.Owner,
+                CreatedDate = dt.CreatedDate,
+                UpdatedDate = dt.UpdatedDate
+            }).ToList();
 
             return View(results);
         }
@@ -52,7 +59,19 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            return View(_mapper.Map<DocumentTypeDetailDto>(documentType));
+            var dto = new DocumentTypeDetailDto
+            {
+                Id = documentType.Id,
+                Description = documentType.Description,
+                Expires = documentType.Expires,
+                ExpiryDate = documentType.ExpiryDate,
+                OwnerId = documentType.OwnerId,
+                Owner = documentType.Owner,
+                CreatedDate = documentType.CreatedDate,
+                UpdatedDate = documentType.UpdatedDate
+            };
+
+            return View(dto);
         }
 
         // GET: DocumentTypes/Create
@@ -62,8 +81,6 @@ namespace Website.Controllers
         }
 
         // POST: DocumentTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Description,Expires,ExpiryDate")] DocumentTypeCreateDto documentType)
@@ -75,10 +92,19 @@ namespace Website.Controllers
                     var user = await _userManager.FindByNameAsync(User.Identity.Name);
                     documentType.Owner = user;
                 }
-                // Check role...if they are an owner....its custom document type..
 
                 documentType.Id = Guid.NewGuid();
-                var mappedData = _mapper.Map<DocumentType>(documentType);
+
+                var mappedData = new DocumentType
+                {
+                    Id = documentType.Id,
+                    Description = documentType.Description,
+                    Expires = documentType.Expires,
+                    ExpiryDate = documentType.ExpiryDate,
+                    OwnerId = documentType.OwnerId,
+                    Owner = documentType.Owner
+                };
+
                 _context.Add(mappedData);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -103,8 +129,6 @@ namespace Website.Controllers
         }
 
         // POST: DocumentTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Description,Id,CreatedDate,UpdatedDate,Expires,ExpiryDate,Owner,OwnerId")] DocumentType documentType)

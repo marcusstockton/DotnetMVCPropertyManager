@@ -78,10 +78,8 @@
     </ul>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            @Html.HiddenFor(x => x.Portfolio.Id, new { @id = "portfolio_id" })
-            @Html.HiddenFor(x => x.Id, new { @id = "property_id" })
-            @Html.HiddenFor(x => x.Address.Latitude)
-            @Html.HiddenFor(x => x.Address.Longitude)
+            @Html.HiddenFor(x => x.Address.Latitude, new { id = "Address_Latitude" })
+            @Html.HiddenFor(x => x.Address.Longitude, new { id = "Address_Longitude" })
 
             <div class="row">
                 <div class="col-sm-12 border rounded">
@@ -135,7 +133,8 @@
                     </dl>
                 </div>
                 <div class="col-sm-6">
-                    <img src="#" alt="Postcode image" hidden="hidden" id="postcodeImg" class="img-thumbnail" />
+                    @* <img src="#" alt="Postcode image" hidden="hidden" id="postcodeImg" class="img-thumbnail" /> *@
+                    <div id="postcodeImg" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom"></div>
                 </div>
             </div>
         </div>

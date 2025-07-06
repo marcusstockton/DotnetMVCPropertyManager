@@ -1,4 +1,6 @@
-﻿$(() => {
+﻿let postcodeMap = null;
+
+$(() => {
 
     $("#error-alert").hide();
 
@@ -28,38 +30,38 @@
         history.replaceState(null, null, newUrl);
     });
 
-    var addressLat = $('#Address_Latitude').val();
-    var addressLon = $('#Address_Longitude').val();
-    var propertyId = $('#property_id').val();
-    var portfolioId = $('#portfolio_id').val();
-    if (addressLat != '0.000000000' && addressLon != '0.000000000') {
-        console.log(`Calling GetMapFromLatLong with PortfolioID: ${portfolioId}, PropertyID: ${propertyId}, Lat: ${addressLat}, Lon: ${addressLon}`);
-        $.ajax({
-            url: "../api/address/GetMapFromLatLong",
-            data: {
-                portfolioId: portfolioId,
-                propertyId: propertyId,
-                lat: addressLat,
-                lon: addressLon
-            },
-            cache: false,
-            type: "GET",
-            success: function (response) {
-                $('#postcodeImg').attr("src", "data:" + response).removeAttr('hidden');
-            },
-            error: function (xhr) {
-                var error = xhr.responseJSON;
-                let jsonErr = JSON.parse(error.detail);
-                $('#error-alert').append(`<p> An error occured when looking up the postcode image.</p>`);
-                $('#error-alert').append(`<p> ${jsonErr.error}: ${jsonErr.error_description} </p>`);
-
-                $('#error-alert').fadeIn(1000);
-                setTimeout(function () {
-                    $('#error-alert').fadeOut(1000);
-                }, 5000);
-
-                console.log(xhr);
+    // Listen for the tab activation event
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+        if ($(e.target).attr('href') === '#nav-home') {
+            initPostcodeMap();
+            if (postcodeMap) {
+                setTimeout(() => postcodeMap.invalidateSize(), 200); // Ensure correct sizing
             }
-        });
+        }
+    });
+
+    // initialize if the tab is already active on page load
+    if ($('#nav-home').hasClass('active')) {
+        initPostcodeMap();
+        if (postcodeMap) {
+            setTimeout(() => postcodeMap.invalidateSize(), 200);
+        }
+    }
+
+
+    function initPostcodeMap() {
+        if (postcodeMap) return; // Prevent multiple initializations
+
+        var addressLat = $('#Address_Latitude').val();
+        var addressLon = $('#Address_Longitude').val();
+        if (addressLat && addressLon && addressLat !== '0.000000000' && addressLon !== '0.000000000') {
+            console.log($('#Address_Latitude').val(), $('#Address_Longitude').val());
+            postcodeMap = L.map('postcodeImg').setView([addressLat, addressLon], 16);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(postcodeMap);
+            L.marker([addressLat, addressLon]).addTo(postcodeMap);
+        }
     }
 });

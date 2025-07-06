@@ -49,6 +49,7 @@ namespace Website.Areas
             }
         }
 
+        [Obsolete("This endpoint is no longer supported due to HereAPI license change")]
         [HttpGet, Route("GetMapFromLatLong"), ResponseCache(VaryByQueryKeys = new string[] { "portfolioId", "propertyId", "lat", "lon" }, Duration = 1400)]
         public async Task<IActionResult> GetMapFromLatLong(string portfolioId, string propertyId, double lat, double lon)
         {
@@ -93,6 +94,7 @@ namespace Website.Areas
             return BadRequest("Unable to find the property with the supplied data.");
         }
 
+        [Obsolete("This endpoint is no longer supported due to HereAPI license change")]
         [HttpGet, Route("lookup")]
         public async Task<IActionResult> Lookup(string hereId)
         {

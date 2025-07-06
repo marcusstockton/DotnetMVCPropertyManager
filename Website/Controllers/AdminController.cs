@@ -16,13 +16,11 @@ namespace Website.Controllers
     public class AdminController : Controller
     {
         private readonly IPortfolioService _portfolioService;
-        private readonly IMapper _mapper;
         private MapperConfiguration config;
 
-        public AdminController(IPortfolioService portfolioService, IMapper mapper)
+        public AdminController(IPortfolioService portfolioService)
         {
             _portfolioService = portfolioService;
-            _mapper = mapper;
 
             config = new MapperConfiguration(cfg =>
                 cfg.CreateProjection<Portfolio, PortfolioAdminIndexDto>());
