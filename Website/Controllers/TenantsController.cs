@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
@@ -15,24 +14,14 @@ namespace Website.Controllers
 {
     public class TenantsController : Controller
     {
-        //private readonly ApplicationDbContext _context;
         private readonly ITenantService _tenantService;
-
         private readonly IPropertyService _propertyService;
-        private readonly IMapper _mapper;
 
-        public TenantsController(ITenantService tenantService, IPropertyService propertyService, IMapper mapper)
+        public TenantsController(ITenantService tenantService, IPropertyService propertyService)
         {
             _tenantService = tenantService;
             _propertyService = propertyService;
-            _mapper = mapper;
         }
-
-        // GET: Tenants
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Tenants.ToListAsync());
-        //}
 
         // GET: Tenants/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -49,7 +38,8 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            return PartialView("_tenantDetail", _mapper.Map<TenantDTO>(tenant));
+            var dto = MapTenantToDTO(tenant);
+            return PartialView("_tenantDetail", dto);
         }
 
         // GET: Tenants/Create
@@ -59,31 +49,31 @@ namespace Website.Controllers
             var tenant = new Tenant { Property = property };
             var nationalities = await _tenantService.GetNationalitiesAsync();
             ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            return PartialView("_TenantCreate", _mapper.Map<TenantCreateDTO>(tenant));
+
+            var dto = MapTenantToCreateDTO(tenant);
+            return PartialView("_TenantCreate", dto);
         }
 
         // POST: Tenants/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Guid portfolioId, Guid propertyId, [Bind("FirstName,LastName,PhoneNumber,EmailAddress,JobTitle,Nationality,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets")] TenantCreateDTO tenant)
+        public async Task<IActionResult> Create(Guid portfolioId, Guid propertyId, [Bind("FirstName,LastName,PhoneNumber,EmailAddress,JobTitle,NationalityId,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets")] TenantCreateDTO tenantDto)
         {
             if (ModelState.IsValid)
             {
-                var new_tenant = _mapper.Map<Tenant>(tenant);
+                var newTenant = MapCreateDTOToTenant(tenantDto);
                 var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
-                var o = await _tenantService.CreateTenant(new_tenant);
-                o.Property = property;
-                if (tenant.TenantImage != null)
+                newTenant.Property = property;
+                var o = await _tenantService.CreateTenant(newTenant);
+                if (tenantDto.TenantImage != null)
                 {
-                    o.TenantImage = await _tenantService.CreateTenantImage(o.Id, tenant.TenantImage);
+                    o.TenantImage = await _tenantService.CreateTenantImage(o.Id, tenantDto.TenantImage);
                 }
 
                 await _tenantService.SaveAsync();
                 return Ok(o);
             }
-            return BadRequest(tenant);
+            return BadRequest(tenantDto);
         }
 
         // GET: Tenants/Edit/5
@@ -100,18 +90,16 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
-            var viewData = _mapper.Map<TenantDTO>(tenant);
+            var viewData = MapTenantToDTO(tenant);
 
             ViewBag.Nationalities = nationalities.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name, Selected = x.Id == viewData.NationalityId }).ToList();
             return View(viewData);
         }
 
         // POST: Tenants/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,Nationality,DateOfBirth,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets, EmailAddress")] Tenant tenant, IFormFile profilePic)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,PhoneNumber,JobTitle,NationalityId,DateOfBirth,TenancyStartDate,TenancyEndDate,TenantImage,Id,CreatedDate,UpdatedDate,IsSmoker,HasPets,EmailAddress")] Tenant tenant, IFormFile profilePic)
         {
             if (id != tenant.Id)
             {
@@ -138,38 +126,77 @@ namespace Website.Controllers
             return View(tenant);
         }
 
-        //// GET: Tenants/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // Manual mapping helpers
 
-        //    var tenant = await _context.Tenants
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (tenant == null)
-        //    {
-        //        return NotFound();
-        //    }
+        private TenantDTO MapTenantToDTO(Tenant tenant)
+        {
+            return new TenantDTO
+            {
+                Id = tenant.Id,
+                CreatedDate = tenant.CreatedDate,
+                UpdatedDate = tenant.UpdatedDate,
+                FirstName = tenant.FirstName,
+                LastName = tenant.LastName,
+                PhoneNumber = tenant.PhoneNumber,
+                EmailAddress = string.IsNullOrEmpty(tenant.EmailAddress) ? "" : tenant.EmailAddress,
+                JobTitle = tenant.JobTitle,
+                NationalityId = tenant.Nationality?.Id ?? 0,
+                Nationality = tenant.Nationality,
+                DateOfBirth = tenant.DateOfBirth,
+                TenancyStartDate = tenant.TenancyStartDate,
+                TenancyEndDate = tenant.TenancyEndDate,
+                IsSmoker = tenant.IsSmoker,
+                HasPets = tenant.HasPets,
+                Property = tenant.Property,
+                TenantImage = tenant.TenantImage,
+                Notes = tenant.Notes
+            };
+        }
 
-        //    return View(tenant);
-        //}
+        private TenantCreateDTO MapTenantToCreateDTO(Tenant tenant)
+        {
+            return new TenantCreateDTO
+            {
+                Id = tenant.Id,
+                CreatedDate = tenant.CreatedDate,
+                UpdatedDate = (DateTimeOffset)tenant.UpdatedDate,
+                FirstName = tenant.FirstName,
+                LastName = tenant.LastName,
+                PhoneNumber = tenant.PhoneNumber,
+                EmailAdresss = tenant.EmailAddress,
+                JobTitle = tenant.JobTitle,
+                NationalityId = tenant.Nationality?.Id ?? 0,
+                DateOfBirth = tenant.DateOfBirth,
+                TenancyStartDate = tenant.TenancyStartDate,
+                TenancyEndDate = tenant.TenancyEndDate,
+                IsSmoker = tenant.IsSmoker,
+                HasPets = tenant.HasPets,
+                Property = tenant.Property,
+                Notes = tenant.Notes
+            };
+        }
 
-        //// POST: Tenants/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    var tenant = await _context.Tenants.FindAsync(id);
-        //    _context.Tenants.Remove(tenant);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool TenantExists(Guid id)
-        //{
-        //    return _context.Tenants.Any(e => e.Id == id);
-        //}
+        private Tenant MapCreateDTOToTenant(TenantCreateDTO dto)
+        {
+            return new Tenant
+            {
+                Id = dto.Id,
+                CreatedDate = dto.CreatedDate,
+                UpdatedDate = dto.UpdatedDate,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                PhoneNumber = dto.PhoneNumber,
+                EmailAddress = dto.EmailAdresss,
+                JobTitle = dto.JobTitle,
+                Nationality = dto.NationalityId != 0 ? new Nationality { Id = dto.NationalityId } : null,
+                DateOfBirth = dto.DateOfBirth?.DateTime,
+                TenancyStartDate = dto.TenancyStartDate.DateTime,
+                TenancyEndDate = dto.TenancyEndDate?.DateTime,
+                IsSmoker = dto.IsSmoker,
+                HasPets = dto.HasPets,
+                Property = dto.Property,
+                Notes = dto.Notes
+            };
+        }
     }
 }

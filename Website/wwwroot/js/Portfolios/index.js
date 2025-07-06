@@ -1,5 +1,4 @@
 ﻿$(function () {
-
     var table = $('#portfolioIndexTable').DataTable({
         processing: true,
         //serverSide: true,
@@ -54,6 +53,4 @@
         var url = "/Portfolio/Details/" + row.id;
         window.location.href = url;
     });
-
-
 });

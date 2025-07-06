@@ -39,7 +39,6 @@ namespace Website.Data
                     _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
 
-
                     if (!_context.Users.Any())
                     {
                         _logger.LogInformation("Creating roles");
@@ -323,8 +322,6 @@ namespace Website.Data
                         await _context.SaveChangesAsync();
                     }
                 }
-
-
             }
             catch (Exception ex)
             {

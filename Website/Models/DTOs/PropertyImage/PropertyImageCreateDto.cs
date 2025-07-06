@@ -8,6 +8,7 @@ namespace Website.Models.DTOs.PropertyImage
     {
         public IFormFile Image { get; set; }
         public Guid PropertyId { get; set; }
+
         [MaxLength(200)]
         public string Description { get; set; }
     }

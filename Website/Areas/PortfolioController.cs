@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using NuGet.Protocol.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

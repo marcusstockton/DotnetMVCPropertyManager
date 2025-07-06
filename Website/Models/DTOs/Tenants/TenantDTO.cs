@@ -15,7 +15,7 @@ namespace Website.Models.DTOs.Tenants
         public DateTimeOffset CreatedDate { get; set; }
 
         [Display(Name = "Updated Date")]
-        public DateTimeOffset UpdatedDate { get; set; }
+        public DateTimeOffset? UpdatedDate { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

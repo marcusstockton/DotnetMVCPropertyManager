@@ -87,7 +87,7 @@ namespace Website.Areas
                     {
                         var error = await response.Content.ReadAsStringAsync();
                         _logger.LogError($"{nameof(GetMapFromLatLong)} hereApiImages error: {error}");
-                        return Problem(error,null, (int)HttpStatusCode.InternalServerError, "Error");
+                        return Problem(error, null, (int)HttpStatusCode.InternalServerError, "Error");
                     }
                 }
             }

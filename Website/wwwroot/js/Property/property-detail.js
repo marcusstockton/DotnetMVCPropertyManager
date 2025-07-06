@@ -1,7 +1,6 @@
 ﻿let postcodeMap = null;
 
 $(() => {
-
     $("#error-alert").hide();
 
     let url = location.href.replace(/\/$/, "");
@@ -47,7 +46,6 @@ $(() => {
             setTimeout(() => postcodeMap.invalidateSize(), 200);
         }
     }
-
 
     function initPostcodeMap() {
         if (postcodeMap) return; // Prevent multiple initializations

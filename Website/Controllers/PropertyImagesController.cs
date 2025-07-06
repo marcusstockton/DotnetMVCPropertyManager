@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -15,16 +13,12 @@ namespace Website.Controllers
     public class PropertyImagesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
         private readonly IPropertyImageService _propertyImageService;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PropertyImagesController(ApplicationDbContext context, IMapper mapper, IPropertyImageService propertyImageService, UserManager<ApplicationUser> userManager)
+        public PropertyImagesController(ApplicationDbContext context, IPropertyImageService propertyImageService)
         {
             _context = context;
-            _mapper = mapper;
             _propertyImageService = propertyImageService;
-            _userManager = userManager;
         }
 
         // GET: PropertyImages
