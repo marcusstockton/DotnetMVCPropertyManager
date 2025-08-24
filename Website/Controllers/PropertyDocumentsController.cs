@@ -18,13 +18,11 @@ namespace Website.Controllers
     public class PropertyDocumentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
         private readonly IPropertyDocumentService _propertyDocumentService;
 
-        public PropertyDocumentsController(ApplicationDbContext context, IMapper mapper, IPropertyDocumentService propertyDocumentService)
+        public PropertyDocumentsController(ApplicationDbContext context, IPropertyDocumentService propertyDocumentService)
         {
             _context = context;
-            _mapper = mapper;
             _propertyDocumentService = propertyDocumentService;
         }
 
@@ -51,7 +49,22 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            var result = _mapper.Map<PropertyDocumentDetailsDto>(propertyDocument);
+            //var result = _mapper.Map<PropertyDocumentDetailsDto>(propertyDocument);
+
+            var result = new PropertyDocumentDetailsDto
+            {
+                Id = propertyDocument.Id,
+                CreatedDate = propertyDocument.CreatedDate,
+                UpdatedDate = propertyDocument.UpdatedDate,
+                FileName = propertyDocument.FileName,
+                FilePath = propertyDocument.FilePath,
+                FileType = propertyDocument.FileType,
+                DocumentTypeId = propertyDocument.DocumentTypeId,
+                DocumentType = propertyDocument.DocumentType,
+                Expires = propertyDocument.Expires,
+                ActiveFrom = propertyDocument.ActiveFrom,
+                ExpirationDate = propertyDocument.ExpirationDate,
+            };
 
             return View(result);
         }
@@ -107,7 +120,22 @@ namespace Website.Controllers
                 return NotFound();
             }
             ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Description", propertyDocument.DocumentTypeId);
-            return View(_mapper.Map<PropertyDocumentDetailsDto>(propertyDocument));
+            
+            var result = new PropertyDocumentDetailsDto
+            {
+                Id = propertyDocument.Id,
+                CreatedDate = propertyDocument.CreatedDate,
+                UpdatedDate = propertyDocument.UpdatedDate,
+                FileName = propertyDocument.FileName,
+                FilePath = propertyDocument.FilePath,
+                FileType = propertyDocument.FileType,
+                DocumentTypeId = propertyDocument.DocumentTypeId,
+                Expires = propertyDocument.Expires,
+                ActiveFrom = propertyDocument.ActiveFrom,
+                ExpirationDate = propertyDocument.ExpirationDate,
+            };
+
+            return View(result);
         }
 
         // POST: PropertyDocuments/Edit/5

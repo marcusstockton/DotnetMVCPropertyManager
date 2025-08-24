@@ -20,14 +20,12 @@ namespace Website.Areas
     public class TenantController : ControllerBase
     {
         private readonly ILogger<TenantController> _logger;
-        private readonly IMapper _mapper;
         private readonly IJobTitleService _jobTitleService;
         private readonly ITenantService _tenantService;
 
-        public TenantController(ILogger<TenantController> logger, IMapper mapper, IJobTitleService jobTitleService, ITenantService tenantService)
+        public TenantController(ILogger<TenantController> logger, IJobTitleService jobTitleService, ITenantService tenantService)
         {
             _logger = logger;
-            _mapper = mapper;
             _jobTitleService = jobTitleService;
             _tenantService = tenantService;
         }
@@ -48,8 +46,32 @@ namespace Website.Areas
         public async Task<ActionResult<IEnumerable<TenantDTO>>> GetTenantsForProperty(Guid propertyId)
         {
             var tenants = await _tenantService.GetTenantsForPropertyId(propertyId);
-            var result = _mapper.Map<IEnumerable<TenantDTO>>(tenants);
-            return Ok(result);
+
+            var results = tenants.Select(t => new List<TenantDTO>
+            {
+                new TenantDTO
+                {
+                    Id = t.Id,
+                    FirstName = t.FirstName,
+                    LastName = t.LastName,
+                    DateOfBirth = t.DateOfBirth,
+                    EmailAddress = t.EmailAddress,
+                    PhoneNumber = t.PhoneNumber,
+                    JobTitle = t.JobTitle,
+                    NationalityId = t.Nationality.Id,
+                    IsSmoker = t.IsSmoker,
+                    HasPets = t.HasPets,
+                    CreatedDate = t.CreatedDate,
+                    Nationality = t.Nationality,
+                    Notes = t.Notes,
+                    Property = t.Property,
+                    TenancyEndDate = t.TenancyEndDate,
+                    TenancyStartDate = t.TenancyStartDate,
+                    TenantImage = t.TenantImage,
+                    UpdatedDate = t.UpdatedDate.GetValueOrDefault().DateTime
+                } }).ToList();
+
+            return Ok(results);
         }
     }
 

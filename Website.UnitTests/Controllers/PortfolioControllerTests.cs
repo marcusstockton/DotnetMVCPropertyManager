@@ -21,7 +21,6 @@ namespace Website.Controllers.Tests
     {
         private readonly Mock<IPortfolioService> _portfolioServiceMock = new Mock<IPortfolioService>();
         private readonly Mock<IMemoryCache> _memoryCache = new Mock<IMemoryCache>();
-        private readonly IMapper _mapper;
 
         private readonly Guid _portfolio1Id;
         private Portfolio _portfolio1;
@@ -32,13 +31,13 @@ namespace Website.Controllers.Tests
             var portfolioProfile = new PortfolioProfile();
             var propertyProfile = new PropertyProfile();
             var addressProfile = new AddressProfile();
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(portfolioProfile);
-                cfg.AddProfile(propertyProfile);
-                cfg.AddProfile(addressProfile);
-            });
-            _mapper = new Mapper(config);
+            //var config = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.AddProfile(portfolioProfile);
+            //    cfg.AddProfile(propertyProfile);
+            //    cfg.AddProfile(addressProfile);
+            //});
+            //_mapper = new Mapper(config);
 
             _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
         }
@@ -80,7 +79,7 @@ namespace Website.Controllers.Tests
         {
             // Arrange
             _portfolioServiceMock.Setup(x => x.GetPortfolioById(_portfolio1Id)).ReturnsAsync(_portfolio1);
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object);
 
             // Act
             var viewResult = await controller.Details(_portfolio1Id) as ViewResult;
@@ -102,7 +101,7 @@ namespace Website.Controllers.Tests
             };
 
             _portfolioServiceMock.Setup(x => x.GetPortfolioById(_portfolio1Id)).ReturnsAsync(_portfolio1);
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
@@ -133,7 +132,7 @@ namespace Website.Controllers.Tests
                 Id = existingPortfolioId
             });
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 
@@ -158,7 +157,7 @@ namespace Website.Controllers.Tests
             _portfolioServiceMock.Setup(x => x.GetPortfolioById(existingPortfolioId)).ReturnsAsync(portfolio);
             _portfolioServiceMock.Setup(x => x.DeletePortfolio(portfolio)).ReturnsAsync(true);
 
-            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object, _mapper);
+            var controller = new PortfolioController(_portfolioServiceMock.Object, _memoryCache.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = _user }; // Mock a logged in user
 

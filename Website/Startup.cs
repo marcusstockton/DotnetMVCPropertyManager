@@ -42,7 +42,7 @@ namespace Website
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddAutoMapper(typeof(Program));
+            //services.AddAutoMapper(typeof(Program));
 
             services.AddControllersWithViews(options =>
             {

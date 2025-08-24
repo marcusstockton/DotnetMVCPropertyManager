@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 using Website.Extensions.Alerts;
 using Website.Interfaces;
 using Website.Models;
+using Website.Models.DTOs;
 using Website.Models.DTOs.Documents;
+using Website.Models.DTOs.Portfolios;
 using Website.Models.DTOs.Properties;
+using Website.Models.DTOs.PropertyDocuments;
+using Website.Models.DTOs.Tenants;
 
 namespace Website.Controllers
 {
@@ -20,16 +24,14 @@ namespace Website.Controllers
         private readonly IPropertyImageService _propertyImageService;
         private readonly IPropertyDocumentService _propertyDocumentService;
         private readonly IPortfolioService _portfolioService;
-        private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public PropertyController(IPropertyService propertyService, IPropertyImageService propertyImageService, IPropertyDocumentService propertyDocumentService, IPortfolioService portfolioService, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public PropertyController(IPropertyService propertyService, IPropertyImageService propertyImageService, IPropertyDocumentService propertyDocumentService, IPortfolioService portfolioService, UserManager<ApplicationUser> userManager)
         {
             _propertyService = propertyService;
             _propertyImageService = propertyImageService;
             _propertyDocumentService = propertyDocumentService;
             _portfolioService = portfolioService;
-            _mapper = mapper;
             _userManager = userManager;
         }
 
@@ -44,7 +46,79 @@ namespace Website.Controllers
         public async Task<IActionResult> Detail(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
-            var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
+            //var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
+            var propertyDto = new PropertyDetailDTO
+            {
+                Id = property.Id,
+                Address = new AddressDTO
+                {
+                    Id = property.Address.Id,
+                    Line1 = property.Address.Line1,
+                    Line2 = property.Address.Line2,
+                    Line3 = property.Address.Line3,
+                    City = property.Address.City,
+                    CreatedDateTime = property.Address.CreatedDate.DateTime,
+                    Latitude = property.Address.Latitude,
+                    Longitude = property.Address.Longitude,
+                    Postcode = property.Address.Postcode,
+                    Town = property.Address.Town,
+                    UpdatedDateTime = property.Address.UpdatedDate.GetValueOrDefault().DateTime
+                },
+                Description = property.Description,
+                CreatedDate = property.CreatedDate,
+                UpdatedDate = property.UpdatedDate,
+                AddressId = property.AddressId,
+                Bathrooms = property.Bathrooms,
+                MonthlyRentAmount = property.MonthlyRentAmount,
+                NoOfRooms = property.NoOfRooms,
+                PropertyValue = property.PropertyValue,
+                PurchaseDate = property.PurchaseDate,
+                Portfolio = new PortfolioDetailsDto
+                {
+                    Id = property.Portfolio.Id,
+                    Name = property.Portfolio.Name
+                },
+                
+                Images = property.Images?.Select(pi => new PropertyImage
+                {
+                    Id = pi.Id,
+                    Description = pi.Description,
+                    FileName = pi.FileName,
+                    FilePath = pi.FilePath,
+                    FileType = pi.FileType,
+                    CreatedDate = pi.CreatedDate,
+                    UpdatedDate = pi.UpdatedDate
+                }).ToList(),
+                Tenants = property.Tenants?.Select(t => new TenantDTO
+                {
+                    Id = t.Id,
+                    FirstName = t.FirstName,
+                    LastName = t.LastName,
+                    IsSmoker = t.IsSmoker,
+                    HasPets = t.HasPets,
+                    EmailAddress = t.EmailAddress,
+                    DateOfBirth = t.DateOfBirth,
+                    JobTitle = t.JobTitle,
+                }).ToList(),
+                Documents = property.Documents?.Select(pd => new PropertyDocumentDetailsDto
+                {
+                    Id = pd.Id,
+                    FileName = pd.FileName,
+                    FilePath = pd.FilePath,
+                    FileType = pd.FileType,
+                    DocumentTypeId = pd.DocumentTypeId,
+                    DocumentType = pd.DocumentType != null ? new DocumentType
+                    {
+                        Id = pd.DocumentType.Id,
+                        Description = pd.DocumentType.Description
+                    } : null,
+                    Expires = pd.Expires,
+                    ActiveFrom = pd.ActiveFrom,
+                    ExpirationDate = pd.ExpirationDate,
+                    CreatedDate = pd.CreatedDate,
+                    UpdatedDate = pd.UpdatedDate
+                }).ToList(),
+            };
             return View(propertyDto);
         }
 
@@ -52,7 +126,69 @@ namespace Website.Controllers
         public async Task<IActionResult> Edit(Guid portfolioId, Guid propertyId)
         {
             var property = await _propertyService.GetPropertyById(portfolioId, propertyId);
-            var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
+            //var propertyDto = _mapper.Map<PropertyDetailDTO>(property);
+
+            var propertyDto = new PropertyDetailDTO
+            {
+                Id = property.Id,
+                Address = new AddressDTO
+                {
+                    Id = property.Address.Id,
+                    Line1 = property.Address.Line1,
+                    Line2 = property.Address.Line2,
+                    Line3 = property.Address.Line3,
+                    City = property.Address.City,
+                    CreatedDateTime = property.Address.CreatedDate.DateTime,
+                    Latitude = property.Address.Latitude,
+                    Longitude = property.Address.Longitude,
+                    Postcode = property.Address.Postcode,
+                    Town = property.Address.Town,
+                    UpdatedDateTime = property.Address.UpdatedDate.GetValueOrDefault().DateTime
+                },
+                Description = property.Description,
+                CreatedDate = property.CreatedDate,
+                UpdatedDate = property.UpdatedDate,
+                AddressId = property.AddressId,
+                Bathrooms = property.Bathrooms,
+                MonthlyRentAmount = property.MonthlyRentAmount,
+                NoOfRooms = property.NoOfRooms,
+                PropertyValue = property.PropertyValue,
+                PurchaseDate = property.PurchaseDate,
+                Portfolio = new PortfolioDetailsDto
+                {
+                    Id = property.Portfolio.Id,
+                    Name = property.Portfolio.Name
+                },
+                Images = property.Images?.Select(pi => new PropertyImage
+                {
+                    Id = pi.Id,
+                    Description = pi.Description,
+                    FileName = pi.FileName,
+                    FilePath = pi.FilePath,
+                    FileType = pi.FileType,
+                    CreatedDate = pi.CreatedDate,
+                    UpdatedDate = pi.UpdatedDate
+                }).ToList(),
+                Documents = property.Documents?.Select(pd => new PropertyDocumentDetailsDto
+                {
+                    Id = pd.Id,
+                    FileName = pd.FileName,
+                    FilePath = pd.FilePath,
+                    FileType = pd.FileType,
+                    DocumentTypeId = pd.DocumentTypeId,
+                    DocumentType = pd.DocumentType != null ? new DocumentType
+                    {
+                        Id = pd.DocumentType.Id,
+                        Description = pd.DocumentType.Description
+                    } : null,
+                    Expires = pd.Expires,
+                    ActiveFrom = pd.ActiveFrom,
+                    ExpirationDate = pd.ExpirationDate,
+                    CreatedDate = pd.CreatedDate,
+                    UpdatedDate = pd.UpdatedDate
+                }).ToList()
+            };
+
             return View(propertyDto);
         }
 
@@ -62,8 +198,83 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                var updatedProperty = _mapper.Map<Property>(property);
-                var portfolio = _mapper.Map<Portfolio>(property.Portfolio);
+                //var updatedProperty = _mapper.Map<Property>(property);
+                var updatedProperty = new Property
+                {
+                    Id = property.Id,
+                    AddressId = property.AddressId,
+                    Address = new Address
+                    {
+                        Id = property.Address.Id,
+                        Line1 = property.Address.Line1,
+                        Line2 = property.Address.Line2,
+                        Line3 = property.Address.Line3,
+                        City = property.Address.City,
+                        CreatedDate = property.Address.CreatedDateTime,
+                        Latitude = property.Address.Latitude,
+                        Longitude = property.Address.Longitude,
+                        Postcode = property.Address.Postcode,
+                        Town = property.Address.Town,
+                        UpdatedDate = DateTime.Now
+                    },
+                    Description = property.Description,
+                    CreatedDate = property.CreatedDate,
+                    UpdatedDate = DateTime.Now,
+                    Bathrooms = property.Bathrooms,
+                    MonthlyRentAmount = property.MonthlyRentAmount,
+                    NoOfRooms = property.NoOfRooms,
+                    PropertyValue = property.PropertyValue,
+                    PurchaseDate = property.PurchaseDate,
+                    Images = property.Images?.Select(pi => new PropertyImage
+                    {
+                        Id = pi.Id,
+                        Description = pi.Description,
+                        FileName = pi.FileName,
+                        FilePath = pi.FilePath,
+                        FileType = pi.FileType,
+                        CreatedDate = pi.CreatedDate,
+                        UpdatedDate = pi.UpdatedDate
+                    }).ToList(),
+                    Documents = property.Documents?.Select(pd => new PropertyDocument
+                    {
+                        Id = pd.Id,
+                        FileName = pd.FileName,
+                        FilePath = pd.FilePath,
+                        FileType = pd.FileType,
+                        DocumentTypeId = pd.DocumentTypeId,
+                        Expires = pd.Expires,
+                        ActiveFrom = pd.ActiveFrom,
+                        ExpirationDate = pd.ExpirationDate,
+                        CreatedDate = pd.CreatedDate,
+                        UpdatedDate = pd.UpdatedDate
+                    }).ToList(),
+                    Portfolio = new Portfolio
+                    {
+                        Id = property.Portfolio.Id,
+                        Name = property.Portfolio.Name
+                    },
+                    Tenants = property.Tenants?.Select(t => new Tenant
+                    {
+                        Id = t.Id,
+                        FirstName = t.FirstName,
+                        LastName = t.LastName,
+                        IsSmoker = t.IsSmoker,
+                        HasPets = t.HasPets,
+                        EmailAddress = t.EmailAddress,
+                        DateOfBirth = t.DateOfBirth,
+                        JobTitle = t.JobTitle,
+                        Nationality = t.Nationality,
+                        Notes = t.Notes,
+                        TenancyStartDate = t.TenancyStartDate,
+                        TenancyEndDate = t.TenancyEndDate,
+                        TenantImage = t.TenantImage,
+                        PhoneNumber = t.PhoneNumber,
+                        CreatedDate = t.CreatedDate,
+                        UpdatedDate = t.UpdatedDate
+                    }).ToList()
+                };
+
+                //var portfolio = _mapper.Map<Portfolio>(property.Portfolio);
                 //if (images.Any())
                 //{
                 //    var imagesSaved = await _propertyImageService.CreateImagesForProperty(updatedProperty, images);
@@ -95,7 +306,38 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                var property = _mapper.Map<Property>(propertyCreateView);
+                //var property = _mapper.Map<Property>(propertyCreateView);
+                var property = new Property
+                {
+                    Id = Guid.NewGuid(),
+                    Address = new Address
+                    {
+                        Id = Guid.NewGuid(),
+                        Line1 = propertyCreateView.Address.Line1,
+                        Line2 = propertyCreateView.Address.Line2,
+                        Line3 = propertyCreateView.Address.Line3,
+                        City = propertyCreateView.Address.City,
+                        CreatedDate = DateTime.Now,
+                        Latitude = propertyCreateView.Address.Latitude,
+                        Longitude = propertyCreateView.Address.Longitude,
+                        Postcode = propertyCreateView.Address.Postcode,
+                        Town = propertyCreateView.Address.Town
+                    },
+                    Description = propertyCreateView.Description,
+                    CreatedDate = DateTime.Now,
+                    Bathrooms = propertyCreateView.Bathrooms,
+                    MonthlyRentAmount = propertyCreateView.MonthlyRentAmount,
+                    NoOfRooms = propertyCreateView.NoOfRooms,
+                    PropertyValue = propertyCreateView.PropertyValue,
+                    PurchaseDate = propertyCreateView.PurchaseDate ?? DateTime.Now,
+                    Portfolio = new Portfolio
+                    {
+                        Id = propertyCreateView.Portfolio.Id,
+                        Name = propertyCreateView.Portfolio.Name
+                    },
+                    Tenants = new List<Tenant> { }
+                };
+
                 var new_property = await _propertyService.CreateProperty(property);
                 if (propertyCreateView.Images != null && propertyCreateView.Images.Any())
                 {

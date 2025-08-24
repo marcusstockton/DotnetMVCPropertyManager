@@ -18,13 +18,12 @@ namespace Website.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<PortfolioService> _logger;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
-        public PortfolioService(ApplicationDbContext context, ILogger<PortfolioService> logger, IMapper mapper)
+        public PortfolioService(ApplicationDbContext context, ILogger<PortfolioService> logger)
         {
             _context = context;
             _logger = logger;
-            _mapper = mapper;
         }
 
         public IQueryable<Portfolio> GetPortfolios()
@@ -42,7 +41,42 @@ namespace Website.Services
             var portfolios = await _context.Portfolios
                 .Include(x => x.Owner)
                 .Where(x => x.Owner.Id == userId)
-                .ProjectTo<PortfolioDetailsDto>(_mapper.ConfigurationProvider)
+                //.ProjectTo<PortfolioDetailsDto>
+                .Select(portfolio => new PortfolioDetailsDto
+                {
+                    Id = portfolio.Id,
+                    Name = portfolio.Name,
+                    CreatedDate = portfolio.CreatedDate,
+                    UpdatedDate = portfolio.UpdatedDate,
+                    Properties = portfolio.Properties.Select(x=> new Models.DTOs.Properties.PropertyListDTO
+                    {
+                        Id = x.Id,
+                        AddressId = x.AddressId,
+                        Address = new Models.DTOs.AddressDTO
+                        {
+                            Id = x.Address.Id,
+                            City = x.Address.City,
+                            Line1 = x.Address.Line1,
+                            Line2 = x.Address.Line2,
+                            Line3 = x.Address.Line3,
+                            Postcode = x.Address.Postcode,
+                            CreatedDateTime = x.Address.CreatedDate.DateTime,
+                            UpdatedDateTime = x.Address.UpdatedDate.GetValueOrDefault().DateTime,
+                            Latitude = x.Address.Latitude,
+                            Longitude = x.Address.Longitude,
+                            Town  = x.Address.Town, 
+                        },
+                        CreatedDate = x.CreatedDate,
+                        UpdatedDate = x.UpdatedDate,
+                        Bathrooms = x.Bathrooms,
+                        Description = x.Description,
+                        MonthlyRentAmount = x.MonthlyRentAmount,
+                        NoOfRooms = x.NoOfRooms,
+                        PropertyValue = x.PropertyValue,
+                        PurchaseDate = x.PurchaseDate 
+                    }).ToList(),
+                    Owner = portfolio.Owner,
+                })
                 .AsNoTracking()
                 .ToListAsync();
             sw.Stop();

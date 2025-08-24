@@ -15,13 +15,11 @@ namespace Website.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
-        private readonly IMapper _mapper;
 
-        public PropertyService(ApplicationDbContext context, ILogger<PropertyService> logger, IMapper mapper)
+        public PropertyService(ApplicationDbContext context, ILogger<PropertyService> logger)
         {
             _context = context;
             _logger = logger;
-            _mapper = mapper;
         }
 
         public async Task<List<Property>> GetPropertiesForPortfolio(Guid portfolioId)
@@ -31,6 +29,25 @@ namespace Website.Services
                 .Include(x => x.Portfolio)
                 .Where(x => x.Portfolio.Id == portfolioId)
                 //.ProjectTo<PropertyDetailDTO>(_mapper.ConfigurationProvider)
+                .Select(x=> new Property
+                {
+                    Id = x.Id,
+                    Address = x.Address,
+                    AddressId = x.AddressId,
+                    Bathrooms = x.Bathrooms,
+                    CreatedDate = x.CreatedDate,
+                    Description = x.Description,
+                    MonthlyRentAmount = x.MonthlyRentAmount,
+                    NoOfRooms = x.NoOfRooms,
+                    Portfolio = x.Portfolio,
+                    Documents = x.Documents,
+                    Images = x.Images,
+                    MapImage = x.MapImage,
+                    Tenants = x.Tenants,
+                    PropertyValue = x.PropertyValue,
+                    PurchaseDate = x.PurchaseDate,
+                    UpdatedDate = x.UpdatedDate
+                })
                 .AsNoTracking()
                 .ToListAsync();
         }

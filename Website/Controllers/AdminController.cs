@@ -22,8 +22,8 @@ namespace Website.Controllers
         {
             _portfolioService = portfolioService;
 
-            config = new MapperConfiguration(cfg =>
-                cfg.CreateProjection<Portfolio, PortfolioAdminIndexDto>());
+            //config = new MapperConfiguration(cfg =>
+            //    cfg.CreateProjection<Portfolio, PortfolioAdminIndexDto>());
         }
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)

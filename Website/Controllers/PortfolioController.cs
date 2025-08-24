@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Website.Extensions.Alerts;
 using Website.Helpers;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Portfolios;
+using Website.Models.DTOs.Properties;
+using Website.Models.DTOs.PropertyDocuments;
 
 namespace Website.Controllers
 {
@@ -17,13 +20,11 @@ namespace Website.Controllers
     {
         private readonly IPortfolioService _context;
         private readonly IMemoryCache _memoryCache;
-        private readonly IMapper _mapper;
 
-        public PortfolioController(IPortfolioService context, IMemoryCache memoryCache, IMapper mapper)
+        public PortfolioController(IPortfolioService context, IMemoryCache memoryCache)
         {
             _context = context;
             _memoryCache = memoryCache;
-            _mapper = mapper;
         }
 
         // GET: Portfolios
@@ -45,7 +46,7 @@ namespace Website.Controllers
             {
                 return NotFound();
             }
-            var portfolioDto = _mapper.Map<PortfolioDetailsDto>(portfolio);
+            var portfolioDto = MapPortfolioToDetailsDto(portfolio);
 
             return View(portfolioDto);
         }
@@ -151,6 +152,47 @@ namespace Website.Controllers
                 return RedirectToAction(nameof(Index)).WithSuccess("Success", "Portfolio Deleted");
             }
             return View(portfolio);
+        }
+
+
+        private PortfolioDetailsDto MapPortfolioToDetailsDto(Portfolio portfolio)
+        {
+            return new PortfolioDetailsDto
+            {
+                Id = portfolio.Id,
+                CreatedDate = portfolio.CreatedDate,
+                UpdatedDate = portfolio.UpdatedDate,
+                Name = portfolio.Name,
+                Owner = portfolio.Owner,
+                Properties = portfolio.Properties?
+                    .Select(p => new PropertyListDTO
+                    {
+                        Id = p.Id,
+                        Description = p.Description, // Adjust if you have a Name property on Property
+                        PropertyValue = p.PropertyValue,
+                        MonthlyRentAmount = p.MonthlyRentAmount,
+                        Address = new Models.DTOs.AddressDTO
+                        {
+                            Id = p.Address.Id,
+                            Line1 = p.Address.Line1,
+                            Line2 = p.Address.Line2,
+                            Line3 = p.Address.Line3,
+                            City = p.Address.City,
+                            Postcode = p.Address.Postcode,
+                            CreatedDateTime = p.Address.CreatedDate.DateTime,
+                            UpdatedDateTime = p.Address.UpdatedDate.GetValueOrDefault().DateTime,
+                            Latitude = p.Address.Latitude,
+                            Longitude = p.Address.Longitude,
+                            Town = p.Address.Town
+                        },
+                        AddressId = p.AddressId,
+                        CreatedDate = p.CreatedDate,
+                        UpdatedDate = p.UpdatedDate,
+                        Bathrooms = p.Bathrooms,
+                        NoOfRooms = p.NoOfRooms,
+                        PurchaseDate = p.PurchaseDate,
+                    }).ToList()
+            };
         }
     }
 }

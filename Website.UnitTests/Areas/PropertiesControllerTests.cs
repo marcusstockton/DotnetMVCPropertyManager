@@ -19,16 +19,14 @@ namespace Website.UnitTests.Areas
     {
         private Mock<IPropertyService> _propertyServiceMock;
         private FakeLogger<PropertiesController> _fakeLogger;
-        private Mock<IMapper> _mapperMock;
         private PropertiesController _controller;
 
         [TestInitialize]
         public void Setup()
         {
             _propertyServiceMock = new Mock<IPropertyService>();
-            _mapperMock = new Mock<IMapper>();
             _fakeLogger = new FakeLogger<PropertiesController>();
-            _controller = new PropertiesController(_propertyServiceMock.Object, _fakeLogger, _mapperMock.Object);
+            _controller = new PropertiesController(_propertyServiceMock.Object, _fakeLogger);
         }
 
         [TestMethod]
@@ -40,7 +38,6 @@ namespace Website.UnitTests.Areas
             var propertiesDto = new List<PropertyListDTO> { new PropertyListDTO { Id = Guid.NewGuid(), Description = "Test Property" } };
 
             _propertyServiceMock.Setup(s => s.GetPropertiesForPortfolio(portfolioId)).ReturnsAsync(properties);
-            _mapperMock.Setup(m => m.Map<List<PropertyListDTO>>(properties)).Returns(propertiesDto);
 
             // Act
             var result = await _controller.GetPropertiesForPortfolio(portfolioId);
