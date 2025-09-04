@@ -34,9 +34,9 @@ namespace Website.Data
                 if (reseedDatabase)
                 {
                     _logger.LogInformation("Blatting the database and reseeding...");
-                    ClearDownUploadFolders();
+                    // ClearDownUploadFolders();
 
-                    _context.Database.EnsureDeleted();
+                    // _context.Database.EnsureDeleted();
                     _context.Database.Migrate();
 
                     if (!_context.Users.Any())
@@ -123,7 +123,7 @@ namespace Website.Data
                                         PhoneNumber = "074625174385",
                                         Nationality = _context.Nationalities.First(x=>x.Name == "British"),
                                         TenancyStartDate = new DateTime(2019, 11, 23),
-                                        TenantImage = @"\TenantImages\Examples\thispersondoesntexist4.jpeg",
+                                        // TenantImage = @"\TenantImages\Examples\thispersondoesntexist4.jpeg",
                                         IsSmoker = true,
                                         EmailAddress = "dave.davidson@art.com",
                                         HasPets = true,
@@ -138,7 +138,7 @@ namespace Website.Data
                                         PhoneNumber = "0192838456",
                                         TenancyStartDate = new DateTime(2018, 7, 17),
                                         TenancyEndDate = new DateTime(2019, 11, 12),
-                                        TenantImage = @"\TenantImages\Examples\thispersondoesntexist6.jpeg",
+                                        // TenantImage = @"\TenantImages\Examples\thispersondoesntexist6.jpeg",
                                         IsSmoker = true,
                                         EmailAddress = "tony.montana@cleaners.com",
                                         HasPets = true,
@@ -158,15 +158,15 @@ namespace Website.Data
                                     Longitude = -3.49282,
                                     CreatedDate = DateTime.Now
                                 },
-                                Documents = new List<PropertyDocument>
-                                {
-                                    new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Tenancy Agreement"), FileName = "sample.pdf", FilePath = @"\PropertyDocuments\Examples\sample.pdf", FileType = ".pdf" }
-                                },
-                                Images = new List<PropertyImage>{
-                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (3).jpeg", FilePath = @"\PropertyImages\Examples\download (3).jpeg", FileType = ".jpeg"},
-                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "Hartford_Farm__Liverton__Newton_Abbot__1_.jpg", FilePath = @"\PropertyImages\Examples\Hartford_Farm__Liverton__Newton_Abbot__1_.jpg", FileType = ".jpeg"},
-                                    new PropertyImage{CreatedDate = DateTime.Now, FileName = "pexels-photo-280229.jpeg", FilePath = @"\PropertyImages\Examples\pexels-photo-280229.jpeg", FileType = ".jpeg"}
-                                }
+                                // Documents = new List<PropertyDocument>
+                                // {
+                                //     new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Tenancy Agreement"), FileName = "sample.pdf", FilePath = @"\PropertyDocuments\Examples\sample.pdf", FileType = ".pdf" }
+                                // },
+                                // Images = new List<PropertyImage>{
+                                //     new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (3).jpeg", FilePath = @"\PropertyImages\Examples\download (3).jpeg", FileType = ".jpeg"},
+                                //     new PropertyImage{CreatedDate = DateTime.Now, FileName = "Hartford_Farm__Liverton__Newton_Abbot__1_.jpg", FilePath = @"\PropertyImages\Examples\Hartford_Farm__Liverton__Newton_Abbot__1_.jpg", FileType = ".jpeg"},
+                                //     new PropertyImage{CreatedDate = DateTime.Now, FileName = "pexels-photo-280229.jpeg", FilePath = @"\PropertyImages\Examples\pexels-photo-280229.jpeg", FileType = ".jpeg"}
+                                // }
                             }, new Property
                             {
                                 PropertyValue = 189000,
@@ -204,7 +204,7 @@ namespace Website.Data
                                         TenancyStartDate = new DateTime(2019, 3, 5),
                                         IsSmoker = true,
                                         HasPets = true,
-                                        TenantImage = @"\TenantImages\Examples\thispersondoesntexist2.jpeg",
+                                        // TenantImage = @"\TenantImages\Examples\thispersondoesntexist2.jpeg",
                                     }
                                 }
                             }
@@ -235,15 +235,15 @@ namespace Website.Data
                                     MonthlyRentAmount = 1200,
                                     PropertyValue = 210000,
                                     PurchaseDate = new DateTime(2014, 4, 29),
-                                    Images = new List<PropertyImage>
-                                    {
-                                        new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (3).jpeg", FilePath = @"\PropertyImages\Examples\download (3).jpeg", FileType = ".jpeg"},
-                                        new PropertyImage{CreatedDate = DateTime.Now, FileName = "pexels-photo-280229.jpeg", FilePath = @"\PropertyImages\Examples\pexels-photo-280229.jpeg", FileType = ".jpg"},
-                                    },
-                                    Documents = new List<PropertyDocument>
-                                    {
-                                        new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Gas Safety Certificate"), FileName = "sample.pdf", FilePath = @"\PropertyDocuments\Examples\sample.pdf", FileType = ".pdf" }
-                                    },
+                                    // Images = new List<PropertyImage>
+                                    // {
+                                    //     new PropertyImage{CreatedDate = DateTime.Now, FileName = "download (3).jpeg", FilePath = @"\PropertyImages\Examples\download (3).jpeg", FileType = ".jpeg"},
+                                    //     new PropertyImage{CreatedDate = DateTime.Now, FileName = "pexels-photo-280229.jpeg", FilePath = @"\PropertyImages\Examples\pexels-photo-280229.jpeg", FileType = ".jpg"},
+                                    // },
+                                    // Documents = new List<PropertyDocument>
+                                    // {
+                                    //     new PropertyDocument{ CreatedDate = DateTime.Now, DocumentType = _context.DocumentTypes.First(x=>x.Description == "Gas Safety Certificate"), FileName = "sample.pdf", FilePath = @"\PropertyDocuments\Examples\sample.pdf", FileType = ".pdf" }
+                                    // },
                                     Tenants = new List<Tenant>
                                     {
                                         new Tenant
@@ -262,7 +262,7 @@ namespace Website.Data
                                             IsSmoker = true,
                                             HasPets = true,
                                             TenancyStartDate = new DateTime(2020, 11, 15),
-                                            TenantImage = @"\TenantImages\Examples\thispersondoesnotexist13.jpg",
+                                            // TenantImage = @"\TenantImages\Examples\thispersondoesnotexist13.jpg",
                                         }
                                     }
                                 }
@@ -333,29 +333,29 @@ namespace Website.Data
         /// <summary>
         /// Loops over the file upload folders and clears them all down, except for the Examples folder in each
         /// </summary>
-        private static void ClearDownUploadFolders()
-        {
-            string tenantImages = Environment.CurrentDirectory + "\\wwwroot\\TenantImages";
-            string propertyDocs = Environment.CurrentDirectory + "\\wwwroot\\PropertyDocuments";
-            string propertyImages = Environment.CurrentDirectory + "\\wwwroot\\PropertyImages";
+        // private static void ClearDownUploadFolders()
+        // {
+        //     string tenantImages = Environment.CurrentDirectory + "\\wwwroot\\TenantImages";
+        //     string propertyDocs = Environment.CurrentDirectory + "\\wwwroot\\PropertyDocuments";
+        //     string propertyImages = Environment.CurrentDirectory + "\\wwwroot\\PropertyImages";
 
-            var clearDownFolders = new string[] { tenantImages, propertyDocs, propertyImages };
+        //     var clearDownFolders = new string[] { tenantImages, propertyDocs, propertyImages };
 
-            foreach (var folderToClear in clearDownFolders)
-            {
-                DirectoryInfo di = new DirectoryInfo(folderToClear);
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    if (!dir.Name.Equals("Examples"))
-                    {
-                        dir.Delete(true);
-                    }
-                }
-            }
-        }
+        //     foreach (var folderToClear in clearDownFolders)
+        //     {
+        //         DirectoryInfo di = new DirectoryInfo(folderToClear);
+        //         foreach (FileInfo file in di.GetFiles())
+        //         {
+        //             file.Delete();
+        //         }
+        //         foreach (DirectoryInfo dir in di.GetDirectories())
+        //         {
+        //             if (!dir.Name.Equals("Examples"))
+        //             {
+        //                 dir.Delete(true);
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

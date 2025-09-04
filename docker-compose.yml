@@ -1,0 +1,64 @@
+services:
+
+  web:
+    container_name: web-app
+    build: 
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app/
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgresdb;Username=postgres;Port=5432;Password=postgres;Database=postgres;Pooling=true;
+    networks:
+    - api
+    - db
+    # mem_limit: 512m
+    # mem_reservation: 128M
+    # memswap_limit: 1g
+    # cpus: "0.5"
+    # cpuset: "1"
+
+
+  postgresdb:
+    image: postgres
+    container_name: postgresdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGUSER=postgres
+      - PGPORT=5432
+    shm_size: 128mb
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5 
+    # mem_limit: 512m
+    # mem_reservation: 128M
+    # memswap_limit: 1g
+    # cpus: "0.5"
+    # cpuset: "1"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - db
+
+
+networks:
+  api:
+    driver: bridge
+  db:
+    driver: bridge
+
+
+
+volumes:
+  pgdata: {}

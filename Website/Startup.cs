@@ -30,10 +30,16 @@ namespace Website
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddDbContext<ApplicationDbContext>(options =>
+            //     options
+            //     .UseLazyLoadingProxies()
+            //     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options
-                .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseLazyLoadingProxies();
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
            {
@@ -106,13 +112,14 @@ namespace Website
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataSeeder seeder, ILoggerFactory loggerFactory)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             if (env.IsDevelopment())
             {
                 var path = Directory.GetCurrentDirectory();
                 loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
                 app.UseDeveloperExceptionPage();
-                seeder.SeedData(false).Wait();
+                seeder.SeedData(true).Wait();
             }
             else
             {
