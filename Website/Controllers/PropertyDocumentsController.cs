@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -120,7 +119,7 @@ namespace Website.Controllers
                 return NotFound();
             }
             ViewData["DocumentTypeId"] = new SelectList(_context.DocumentTypes, "Id", "Description", propertyDocument.DocumentTypeId);
-            
+
             var result = new PropertyDocumentDetailsDto
             {
                 Id = propertyDocument.Id,

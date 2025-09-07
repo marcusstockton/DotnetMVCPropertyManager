@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -11,7 +10,6 @@ using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Portfolios;
 using Website.Models.DTOs.Properties;
-using Website.Models.DTOs.PropertyDocuments;
 
 namespace Website.Controllers
 {
@@ -153,7 +151,6 @@ namespace Website.Controllers
             }
             return View(portfolio);
         }
-
 
         private PortfolioDetailsDto MapPortfolioToDetailsDto(Portfolio portfolio)
         {

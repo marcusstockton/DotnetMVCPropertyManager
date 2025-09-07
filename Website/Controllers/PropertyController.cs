@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -78,7 +77,7 @@ namespace Website.Controllers
                     Id = property.Portfolio.Id,
                     Name = property.Portfolio.Name
                 },
-                
+
                 Images = property.Images?.Select(pi => new PropertyImage
                 {
                     Id = pi.Id,
@@ -274,16 +273,6 @@ namespace Website.Controllers
                     }).ToList()
                 };
 
-                //var portfolio = _mapper.Map<Portfolio>(property.Portfolio);
-                //if (images.Any())
-                //{
-                //    var imagesSaved = await _propertyImageService.CreateImagesForProperty(updatedProperty, images);
-                //}
-                //if (documents.Any())
-                //{
-                //    await _propertyDocumentService.CreatePropertyDocumentsForProperty(updatedProperty, documents);
-                //}
-
                 await _propertyService.UpdateProperty(updatedProperty);
                 return RedirectToAction(nameof(Detail), new { portfolioId = property.Portfolio.Id, propertyId = property.Id })
                     .WithSuccess("Success", "Property Updated Sucessfully!");
@@ -403,6 +392,93 @@ namespace Website.Controllers
 
             property.Documents.Add(new DocumentUploader());
             return PartialView("PropertyDocuments", property);
+        }
+
+        [HttpGet]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                ModelState.AddModelError("SearchTerm", "Please enter a search term.");
+                return View();
+            }
+
+            var results = await _propertyService.PropertyFullTextSearchWithRank(searchTerm);
+            var resultsDto = results.Select(property => new PropertyDetailDTO
+            {
+                Id = property.Id,
+                Description = property.Description,
+                Address = new AddressDTO
+                {
+                    Line1 = property.Address.Line1,
+                    Line2 = property.Address.Line2,
+                    Line3 = property.Address.Line3,
+                    City = property.Address.City,
+                    Postcode = property.Address.Postcode,
+                    Town = property.Address.Town
+                },
+                MonthlyRentAmount = property.MonthlyRentAmount,
+                NoOfRooms = property.NoOfRooms,
+                PropertyValue = property.PropertyValue,
+                PurchaseDate = property.PurchaseDate,
+                AddressId = property.AddressId,
+                Bathrooms = property.Bathrooms,
+                CreatedDate = property.CreatedDate,
+                Documents = property.Documents?.Select(pd => new PropertyDocumentDetailsDto
+                {
+                    Id = pd.Id,
+                    FileName = pd.FileName,
+                    FilePath = pd.FilePath,
+                    FileType = pd.FileType,
+                    DocumentTypeId = pd.DocumentTypeId,
+                    DocumentType = pd.DocumentType != null ? new DocumentType
+                    {
+                        Id = pd.DocumentType.Id,
+                        Description = pd.DocumentType.Description
+                    } : null,
+                    Expires = pd.Expires,
+                    ActiveFrom = pd.ActiveFrom,
+                    ExpirationDate = pd.ExpirationDate,
+                    CreatedDate = pd.CreatedDate,
+                    UpdatedDate = pd.UpdatedDate
+                }).ToList(),
+                Images = property.Images?.Select(pi => new PropertyImage
+                {
+                    Id = pi.Id,
+                    Description = pi.Description,
+                    FileName = pi.FileName,
+                    FilePath = pi.FilePath,
+                    FileType = pi.FileType,
+                    CreatedDate = pi.CreatedDate,
+                    UpdatedDate = pi.UpdatedDate
+                }).ToList(),
+                Portfolio = new PortfolioDetailsDto
+                {
+                    Id = property.Portfolio.Id,
+                    Name = property.Portfolio.Name
+                },
+                Tenants = property.Tenants?.Select(t => new TenantDTO
+                {
+                    Id = t.Id,
+                    FirstName = t.FirstName,
+                    LastName = t.LastName,
+                    IsSmoker = t.IsSmoker,
+                    HasPets = t.HasPets,
+                    EmailAddress = t.EmailAddress,
+                    DateOfBirth = t.DateOfBirth,
+                    JobTitle = t.JobTitle,
+                }).ToList(),
+                UpdatedDate = property.UpdatedDate
+            }).AsEnumerable();
+
+            return View("SearchResults", resultsDto);
         }
     }
 }

@@ -130,5 +130,7 @@ namespace Website.Data
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
+
+        public DbSet<Website.Models.DTOs.Portfolios.PortfolioDetailsDto> PortfolioDetailsDto { get; set; }
     }
 }

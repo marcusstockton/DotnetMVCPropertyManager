@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -48,7 +46,7 @@ namespace Website.Services
                     Name = portfolio.Name,
                     CreatedDate = portfolio.CreatedDate,
                     UpdatedDate = portfolio.UpdatedDate,
-                    Properties = portfolio.Properties.Select(x=> new Models.DTOs.Properties.PropertyListDTO
+                    Properties = portfolio.Properties.Select(x => new Models.DTOs.Properties.PropertyListDTO
                     {
                         Id = x.Id,
                         AddressId = x.AddressId,
@@ -64,7 +62,7 @@ namespace Website.Services
                             UpdatedDateTime = x.Address.UpdatedDate.GetValueOrDefault().DateTime,
                             Latitude = x.Address.Latitude,
                             Longitude = x.Address.Longitude,
-                            Town  = x.Address.Town, 
+                            Town = x.Address.Town,
                         },
                         CreatedDate = x.CreatedDate,
                         UpdatedDate = x.UpdatedDate,
@@ -73,7 +71,7 @@ namespace Website.Services
                         MonthlyRentAmount = x.MonthlyRentAmount,
                         NoOfRooms = x.NoOfRooms,
                         PropertyValue = x.PropertyValue,
-                        PurchaseDate = x.PurchaseDate 
+                        PurchaseDate = x.PurchaseDate
                     }).ToList(),
                     Owner = portfolio.Owner,
                 })

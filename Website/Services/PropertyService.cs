@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -28,8 +27,7 @@ namespace Website.Services
                 .Include(x => x.Address)
                 .Include(x => x.Portfolio)
                 .Where(x => x.Portfolio.Id == portfolioId)
-                //.ProjectTo<PropertyDetailDTO>(_mapper.ConfigurationProvider)
-                .Select(x=> new Property
+                .Select(x => new Property
                 {
                     Id = x.Id,
                     Address = x.Address,
@@ -108,6 +106,84 @@ namespace Website.Services
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        public async Task<List<Property>> PropertyFullTextSearch(string searchTerm)
+        {
+            var properties = _context.Properties
+                .Where(
+                    b => EF.Functions.ToTsVector("english", b.Description)
+                    .Matches(EF.Functions.PhraseToTsQuery("english", searchTerm))).Select(b => new Property
+                    {
+                        Id = b.Id,
+                        Address = b.Address,
+                        AddressId = b.AddressId,
+                        Bathrooms = b.Bathrooms,
+                        CreatedDate = b.CreatedDate,
+                        Description = b.Description,
+                        MonthlyRentAmount = b.MonthlyRentAmount,
+                        NoOfRooms = b.NoOfRooms,
+                        Portfolio = b.Portfolio,
+                        Documents = b.Documents,
+                        Images = b.Images,
+                        MapImage = b.MapImage,
+                        Tenants = b.Tenants,
+                        PropertyValue = b.PropertyValue,
+                        PurchaseDate = b.PurchaseDate,
+                        UpdatedDate = b.UpdatedDate
+                    }).ToList();
+            return await Task.FromResult(properties);
+        }
+
+        public async Task<List<Property>> PropertyFullTextSearchWithRank(string searchTerm)
+        {
+            var properties = _context.Properties
+                .Where(
+                    b => EF.Functions.ToTsVector("english", b.Description)
+                    .Matches(EF.Functions.PhraseToTsQuery("english", searchTerm)))
+                    .Select(b => new
+                    {
+                        Id = b.Id,
+                        Address = b.Address,
+                        AddressId = b.AddressId,
+                        Bathrooms = b.Bathrooms,
+                        CreatedDate = b.CreatedDate,
+                        Description = b.Description,
+                        MonthlyRentAmount = b.MonthlyRentAmount,
+                        NoOfRooms = b.NoOfRooms,
+                        Portfolio = b.Portfolio,
+                        Documents = b.Documents,
+                        Images = b.Images,
+                        MapImage = b.MapImage,
+                        Tenants = b.Tenants,
+                        PropertyValue = b.PropertyValue,
+                        PurchaseDate = b.PurchaseDate,
+                        UpdatedDate = b.UpdatedDate,
+                        Rank = EF.Functions.ToTsVector("english", b.Description)
+                            .Rank(EF.Functions.PhraseToTsQuery("english", searchTerm))
+                    })
+                    .OrderByDescending(x => x.Rank)
+                    .ToList()
+                    .Select(b => new Property
+                    {
+                        Id = b.Id,
+                        Address = b.Address,
+                        AddressId = b.AddressId,
+                        Bathrooms = b.Bathrooms,
+                        CreatedDate = b.CreatedDate,
+                        Description = b.Description,
+                        MonthlyRentAmount = b.MonthlyRentAmount,
+                        NoOfRooms = b.NoOfRooms,
+                        Portfolio = b.Portfolio,
+                        Documents = b.Documents,
+                        Images = b.Images,
+                        MapImage = b.MapImage,
+                        Tenants = b.Tenants,
+                        PropertyValue = b.PropertyValue,
+                        PurchaseDate = b.PurchaseDate,
+                        UpdatedDate = b.UpdatedDate
+                    }).ToList();
+            return await Task.FromResult(properties);
         }
     }
 }

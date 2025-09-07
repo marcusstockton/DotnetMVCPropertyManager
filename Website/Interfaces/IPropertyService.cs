@@ -18,5 +18,9 @@ namespace Website.Interfaces
         Task DeleteProperty(Guid propertyId);
 
         Task<int> SaveAsync();
+
+        Task<List<Property>> PropertyFullTextSearch(string searchTerm);
+
+        Task<List<Property>> PropertyFullTextSearchWithRank(string searchTerm);
     }
 }
