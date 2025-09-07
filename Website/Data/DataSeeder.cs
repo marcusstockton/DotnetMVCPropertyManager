@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Website.Models;
@@ -36,7 +35,7 @@ namespace Website.Data
                     _logger.LogInformation("Blatting the database and reseeding...");
                     // ClearDownUploadFolders();
 
-                    // _context.Database.EnsureDeleted();
+                    await _context.Database.EnsureDeletedAsync();
                     _context.Database.Migrate();
 
                     if (!_context.Users.Any())
@@ -287,7 +286,7 @@ namespace Website.Data
                             .RuleFor(x => x.TenancyEndDate, (f, u) => f.Date.BetweenOffset(u.TenancyStartDate, DateTime.Now).OrNull(f, .8f));
 
                         var propertyImageFaker = new Faker<PropertyImage>("en_GB")
-                            .RuleFor(x => x.FilePath, f => f.Image.LoremFlickrUrl(800, 600, "building,home"))
+                            .RuleFor(x => x.FilePath, f => f.Image.PicsumUrl(800, 600))
                             .RuleFor(x => x.FileName, f => f.System.FileName())
                             .RuleFor(x => x.CreatedDate, f => f.Date.Recent(100));
 

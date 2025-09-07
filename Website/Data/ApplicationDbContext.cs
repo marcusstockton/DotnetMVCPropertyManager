@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading;
@@ -131,5 +130,7 @@ namespace Website.Data
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
+
+        public DbSet<Website.Models.DTOs.Portfolios.PortfolioDetailsDto> PortfolioDetailsDto { get; set; }
     }
 }
