@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <UserSecretsId>aspnet-Website-888A4B13-250B-4CB9-B1D6-81C2082707A1</UserSecretsId>
+	  <SatelliteResourceLanguages>en-GB</SatelliteResourceLanguages>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\lib\bootstrap\**" />
@@ -18,7 +19,6 @@
     <None Remove="wwwroot\TenantImages\467c17b9-c5fb-4d8a-219b-08dd2b6412a8\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="CountryData.Bogus" Version="6.13.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.8" />
@@ -37,7 +37,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />

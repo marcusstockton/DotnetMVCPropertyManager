@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -15,14 +13,10 @@ namespace Website.Controllers
     public class AdminController : Controller
     {
         private readonly IPortfolioService _portfolioService;
-        private MapperConfiguration config;
 
         public AdminController(IPortfolioService portfolioService)
         {
             _portfolioService = portfolioService;
-
-            //config = new MapperConfiguration(cfg =>
-            //    cfg.CreateProjection<Portfolio, PortfolioAdminIndexDto>());
         }
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
@@ -67,7 +61,13 @@ namespace Website.Controllers
             }
 
             int pageSize = 5;
-            var portList = portfolios.ProjectTo<PortfolioAdminIndexDto>(config);
+            var portList = portfolios.Select(x => new PortfolioAdminIndexDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreatedDate = x.CreatedDate,
+                UpdatedDate = x.UpdatedDate
+            });
             return View(await PaginatedList<PortfolioAdminIndexDto>.CreateAsync(portList.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
     }

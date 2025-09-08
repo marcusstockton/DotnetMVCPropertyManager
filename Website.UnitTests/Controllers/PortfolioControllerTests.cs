@@ -11,7 +11,6 @@ using Website.Extensions.Alerts;
 using Website.Interfaces;
 using Website.Models;
 using Website.Models.DTOs.Portfolios;
-using Website.Profiles;
 
 namespace Website.Controllers.Tests
 {
@@ -27,17 +26,6 @@ namespace Website.Controllers.Tests
 
         public PortfolioControllerTests()
         {
-            var portfolioProfile = new PortfolioProfile();
-            var propertyProfile = new PropertyProfile();
-            var addressProfile = new AddressProfile();
-            //var config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.AddProfile(portfolioProfile);
-            //    cfg.AddProfile(propertyProfile);
-            //    cfg.AddProfile(addressProfile);
-            //});
-            //_mapper = new Mapper(config);
-
             _user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"), new Claim(ClaimTypes.Name, "TestUser1@test.com") }, "Owner"));
         }
 
