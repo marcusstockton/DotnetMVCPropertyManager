@@ -32,6 +32,7 @@ namespace Website.Controllers
         }
 
         // GET: Portfolios/Details/5
+        [ResponseCache(VaryByQueryKeys = new string[] { "id" }, Duration = 10)]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)

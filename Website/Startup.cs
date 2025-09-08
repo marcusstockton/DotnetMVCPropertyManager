@@ -30,11 +30,6 @@ namespace Website
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<ApplicationDbContext>(options =>
-            //     options
-            //     .UseLazyLoadingProxies()
-            //     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
@@ -47,8 +42,6 @@ namespace Website
            })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-
-            //services.AddAutoMapper(typeof(Program));
 
             services.AddControllersWithViews(options =>
             {
@@ -119,7 +112,7 @@ namespace Website
                 loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
                 app.UseDeveloperExceptionPage();
-                seeder.SeedData(true).Wait();
+                seeder.SeedData(false).Wait();
             }
             else
             {
