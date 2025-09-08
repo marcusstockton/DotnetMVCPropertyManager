@@ -478,7 +478,9 @@ namespace Website.Controllers
                 UpdatedDate = property.UpdatedDate
             }).AsEnumerable();
 
-            return View("SearchResults", resultsDto);
+            ViewBag.SearchTerm = resultsDto;
+            return View();
+            //return View("SearchResults", resultsDto);
         }
     }
 }

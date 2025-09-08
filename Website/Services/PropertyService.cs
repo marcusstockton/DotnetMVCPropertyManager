@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 using Website.Data;
 using Website.Interfaces;
 using Website.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Website.Services
 {
     public class PropertyService : IPropertyService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger _logger;
 
-        public PropertyService(ApplicationDbContext context, ILogger<PropertyService> logger)
+        public PropertyService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, ILogger<PropertyService> logger)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
             _logger = logger;
         }
 
@@ -110,7 +114,10 @@ namespace Website.Services
 
         public async Task<List<Property>> PropertyFullTextSearch(string searchTerm)
         {
+            var userid = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var properties = _context.Properties
+                .Where(b => b.Portfolio.OwnerId == userid)
                 .Where(
                     b => EF.Functions.ToTsVector("english", b.Description)
                     .Matches(EF.Functions.PhraseToTsQuery("english", searchTerm))).Select(b => new Property
@@ -137,28 +144,31 @@ namespace Website.Services
 
         public async Task<List<Property>> PropertyFullTextSearchWithRank(string searchTerm)
         {
+            var userid = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var properties = _context.Properties
+                .Where(b => b.Portfolio.OwnerId == userid)
                 .Where(
                     b => EF.Functions.ToTsVector("english", b.Description)
                     .Matches(EF.Functions.PhraseToTsQuery("english", searchTerm)))
                     .Select(b => new
                     {
-                        Id = b.Id,
-                        Address = b.Address,
-                        AddressId = b.AddressId,
-                        Bathrooms = b.Bathrooms,
-                        CreatedDate = b.CreatedDate,
-                        Description = b.Description,
-                        MonthlyRentAmount = b.MonthlyRentAmount,
-                        NoOfRooms = b.NoOfRooms,
-                        Portfolio = b.Portfolio,
-                        Documents = b.Documents,
-                        Images = b.Images,
-                        MapImage = b.MapImage,
-                        Tenants = b.Tenants,
-                        PropertyValue = b.PropertyValue,
-                        PurchaseDate = b.PurchaseDate,
-                        UpdatedDate = b.UpdatedDate,
+                        b.Id,
+                        b.Address,
+                        b.AddressId,
+                        b.Bathrooms,
+                        b.CreatedDate,
+                        b.Description,
+                        b.MonthlyRentAmount,
+                        b.NoOfRooms,
+                        b.Portfolio,
+                        b.Documents,
+                        b.Images,
+                        b.MapImage,
+                        b.Tenants,
+                        b.PropertyValue,
+                        b.PurchaseDate,
+                        b.UpdatedDate,
                         Rank = EF.Functions.ToTsVector("english", b.Description)
                             .Rank(EF.Functions.PhraseToTsQuery("english", searchTerm))
                     })

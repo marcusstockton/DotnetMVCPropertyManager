@@ -1,6 +1,8 @@
-﻿
+﻿@using Website.Models.DTOs.Properties
+
 @{
     ViewData["Title"] = "Search";
+    var propertyList = (IEnumerable<PropertyDetailDTO>)ViewBag.SearchTerm;
 }
 
 <h1>Search</h1>
@@ -12,3 +14,55 @@
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
+
+@if (propertyList != null && propertyList.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => propertyList.First().Portfolio.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => propertyList.First().UpdatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => propertyList.First().Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in propertyList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Portfolio.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @foreach (var property in propertyList)
+    {
+        <p>@property.Id</p>
+    }
+}
+else
+{
+    <div>
+        <p>No Results</p>
+    </div>
+}

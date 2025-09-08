@@ -28,6 +28,7 @@ namespace Website.Models.DTOs.Portfolios
         public double GrossIncome
         { get { return (Properties == null) ? 0 : Properties.Select(x => x.MonthlyRentAmount).Sum(); } }
 
+        [Display(Name="Portfolio Name")]
         public string Name { get; set; }
         public virtual ApplicationUser Owner { get; set; }
         public virtual IList<PropertyListDTO> Properties { get; set; }
