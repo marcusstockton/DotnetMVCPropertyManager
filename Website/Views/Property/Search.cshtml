@@ -10,7 +10,7 @@
 <form method="post" asp-action="Search">
     <div class="form-group">
         <label for="searchTerm">Search Query:</label>
-        <input type="text" class="form-control" id="searchTerm" name="searchTerm" required />
+        <input type="text" class="form-control" id="searchTerm" name="searchTerm" value="@ViewBag.CurrentFilter" required />
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
@@ -46,9 +46,10 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                         @* Guid portfolioId, Guid propertyId *@
+                        <a asp-action="Edit" asp-controller="Property" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Edit</a> |
+                        <a asp-action="Detail" asp-controller="Property" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-controller="Property" asp-route-portfolioId="@item.Portfolio.Id" asp-route-propertyId="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

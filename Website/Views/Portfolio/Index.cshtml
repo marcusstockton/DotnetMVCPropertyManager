@@ -14,7 +14,7 @@
         <div class="col-4">
             <form method="post" asp-action="Search" asp-controller="Property">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="searchTerm" 
+                    <input type="text" class="form-control" id="searchTerm" value="@ViewBag.CurrentFilter"
                     name="searchTerm" required placeholder="Search all properties"/>
                     <span class="input-group-btn" style="width:0;">
                         <button type="submit" class="btn btn-primary">Search</button>

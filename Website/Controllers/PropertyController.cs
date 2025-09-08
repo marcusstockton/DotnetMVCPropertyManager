@@ -409,6 +409,7 @@ namespace Website.Controllers
                 ModelState.AddModelError("SearchTerm", "Please enter a search term.");
                 return View();
             }
+            ViewBag.CurrentFilter = searchTerm;
 
             var results = await _propertyService.PropertyFullTextSearchWithRank(searchTerm);
             var resultsDto = results.Select(property => new PropertyDetailDTO
