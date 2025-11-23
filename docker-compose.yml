@@ -7,13 +7,13 @@ services:
       dockerfile: dockerfile
     ports:
       - 8080:8080
-    volumes:
-      - .:/app/
     depends_on:
       postgresdb:
         condition: service_healthy
     environment:
-      - ConnectionStrings__DefaultConnection=Host=postgresdb;Username=postgres;Port=5432;Password=postgres;Database=postgres;Pooling=true;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=postgresdb;Username=postgres;Port=5432;Password=postgres;Database=PropertyManager;Pooling=true;
     networks:
     - api
     - db
@@ -30,7 +30,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=PropertyManager
       - PGUSER=postgres
       - PGPORT=5432
     shm_size: 128mb
