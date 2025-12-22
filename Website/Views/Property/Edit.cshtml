@@ -39,12 +39,7 @@
                     <div class="form-group">
                         <label asp-for="Address.Line1" class="control-label"></label>
                         <input asp-for="Address.Line1" class="form-control" />
-                        <small class="text-muted">Start typing the full address in here for auto suggestion</small>
                         <span asp-validation-for="Address.Line1" class="text-danger"></span>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="enableautocomplete">
-                            <label class="custom-control-label" for="enableautocomplete">Enable address autocomplete</label>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="Address.Line2" class="control-label"></label>

@@ -12,6 +12,8 @@ Property Tenants > make a table instead of the card desk
 Update from bootstrap 4 > 5
 
 
+TODO:
+Need to remove hereapi address lookup and replace with a different service as hereapi is no longer free
 
 
 ### Docker Commands

@@ -11,7 +11,7 @@ else
             <div class="carousel-inner">
                 @foreach (var image in Model)
                 {
-                    <p>@image.FilePath</p>
+                    @* <p>@image.FilePath</p> *@
                     <div class="carousel-item @(image == Model.First() ? "active" : "")" data-bs-interval="10000">
                         <img src="@image.FilePath" class="d-block w-100 img-fluid" alt="Property Image" style="display: block; width: auto; height: 60vh;">
                         @if (!string.IsNullOrEmpty(image.Description))

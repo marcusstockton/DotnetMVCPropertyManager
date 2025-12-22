@@ -1,49 +1,49 @@
-services:
+version: '3.9'
 
-  web:
-    container_name: web-app
-    build: 
+services:
+  website:
+    container_name: dotnetmvcpropertymanager_website
+    build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Website/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+    image: dotnetmvcpropertymanager_website:latest
     ports:
-      - 8080:8080
-    depends_on:
-      postgresdb:
-        condition: service_healthy
+      - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Host=postgresdb;Username=postgres;Port=5432;Password=postgres;Database=PropertyManager;Pooling=true;
+    depends_on:
+      postgresdb:
+        condition: service_healthy
     networks:
-    - api
-    - db
-    # mem_limit: 512m
-    # mem_reservation: 128M
-    # memswap_limit: 1g
-    # cpus: "0.5"
-    # cpuset: "1"
-
+      - api
+      - db
+    # restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "bash", "-lc", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ./dpkeys:/home/app/.aspnet/DataProtection-Keys
 
   postgresdb:
-    image: postgres
+    image: postgres:16-alpine
     container_name: postgresdb
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=PropertyManager
-      - PGUSER=postgres
-      - PGPORT=5432
     shm_size: 128mb
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      test: ["CMD", "pg_isready", "-q", "-d", "PropertyManager", "-U", "postgres"]
       interval: 5s
       timeout: 5s
-      retries: 5 
-    # mem_limit: 512m
-    # mem_reservation: 128M
-    # memswap_limit: 1g
-    # cpus: "0.5"
-    # cpuset: "1"
+      retries: 5
     ports:
       - "5432:5432"
     volumes:
@@ -51,14 +51,12 @@ services:
     networks:
       - db
 
-
 networks:
   api:
     driver: bridge
   db:
     driver: bridge
 
-
-
 volumes:
-  pgdata: {}
+  pgdata:
+    driver: local
