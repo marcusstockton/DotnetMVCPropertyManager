@@ -33,7 +33,7 @@ namespace Website.UnitTests.Areas
         {
             // Arrange
             var portfolioId = Guid.NewGuid();
-            var properties = new List<Property> { new Property { Id = Guid.NewGuid(), Description = "Test Property" } };
+            var properties = new List<Property> { new Property { Id = Guid.NewGuid(), Description = "Test Property", Address = new Address { Id = Guid.NewGuid(), Postcode = "TS1 1TS"} } };
             var propertiesDto = new List<PropertyListDTO> { new PropertyListDTO { Id = Guid.NewGuid(), Description = "Test Property" } };
 
             _propertyServiceMock.Setup(s => s.GetPropertiesForPortfolio(portfolioId)).ReturnsAsync(properties);

@@ -33,13 +33,11 @@ namespace Website.Services
 
         public async Task<IList<PortfolioDetailsDto>> GetMyPortfolios(string userId)
         {
-            _logger.LogInformation($"{nameof(GetMyPortfolios)} > Retrieving all portfolio's for user id {userId}");
+            _logger.LogInformation("{Method} retrieving portfolios for UserId={UserId}", nameof(GetMyPortfolios), userId);
             var sw = new Stopwatch();
             sw.Start();
             var portfolios = await _context.Portfolios
-                .Include(x => x.Owner)
                 .Where(x => x.Owner.Id == userId)
-                //.ProjectTo<PortfolioDetailsDto>
                 .Select(portfolio => new PortfolioDetailsDto
                 {
                     Id = portfolio.Id,
@@ -100,8 +98,10 @@ namespace Website.Services
         public async Task<bool> DeletePortfolio(Portfolio portfolio)
         {
             _logger.LogInformation($"Deleting portfolio with id {portfolio.Id}");
-            var properties = _context.Properties.Where(x => x.Portfolio.Id == portfolio.Id);
-            _logger.LogInformation($"Also deleting all attached properties. Found {properties.Count()} properties to delete");
+            var properties = await _context.Properties
+                .Where(p => p.Portfolio.Id == portfolio.Id)
+                .ToListAsync();
+            _logger.LogInformation("Found {Count} properties", properties.Count);
             foreach (var item in properties)
             {
                 _context.Properties.Remove(item);
