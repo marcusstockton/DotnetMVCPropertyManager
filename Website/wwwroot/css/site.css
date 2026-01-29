@@ -1,42 +1,77 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/* Theme variables */
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --muted: #6c757d;
+  --primary: #1b6ec2;
+  --primary-contrast: #ffffff;
+  --nav-bg: #f8f9fa;
+  --footer-bg: #f8f9fa;
+  --border: #e5e5e5;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+  --primary: #58a6ff;
+  --primary-contrast: #0b1220;
+  --nav-bg: #071026;
+  --footer-bg: #071026;
+  --border: rgba(255,255,255,0.06);
+}
+
+/* Respect system preference as a default if no explicit choice */
+@media (prefers-color-scheme: dark) {
+  :root { }
+}
+
+/* Base page styles using variables */
 html,
 body {
     height: 100%;
     margin: 0;
+    background: var(--bg);
+    color: var(--text);
 }
 
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: var(--primary);
 }
 
-.nav-link.active {
-    font-weight: bold;
-    /*background-color: lightsteelblue;*/
+.navbar, .bg-light {
+    background-color: var(--nav-bg) !important;
+    border-color: var(--border) !important;
+}
+
+.border-top {
+    border-top: 1px solid var(--border) !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--border) !important;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    color: var(--primary-contrast) !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    color: var(--primary-contrast);
+    background-color: var(--primary);
+    border-color: var(--primary);
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+/* Sticky footer helpers */
 html {
     font-size: 14px;
 }
@@ -47,27 +82,9 @@ html {
     }
 }
 
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
 button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
-}
-
-/* Ensure footer sits at the bottom with no extra gap */
-html, body {
-  height: 100%;
-  margin: 0;
 }
 
 /* Keep page a column flex container and allow main to grow */
@@ -81,13 +98,171 @@ main {
   flex: 1 0 auto;
 }
 
-/* Reset any unexpected bottom margins on the main container */
 #main_body, .container:last-child {
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
 
-/* Ensure footer does not add extra space */
 .footer {
   margin-bottom: 0;
+  background-color: var(--footer-bg) !important;
+}
+
+/* Small helper for theme toggle button */
+#themeToggle .material-icons { vertical-align: middle; }
+
+/* Dark-mode link fixes */
+[data-theme="dark"] a,
+[data-theme="dark"] a:link,
+[data-theme="dark"] a:visited {
+  color: var(--primary) !important;
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus {
+  color: #9ad1ff !important;
+  text-decoration: underline;
+}
+
+/* Ensure Bootstrap utility classes like .text-dark don't force dark text in dark theme */
+[data-theme="dark"] .text-dark {
+  color: var(--text) !important;
+}
+
+/* Nav links should be readable on dark nav background */
+[data-theme="dark"] .navbar .nav-link,
+[data-theme="dark"] .navbar .nav-link.text-dark {
+  color: var(--text) !important;
+}
+
+/* Footer link contrast */
+[data-theme="dark"] footer a {
+  color: var(--primary) !important;
+}
+
+/* DataTables dark-mode overrides */
+[data-theme="dark"] .dataTables_wrapper,
+[data-theme="dark"] table.dataTable {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* header / table cells */
+[data-theme="dark"] table.dataTable thead th {
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+[data-theme="dark"] table.dataTable tbody td {
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+/* search / length inputs */
+[data-theme="dark"] .dataTables_wrapper .dataTables_filter input,
+[data-theme="dark"] .dataTables_wrapper .dataTables_length select {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* pagination */
+[data-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+}
+[data-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+[data-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  border-color: var(--primary);
+}
+
+/* DataTables button styles for dark mode */
+/* Higher specificity and broader selector coverage to override library defaults */
+html[data-theme="dark"] .dt-button,
+html[data-theme="dark"] .dataTables_wrapper .dt-buttons .btn,
+[data-theme="dark"] .dt-button,
+[data-theme="dark"] .dataTables_wrapper .dt-buttons .btn {
+  background-color: var(--primary) !important;
+  color: var(--primary-contrast) !important;
+  border: 1px solid var(--primary) !important;
+  box-shadow: none !important;
+}
+
+/* Hover / focus states */
+html[data-theme="dark"] .dt-button:hover,
+html[data-theme="dark"] .dt-button:focus,
+[data-theme="dark"] .dt-button:hover,
+[data-theme="dark"] .dt-button:focus,
+html[data-theme="dark"] .dataTables_wrapper .dt-buttons .btn:hover,
+[data-theme="dark"] .dataTables_wrapper .dt-buttons .btn:hover {
+  background-color: color-mix(in srgb, var(--primary) 80%, black) !important;
+  color: var(--primary-contrast) !important;
+}
+
+/* Disabled state */
+html[data-theme="dark"] .dt-button:disabled,
+html[data-theme="dark"] .dt-button.disabled,
+[data-theme="dark"] .dt-button:disabled,
+[data-theme="dark"] .dt-button.disabled {
+  opacity: 0.5 !important;
+  background-color: transparent !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+/* Buttons using Bootstrap utility classes (btn-light, btn-secondary) */
+html[data-theme="dark"] .dt-button.btn-light,
+[data-theme="dark"] .dt-button.btn-light,
+html[data-theme="dark"] .btn-light,
+[data-theme="dark"] .btn-light {
+  background-color: transparent !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+/* Ensure collection dropdowns and flash messages follow theme */
+html[data-theme="dark"] .dt-button.buttons-collection,
+[data-theme="dark"] .dt-button.buttons-collection {
+  background-color: var(--primary) !important;
+  color: var(--primary-contrast) !important;
+}
+
+/* Improve table stripe contrast if using striped tables */
+[data-theme="dark"] table.dataTable.stripe tbody tr.odd {
+  background-color: rgba(255,255,255,0.01);
+}
+[data-theme="dark"] table.dataTable.stripe tbody tr.even {
+  background-color: transparent;
+}
+
+/* Force tables to follow dark variables when html[data-theme="dark"] is set */
+html[data-theme="dark"] table.table,
+html[data-theme="dark"] .dataTables_wrapper table,
+html[data-theme="dark"] table.dataTable {
+  background-color: transparent !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] table.table thead th,
+html[data-theme="dark"] table.dataTable thead th {
+  background-color: rgba(255,255,255,0.03) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+html[data-theme="dark"] table.table tbody td,
+html[data-theme="dark"] table.dataTable tbody td {
+  background-color: transparent !important;
+  color: var(--text) !important;
+}
+
+/* DataTables wrapper elements */
+html[data-theme="dark"] .dataTables_wrapper,
+html[data-theme="dark"] .dataTables_wrapper .dataTables_filter,
+html[data-theme="dark"] .dataTables_wrapper .dataTables_length {
+  background: transparent !important;
+  color: var(--text) !important;
 }

@@ -39,6 +39,11 @@
 
                         @* <partial name="_LoginNavbarMenuItems" /> *@
                         @await Html.PartialAsync("_LoginNavbarMenuItems")
+                        <li class="nav-item">
+                            <button id="themeToggle" class="btn btn-sm btn-outline-secondary ms-2" title="Toggle theme">
+                                <span class="material-icons">light_mode</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
